@@ -1,0 +1,50 @@
+{
+  "home": {
+    "hero": {
+      "eyebrow": "Practical playbooks",
+      "title": "The lightweight template for Umamusume launches",
+      "subtitle": "Start with ready-to-ship SEO, legal pages, and a content framework tuned for trainers. Swap text and assets, run the checklist, and publish.",
+      "support": "Each checklist item links back to this repository so you can re-run the setup any time a new campaign launches.",
+      "primaryCta": "Read the latest guides",
+      "secondaryCta": "Get to know the project",
+      "badges": [
+        "No rebuilds required",
+        "SEO ready",
+        "Blog friendly"
+      ]
+    },
+    "features": {
+      "title": "What comes ready out of the box",
+      "description": "These sections map directly to content files so you can update text, imagery, and priority links without touching components.",
+      "items": [
+        {
+          "title": "Centralised configuration",
+          "description": "Site name, navigation, SEO defaults, and social links are in one place so handoff takes minutes."
+        },
+        {
+          "title": "Reusable sections",
+          "description": "Hero, feature highlights, CTA, and quick links share the same schema across landing pages."
+        },
+        {
+          "title": "Writer-first blog",
+          "description": "Markdown with frontmatter for SEO metadata, reading time, related articles, and structured data."
+        }
+      ]
+    },
+    "links": {
+      "title": "Jump straight into customising",
+      "description": "Use these links as a mini checklist when preparing a new deployment.",
+      "items": [
+        "Update site config",
+        "Prepare privacy & terms",
+        "Load blog posts"
+      ]
+    },
+    "cta": {
+      "title": "Ready to launch your next Umamusume project?",
+      "description": "Clone this template, customise the sections, run the preflight checklist, and go live in record time.",
+      "primaryCta": "View deployment checklist",
+      "secondaryCta": "Visit project repository"
+    }
+  }
+}
