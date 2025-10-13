@@ -8,6 +8,7 @@ import {
   processMarkdownContent,
   getRelatedPosts,
   getPostNavigation,
+  listPostSlugs,
   type BlogPost
 } from '@/lib/blog-utils';
 import { PostHeader, RelatedPosts } from '@/features/blog';
@@ -15,11 +16,15 @@ import { SEOHead, StructuredData } from '@/features/seo';
 import { Breadcrumbs } from '@/features/layout';
 
 interface BlogPostPageProps {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
+}
+
+export function generateStaticParams() {
+  return listPostSlugs().map((slug) => ({ slug }));
 }
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = await params;
+  const { slug } = params;
   const post = getPostBySlug(slug);
 
   if (!post) {
@@ -40,7 +45,7 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = await params;
+  const { slug } = params;
   const post = getPostBySlug(slug);
 
   if (!post) {
@@ -75,9 +80,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       />
       <PostHeader post={post} />
 
-      <div className="prose prose-lg max-w-none prose-blue">
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
-      </div>
+      <BlogPostBody html={htmlContent} />
 
       <div className="flex flex-wrap items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 text-sm text-gray-600 shadow-sm">
         <span>Share:</span>
@@ -114,6 +117,14 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
       <RelatedPosts posts={relatedPosts} />
     </article>
+  );
+}
+
+function BlogPostBody({ html }: { html: string }) {
+  return (
+    <div className="prose prose-lg max-w-none prose-blue">
+      <div dangerouslySetInnerHTML={{ __html: html }} />
+    </div>
   );
 }
 

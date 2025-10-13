@@ -1,13 +1,14 @@
 import type { Metadata } from 'next';
 import { buildPageMetadata } from '@/config/seo';
 import { SEOHead, StructuredData } from '@/features/seo';
-import { homePageSections } from '@/content/home-sections';
+import { getHomePageSections } from '@/content/home-sections';
+import { siteConfig } from '@/config/site';
 import { HeroSection, FeatureGridSection, LinkListSection, CtaSection } from '@/features/sections';
 
 export const metadata: Metadata = buildPageMetadata('home');
 
 export default function HomePage() {
-  const { hero, features, quickLinks, cta } = homePageSections;
+  const { hero, features, quickLinks, cta } = getHomePageSections(siteConfig.defaultLocale);
 
   return (
     <div className="space-y-10">

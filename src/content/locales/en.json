@@ -1,50 +1,50 @@
 {
   "home": {
     "hero": {
-      "eyebrow": "Practical playbooks",
-      "title": "The lightweight template for Umamusume launches",
-      "subtitle": "Start with ready-to-ship SEO, legal pages, and a content framework tuned for trainers. Swap text and assets, run the checklist, and publish.",
-      "support": "Each checklist item links back to this repository so you can re-run the setup any time a new campaign launches.",
-      "primaryCta": "Read the latest guides",
-      "secondaryCta": "Get to know the project",
+      "eyebrow": "Professional Marketing Tools",
+      "title": "The most accurate CPM calculator for digital advertising",
+      "subtitle": "Calculate cost per mille instantly, analyze campaign performance, and optimize your advertising budget with our professional-grade tools.",
+      "support": "All calculations are based on industry-standard formulas and updated regularly to reflect the latest digital advertising trends.",
+      "primaryCta": "Try CPM Calculator",
+      "secondaryCta": "Learn More",
       "badges": [
-        "No rebuilds required",
-        "SEO ready",
-        "Blog friendly"
+        "Instant calculations",
+        "Industry standards",
+        "Free to use"
       ]
     },
     "features": {
-      "title": "What comes ready out of the box",
-      "description": "These sections map directly to content files so you can update text, imagery, and priority links without touching components.",
+      "title": "Everything you need for CPM analysis",
+      "description": "Professional tools designed to help digital marketers make data-driven decisions and optimize advertising spend.",
       "items": [
         {
-          "title": "Centralised configuration",
-          "description": "Site name, navigation, SEO defaults, and social links are in one place so handoff takes minutes."
+          "title": "Real-time CPM calculations",
+          "description": "Instantly calculate cost per mille, CPM, and other key metrics with our precision calculator."
         },
         {
-          "title": "Reusable sections",
-          "description": "Hero, feature highlights, CTA, and quick links share the same schema across landing pages."
+          "title": "Campaign optimization",
+          "description": "Get insights on how to improve your advertising performance and maximize ROI."
         },
         {
-          "title": "Writer-first blog",
-          "description": "Markdown with frontmatter for SEO metadata, reading time, related articles, and structured data."
+          "title": "Marketing insights",
+          "description": "Expert guides and benchmarks to help you understand industry trends and best practices."
         }
       ]
     },
     "links": {
-      "title": "Jump straight into customising",
-      "description": "Use these links as a mini checklist when preparing a new deployment.",
+      "title": "Get started with CPM analysis",
+      "description": "Use these tools and resources to optimize your digital advertising campaigns.",
       "items": [
-        "Update site config",
-        "Prepare privacy & terms",
-        "Load blog posts"
+        "CPM Calculator",
+        "Marketing Blog",
+        "Campaign Tips"
       ]
     },
     "cta": {
-      "title": "Ready to launch your next Umamusume project?",
-      "description": "Clone this template, customise the sections, run the preflight checklist, and go live in record time.",
-      "primaryCta": "View deployment checklist",
-      "secondaryCta": "Visit project repository"
+      "title": "Ready to optimize your advertising campaigns?",
+      "description": "Start using our professional CPM calculator today and make data-driven decisions for your digital marketing.",
+      "primaryCta": "Start Calculating",
+      "secondaryCta": "Read Marketing Blog"
     }
   }
 }

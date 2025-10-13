@@ -1,8 +1,8 @@
 import Link from 'next/link';
-import { siteConfig } from '@/config/site';
+import { useSiteConfig } from '@/config/site-context';
 
 export function AnnouncementBar() {
-  const announcement = siteConfig.announcement;
+  const { announcement } = useSiteConfig();
 
   if (!announcement) {
     return null;

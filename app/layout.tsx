@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import './globals.css';
 import { SiteShell } from '@/features/layout';
 import { siteConfig } from '@/config/site';
+import { SiteConfigProvider } from '@/config/site-context';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${siteConfig.domain}`),
@@ -24,7 +25,9 @@ export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en">
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
-        <SiteShell>{children}</SiteShell>
+        <SiteConfigProvider value={siteConfig}>
+          <SiteShell>{children}</SiteShell>
+        </SiteConfigProvider>
       </body>
     </html>
   );

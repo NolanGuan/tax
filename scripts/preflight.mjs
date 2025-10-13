@@ -87,10 +87,10 @@ if (!siteConfig) {
 }
 
 if (siteConfig) {
-  if (siteConfig.domain === 'umamusume-guide.com') {
+  if (siteConfig.domain === 'cpmcalculation.com') {
     warnings.push('请在 src/config/site.ts 中更新 domain，避免使用模板默认值。');
   }
-  if (siteConfig.contactEmail === 'hello@umamusume-guide.com') {
+  if (siteConfig.contactEmail === 'hello@cpmcalculation.com') {
     warnings.push('请在 src/config/site.ts 中更新 contactEmail。');
   }
   if (!siteConfig.announcement?.message) {

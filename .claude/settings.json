@@ -1,8 +1,10 @@
 {
   "env": {
-    "ANTHROPIC_AUTH_TOKEN": "sk-ant-oat01-YA2hWI9ZBZEMrA7jpBCRGf4HTHdGG2ToW_jVZVufF81dzz91-KqOHH98ly6yPsg1I7MmEWrLMgo2NzKwHqVKd33SQgZQEAA",
-    "ANTHROPIC_BASE_URL": "https://code.newcli.com/claude",
-    "CLAUDE_CODE_DISABLE_NONESSENTIAL_TRAFFIC": 1
+    "ANTHROPIC_AUTH_TOKEN": "65ffd2261feb4962a6c843810e1c7c17.adj8X2ZcMgyMn0wM",
+    "ANTHROPIC_BASE_URL": "https://open.bigmodel.cn/api/anthropic",
+    "ANTHROPIC_DEFAULT_HAIKU_MODEL": "glm-4.6",
+    "ANTHROPIC_DEFAULT_SONNET_MODEL": "glm-4.6",
+    "ANTHROPIC_DEFAULT_OPUS_MODEL": "glm-4.6"
   },
   "permissions": {
     "allow": [],

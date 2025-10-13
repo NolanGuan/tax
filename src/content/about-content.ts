@@ -28,47 +28,47 @@ export interface AboutContent {
 }
 
 export const aboutContent: AboutContent = {
-  title: 'About Umamusume Guide',
+  title: 'About CPMCalculation',
   lastUpdated: 'Last updated: January 2025',
   intro: {
-    heading: 'Your complete training resource',
+    heading: 'Your professional CPM calculation resource',
     paragraphs: [
-      'Umamusume Guide exists to make raising champion horse girls less intimidating. Whether you are tackling your first campaign or optimising final times, we collect the best community knowledge in one place.',
-      'The project started as a personal notebook, then grew into a public guide that documents proven builds, training checkpoints, and race strategies that keep working as the meta evolves.'
+      'CPMCalculation exists to make digital advertising ROI analysis simple and accessible. Whether you are planning your first campaign or optimizing multi-channel ad spend, we provide the tools and insights you need in one place.',
+      'The project started as a simple calculator for marketers, then grew into a comprehensive platform offering advanced CPM analysis, campaign optimization tools, and industry benchmarks that evolve with the digital advertising landscape.'
     ]
   },
   mission: {
-    heading: 'Built by players, updated with every patch',
+    heading: 'Built by marketers, updated with industry trends',
     paragraphs: [
-      'We watch balance updates, new support cards, and event mechanics so you do not have to relearn everything from scratch.',
-      'Every article is peer-reviewed by volunteer trainers before it goes live. Accuracy matters when you are investing days into perfect runs.'
+      'We monitor advertising platform changes, new targeting options, and performance metrics so you can focus on creating effective campaigns rather than recalculating everything.',
+      'Every calculation method and insight is reviewed by digital marketing professionals before implementation. Accuracy matters when you are investing your advertising budget.'
     ]
   },
   features: {
     title: 'What you will find',
     items: [
       {
-        icon: '📚',
-        title: 'Training frameworks',
-        description: 'Step-by-step seasonal playbooks that keep moods high, stats balanced, and motivation streaks intact.'
+        icon: '🧮',
+        title: 'CPM Calculator',
+        description: 'Instantly calculate cost per mille, CPM, and other key advertising metrics with our professional-grade calculator tools.'
       },
       {
-        icon: '🏁',
-        title: 'Race breakdowns',
-        description: 'Distance, pace, and skill callouts for every major cup so you line up with confidence.'
+        icon: '📊',
+        title: 'Campaign Analytics',
+        description: 'Analyze your advertising performance across different platforms and optimize your spending for maximum ROI.'
       },
       {
         icon: '💡',
-        title: 'Tools & calculators',
-        description: 'Lightweight helpers for skill score planning, inheritance previews, and resource budgeting.'
+        title: 'Marketing Insights',
+        description: 'Expert guides on digital advertising strategies, CPM optimization techniques, and industry best practices.'
       }
     ]
   },
   contact: {
     title: 'Stay in touch',
-    description: 'Send feedback, report mistakes, or propose new topics—everything helps the next trainer succeed.',
-    github: { label: 'View the repo on GitHub', href: 'https://github.com/umamusume-guide' },
-    emailLabel: 'hello@umamusume-guide.com'
+    description: 'Send feedback, report calculation issues, or suggest new features—every input helps improve the tools for the entire marketing community.',
+    github: { label: 'View the repo on GitHub', href: 'https://github.com/cpmcalculation' },
+    emailLabel: 'hello@cpmcalculation.com'
   }
 };
 

@@ -1,5 +1,5 @@
 import { siteConfig } from '@/config/site';
-import { getDictionary, getTranslator } from '@/lib/i18n';
+import { getAvailableLocales, getDictionary, getTranslator } from '@/lib/i18n';
 import type {
   HeroSectionConfig,
   FeatureGridConfig,
@@ -23,9 +23,15 @@ interface HomeSections {
 
 const quickLinkTargets = ['/about', '/privacy', '/blog'] as const;
 
+function resolveLocale(locale: string): string {
+  const available = getAvailableLocales();
+  return available.includes(locale) ? locale : siteConfig.defaultLocale;
+}
+
 export function getHomePageSections(locale: string): HomeSections {
-  const t = getTranslator(locale);
-  const dictionary = getDictionary(locale);
+  const resolvedLocale = resolveLocale(locale);
+  const t = getTranslator(resolvedLocale);
+  const dictionary = getDictionary(resolvedLocale);
 
   const heroBadges: string[] = Array.isArray(dictionary.home?.hero?.badges)
     ? dictionary.home.hero.badges
@@ -93,5 +99,3 @@ export function getHomePageSections(locale: string): HomeSections {
     }
   };
 }
-
-export const homePageSections = getHomePageSections(siteConfig.defaultLocale);

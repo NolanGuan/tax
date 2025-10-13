@@ -3,6 +3,7 @@ import { siteConfig } from './site';
 
 export type PageKey =
   | 'home'
+  | 'calculator'
   | 'about'
   | 'blog'
   | 'privacy-policy'
@@ -57,74 +58,89 @@ const seoConfig: GlobalSeoConfig = {
   siteUrl,
   defaultImage: siteConfig.defaultOgImage,
   defaultKeywords: [
-    'Umamusume guide',
-    'Pretty Derby tutorial',
-    'Umamusume racing tips',
-    'horse girl game guide'
+    'CPM calculator',
+    'cost per mille',
+    'digital advertising',
+    'marketing ROI',
+    'CPM formula',
+    'advertising calculator'
   ],
   twitter: {
     site: siteConfig.social.twitter,
-    creator: '@umamusume_guide'
+    creator: '@cpmcalculation'
   },
   pages: {
     home: {
-      title: 'Umamusume: Pretty Derby Guide - Complete Training and Racing Guide',
+      title: 'CPM Calculator - Free Online Cost Per Mille Calculator | CPMCalculation',
       description:
-        'Complete guide to training, racing and winning in Umamusume: Pretty Derby. Learn strategies, stats management, and career mode tips.',
+        'Free online CPM calculator for digital advertising campaigns. Calculate cost per mille, analyze marketing ROI, and optimize your ad spend with professional tools.',
       path: '/',
-      keywords: ['Umamusume guide', 'training plans', 'Pretty Derby tips'],
+      keywords: ['CPM calculator', 'cost per mille calculator', 'digital advertising ROI', 'marketing calculator'],
       structuredData: [
         {
           '@context': 'https://schema.org',
-          '@type': 'WebSite',
+          '@type': 'WebApplication',
           name: siteConfig.name,
           url: siteUrl,
           description:
-            'Complete guide to training, racing and winning in Umamusume: Pretty Derby with strategies, stat optimisation tips and tools.',
+            'Professional CPM calculator tool for digital marketers. Calculate cost per mille, analyze campaign performance, and optimize advertising budgets.',
+          applicationCategory: 'BusinessApplication',
+          operatingSystem: 'Any',
+          offers: {
+            '@type': 'Offer',
+            price: '0',
+            priceCurrency: 'USD'
+          },
           potentialAction: {
-            '@type': 'SearchAction',
-            target: `${siteUrl}/blog?q={search_term_string}`,
-            'query-input': 'required name=search_term_string'
+            '@type': 'UseAction',
+            target: `${siteUrl}/calculator`
           }
         }
       ]
     },
+    calculator: {
+      title: 'CPM Calculator Tool - Calculate Cost Per Mille | CPMCalculation',
+      description: 'Professional CPM calculator tool. Input your campaign cost and impressions to instantly calculate cost per mille and optimize your digital advertising spend.',
+      path: '/calculator',
+      keywords: ['CPM calculator tool', 'cost per mille calculation', 'advertising ROI', 'digital marketing calculator']
+    },
     about: {
-      title: 'About Umamusume Guide',
-      description: 'Learn about Umamusume Guide, the ultimate resource for Pretty Derby trainers.',
+      title: 'About CPMCalculation - Professional CPM Calculator Tool',
+      description: 'Learn about CPMCalculation, the leading free CPM calculator for digital marketers and advertisers to optimize campaign performance.',
       path: '/about',
-      keywords: ['About Umamusume Guide', 'Pretty Derby community']
+      keywords: ['About CPMCalculation', 'CPM calculator team', 'digital marketing tools']
     },
     blog: {
-      title: 'Umamusume Guide Blog',
-      description: 'Stay updated with the latest Umamusume tips, strategies and updates.',
+      title: 'CPMCalculation Blog - Digital Marketing Insights & Tips',
+      description: 'Expert insights on CPM optimization, digital advertising strategies, and marketing ROI analysis to improve your campaign performance.',
       path: '/blog',
-      keywords: ['Umamusume blog', 'Pretty Derby news', 'Umamusume strategies'],
+      keywords: ['CPM marketing blog', 'digital advertising tips', 'marketing ROI strategies', 'CPM optimization'],
       structuredData: [
         {
           '@context': 'https://schema.org',
           '@type': 'Blog',
-          name: 'Umamusume Guide Blog',
-          description: 'Latest Umamusume tips, strategies and updates.',
+          name: 'CPMCalculation Blog',
+          description: 'Expert insights on CPM optimization, digital advertising strategies, and marketing ROI analysis.',
           url: `${siteUrl}/blog`
         }
       ]
     },
     'privacy-policy': {
-      title: 'Privacy Policy - Umamusume Guide',
-      description: 'Your privacy is our priority. Learn how we protect your data when using Umamusume Guide.',
+      title: 'Privacy Policy - CPMCalculation',
+      description: 'Your privacy is our priority. Learn how we protect your data when using CPMCalculation and our CPM calculator tools.',
       path: '/privacy',
-      keywords: ['Umamusume privacy policy', 'data protection']
+      keywords: ['CPMCalculation privacy policy', 'calculator data protection']
     },
     'terms-of-service': {
-      title: 'Terms of Service - Umamusume Guide',
-      description: 'Read our terms of service for using Umamusume Guide and related services.',
+      title: 'Terms of Service - CPMCalculation',
+      description: 'Read our terms of service for using CPMCalculation CPM calculator and related digital advertising tools.',
       path: '/terms',
-      keywords: ['Umamusume terms', 'service agreement']
+      keywords: ['CPMCalculation terms', 'calculator service agreement']
     }
   },
   sitemap: {
     home: { priority: 1.0, changeFrequency: 'weekly' },
+    calculator: { priority: 0.9, changeFrequency: 'weekly' },
     about: { priority: 0.6, changeFrequency: 'monthly' },
     blog: { priority: 0.8, changeFrequency: 'weekly' },
     'privacy-policy': { priority: 0.4, changeFrequency: 'yearly' },

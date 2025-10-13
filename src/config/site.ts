@@ -42,40 +42,41 @@ export interface SiteConfig {
 }
 
 export const siteConfig: SiteConfig = {
-  name: 'Umamusume Guide',
-  tagline: 'Complete guide to training, racing and winning in Umamusume: Pretty Derby.',
+  name: 'CPMCalculation',
+  tagline: 'Free online CPM calculator for digital advertising campaigns and marketing ROI analysis.',
   nav: [
     { label: 'Home', href: '/' },
+    { label: 'Calculator', href: '/calculator' },
     { label: 'Blog', href: '/blog' },
     { label: 'About', href: '/about' },
     { label: 'Privacy', href: '/privacy' },
     { label: 'Terms', href: '/terms' }
   ],
   footer: {
-    about: 'Complete guide to training, racing and winning in Umamusume: Pretty Derby. Built for trainers who want to succeed.',
-    copyright: '© 2025 Umamusume Guide. All rights reserved.',
+    about: 'Professional CPM calculator tool for digital marketers and advertisers. Calculate cost per mille, analyze campaign performance, and optimize your advertising budget.',
+    copyright: '© 2025 CPMCalculation. All rights reserved.',
     links: [
-      { label: 'Deployment checklist', href: '/terms' },
+      { label: 'CPM Calculator', href: '/calculator' },
       { label: 'Privacy policy', href: '/privacy' },
       { label: 'Blog overview', href: '/blog' }
     ],
     resources: [
-      { label: 'Project repository', href: 'https://github.com/umamusume-guide' },
-      { label: 'Strategy updates', href: '/blog' }
+      { label: 'Project repository', href: 'https://github.com/cpmcalculation' },
+      { label: 'Marketing guides', href: '/blog' }
     ]
   },
-  contactEmail: 'hello@umamusume-guide.com',
+  contactEmail: 'hello@cpmcalculation.com',
   social: {
-    github: 'https://github.com/umamusume-guide',
-    twitter: 'https://twitter.com/umamusume_guide'
+    github: 'https://github.com/cpmcalculation',
+    twitter: 'https://twitter.com/cpmcalculation'
   },
-  domain: 'umamusume-guide.com',
+  domain: 'cpmcalculation.com',
   defaultOgImage: '/images/og-default.jpg',
   announcement: {
-    message: 'Launching a new Umamusume project? Follow the deployment checklist before going live.',
-    href: '/terms',
-    label: 'View checklist'
+    message: 'New CPM calculator features added! Enhanced reporting and campaign analysis tools now available.',
+    href: '/calculator',
+    label: 'Try now'
   },
   defaultLocale: 'en',
-  supportedLocales: ['en']
+  supportedLocales: ['en', 'zh']
 };

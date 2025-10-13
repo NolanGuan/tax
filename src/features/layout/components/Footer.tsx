@@ -1,13 +1,13 @@
-import { siteConfig } from '@/config/site';
+import { useSiteConfig } from '@/config/site-context';
 
 export function Footer() {
-  const { footer, contactEmail, social } = siteConfig;
+  const { footer, contactEmail, social, name } = useSiteConfig();
 
   return (
     <footer className="border-t border-gray-200 bg-white">
       <div className="mx-auto grid max-w-6xl gap-10 px-4 py-12 text-sm text-gray-600 md:grid-cols-3">
         <div className="space-y-3">
-          <p className="text-lg font-semibold text-gray-900">{siteConfig.name}</p>
+          <p className="text-lg font-semibold text-gray-900">{name}</p>
           <p className="max-w-md text-gray-600">{footer.about}</p>
           <div className="space-y-1 text-gray-500">
             <p>

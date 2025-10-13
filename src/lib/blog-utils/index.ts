@@ -4,9 +4,13 @@ import matter from 'gray-matter';
 import readingTime from 'reading-time';
 import { remark } from 'remark';
 import remarkGfm from 'remark-gfm';
-import remarkHtml from 'remark-html';
+import remarkRehype from 'remark-rehype';
+import rehypeSanitize from 'rehype-sanitize';
+import rehypeStringify from 'rehype-stringify';
 
 const POSTS_DIRECTORY = path.join(process.cwd(), 'content/posts');
+
+const markdownCache = new Map<string, { htmlContent: string; tableOfContents: TocItem[] }>();
 
 export interface BlogPostSeo {
   title?: string;
@@ -54,6 +58,10 @@ export function getAllPostFiles(): string[] {
   return fs
     .readdirSync(POSTS_DIRECTORY)
     .filter((file) => file.endsWith('.md') || file.endsWith('.mdx'));
+}
+
+export function listPostSlugs(): string[] {
+  return getAllPostFiles().map(toSlug);
 }
 
 function toSlug(filename: string): string {
@@ -115,6 +123,10 @@ export async function processMarkdownContent(content: string): Promise<{
   htmlContent: string;
   tableOfContents: TocItem[];
 }> {
+  if (markdownCache.has(content)) {
+    return markdownCache.get(content)!;
+  }
+
   const toc: TocItem[] = [];
 
   const result = await remark()
@@ -145,13 +157,19 @@ export async function processMarkdownContent(content: string): Promise<{
 
       visit(tree);
     })
-    .use(remarkHtml)
+    .use(remarkRehype)
+    .use(rehypeSanitize)
+    .use(rehypeStringify)
     .process(content);
 
-  return {
+  const payload = {
     htmlContent: result.toString(),
     tableOfContents: toc
   };
+
+  markdownCache.set(content, payload);
+
+  return payload;
 }
 
 export function getRelatedPosts(currentPost: BlogPost, limit = 4): BlogPost[] {
