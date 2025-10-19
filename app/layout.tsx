@@ -5,7 +5,7 @@ import { SiteShell } from '@/features/layout';
 import { siteConfig } from '@/config/site';
 import { SiteConfigProvider } from '@/config/site-context';
 import { OrganizationSchema } from '@/features/seo';
-import { GoogleAnalytics } from '@/features/analytics';
+import { GoogleAnalytics, VercelAnalytics } from '@/features/analytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${siteConfig.domain}`),
@@ -32,6 +32,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
         <SiteConfigProvider value={siteConfig}>
           <GoogleAnalytics />
+          <VercelAnalytics />
           <OrganizationSchema />
           <SiteShell>{children}</SiteShell>
         </SiteConfigProvider>
