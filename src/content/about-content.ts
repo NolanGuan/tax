@@ -28,47 +28,47 @@ export interface AboutContent {
 }
 
 export const aboutContent: AboutContent = {
-  title: 'About Capital Gains Navigator',
+  title: 'About Gain Tax Calculator',
   lastUpdated: 'Last updated: February 2025',
   intro: {
-    heading: 'A planning desk for every capital gains decision',
+    heading: 'Why we built Gain Tax Calculator',
     paragraphs: [
-      'Capital Gains Navigator helps investors, homeowners, and crypto traders model the real tax impact of each transaction before they commit.',
-      'We combine rigorously maintained tax data with expert-reviewed calculators so you can see the downstream effects of timing, filing status, and income shifts in minutes.'
+      'Gain Tax Calculator exists to make capital gains planning clear long before it becomes a filing problem. Investors, homeowners, and crypto traders deserve instant answers about how a sale, swap, or relocation will change what they owe.',
+      'Every module in Gain Tax Calculator uses the same verified tax engine, so the quick estimate you run today connects seamlessly with deeper scenario planning tomorrow.'
     ]
   },
   mission: {
-    heading: 'Built by tax professionals, engineered for clarity',
+    heading: 'Accurate capital gains math, explained in plain language',
     paragraphs: [
-      'Our CPA partners review every calculation engine update against current IRS guidance and state-level rulings.',
-      'We believe transparent, source-linked tax math is essential. Every assumption is documented, and every output is designed to help you explain decisions to clients, partners, or your future self.'
+      'Our tax research team monitors IRS guidance, revenue procedures, and state bulletins to keep the calculator logic current. CPAs review each release before it ships.',
+      'We pair that accuracy with context. Each result is accompanied by “why” explanations, documentation links, and planning prompts so you can make confident decisions—or brief a client in minutes.'
     ]
   },
   features: {
-    title: 'What you will find',
+    title: 'How Gain Tax Calculator helps you plan',
     items: [
       {
         icon: '🧮',
-        title: 'Capital gains calculators',
-        description: 'Model federal and state capital gains taxes with detailed breakdowns for short-term and long-term scenarios.'
+        title: 'Capital gains engine',
+        description: 'Project federal, state, and NIIT exposure across short-term and long-term holding periods with side-by-side filing status comparisons.'
       },
       {
         icon: '🏠',
-        title: 'Real estate insights',
-        description: 'Run primary residence exclusion tests, depreciation recapture calculations, and home improvement adjustments.'
+        title: 'Real estate workflows',
+        description: 'Track primary residence exclusions, capital improvements, depreciation recapture, and partial-year residency moves in one report.'
       },
       {
-        icon: '📊',
-        title: 'Strategy playbooks',
-        description: 'Follow evidence-based guides covering tax-loss harvesting, relocation planning, and sale timing comparisons.'
+        icon: '🧭',
+        title: 'Scenario planning guidance',
+        description: 'Layer in timing shifts, relocation plans, and loss harvesting to uncover the combination that lowers your total capital gain tax rate.'
       }
     ]
   },
   contact: {
-    title: 'Connect with the team',
-    description: 'Share feedback, ask tax logic questions, or request new calculators—your input shapes our roadmap.',
-    github: { label: 'View the repo on GitHub', href: 'https://github.com/capitalgainsnavigator' },
-    emailLabel: 'support@capitalgainsnavigator.com'
+    title: 'Stay in touch with the Gain Tax Calculator team',
+    description: 'We roadmap new calculators and features based on user feedback. Tell us what you need next, flag data sources, or request a walkthrough of the platform.',
+    github: { label: 'View the Gain Tax Calculator repo', href: 'https://github.com/gaintaxcalculator' },
+    emailLabel: 'support@gaintaxcalculator.com'
   }
 };
 
