@@ -1,37 +1,37 @@
 export const privacyContent = {
   title: 'Privacy policy',
-  lastUpdated: 'Last updated: January 15, 2025',
+  lastUpdated: 'Last updated: February 10, 2025',
   intro: {
-    heading: 'We only store what keeps the site running',
+    heading: 'We only track what keeps calculators accurate',
     paragraphs: [
-      'Umamusume Guide does not ask for accounts, analytics cookies, or invasive tracking scripts.',
-      'We collect only the minimal operational data needed to keep the site healthy and diagnose errors.'
+      'Capital Gains Navigator does not sell user data or embed ad-tech trackers. We run the minimum logging necessary to monitor uptime and resolve bugs.',
+      'Calculator inputs are processed in-memory and never stored on our servers once you leave the page.'
     ]
   },
   dataWeDoNotCollect: {
     heading: "What we don't collect",
     items: [
-      'Personal profile information',
-      'Usage or behaviour analytics',
-      'Advertising or cross-site identifiers',
-      'Precise location data'
+      'Personal profile or contact details',
+      'Individual calculator inputs or uploaded files',
+      'Cross-site advertising identifiers',
+      'Precise geolocation data'
     ]
   },
   minimalData: {
     heading: 'What still gets logged',
     items: [
       {
-        title: 'Technical logs',
-        description: 'Anonymous request logs containing timestamps and coarse performance metrics.'
+        title: 'Infrastructure health metrics',
+        description: 'Aggregated performance telemetry that helps us keep response times fast on all devices.'
       },
       {
-        title: 'Error snapshots',
-        description: 'Stack traces that help us fix crashes. These logs are automatically purged.'
+        title: 'Error diagnostics',
+        description: 'Anonymous stack traces captured when a page fails, automatically purged after 30 days.'
       }
     ]
   },
   contact: {
-    heading: 'Questions?',
-    description: 'Reach out any time if you spot an issue or need data removed.'
+    heading: 'Need anything removed?',
+    description: 'Email support@capitalgainsnavigator.com and our team will respond within two business days.'
   }
 };

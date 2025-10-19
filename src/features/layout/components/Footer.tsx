@@ -1,3 +1,5 @@
+'use client';
+
 import { useSiteConfig } from '@/config/site-context';
 
 export function Footer() {
@@ -14,6 +16,12 @@ export function Footer() {
               Contact us at{' '}
               <a className="text-blue-600 hover:text-blue-700" href={`mailto:${contactEmail}`}>
                 {contactEmail}
+              </a>
+            </p>
+            <p>
+              Share feature requests at{' '}
+              <a className="text-blue-600 hover:text-blue-700" href="mailto:feedback@capitalgainsnavigator.com">
+                feedback@capitalgainsnavigator.com
               </a>
             </p>
             <div className="flex gap-4 text-blue-600">

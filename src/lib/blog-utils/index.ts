@@ -2,11 +2,6 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import readingTime from 'reading-time';
-import { remark } from 'remark';
-import remarkGfm from 'remark-gfm';
-import remarkRehype from 'remark-rehype';
-import rehypeSanitize from 'rehype-sanitize';
-import rehypeStringify from 'rehype-stringify';
 
 const POSTS_DIRECTORY = path.join(process.cwd(), 'content/posts');
 
@@ -15,7 +10,6 @@ const markdownCache = new Map<string, { htmlContent: string; tableOfContents: To
 export interface BlogPostSeo {
   title?: string;
   description?: string;
-  keywords?: string[];
   image?: string;
   type?: string;
 }
@@ -119,6 +113,89 @@ export function getPostBySlug(slug: string): BlogPost | null {
   return loadPostFromFile(match);
 }
 
+function escapeHtml(value: string): string {
+  return value
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
+function normalizeHeading(text: string): { id: string; label: string } {
+  const label = text.trim();
+  const id = label
+    .toLowerCase()
+    .replace(/[^\w\s-]/g, '')
+    .trim()
+    .replace(/\s+/g, '-');
+
+  return { id, label };
+}
+
+function naiveMarkdownToHtml(content: string): { htmlContent: string; tableOfContents: TocItem[] } {
+  const lines = content.split(/\r?\n/);
+  const htmlParts: string[] = [];
+  const toc: TocItem[] = [];
+  let inList = false;
+
+  function closeList() {
+    if (inList) {
+      htmlParts.push('</ul>');
+      inList = false;
+    }
+  }
+
+  for (const line of lines) {
+    const trimmed = line.trim();
+
+    if (!trimmed) {
+      closeList();
+      continue;
+    }
+
+    if (trimmed.startsWith('- ')) {
+      const item = escapeHtml(trimmed.slice(2));
+      if (!inList) {
+        inList = true;
+        htmlParts.push('<ul>');
+      }
+      htmlParts.push(`<li>${item}</li>`);
+      continue;
+    }
+
+    closeList();
+
+    if (trimmed.startsWith('### ')) {
+      const { id, label } = normalizeHeading(trimmed.slice(4));
+      toc.push({ id, text: label, level: 3 });
+      htmlParts.push(`<h3 id="${id}">${escapeHtml(label)}</h3>`);
+      continue;
+    }
+
+    if (trimmed.startsWith('## ')) {
+      const { id, label } = normalizeHeading(trimmed.slice(3));
+      toc.push({ id, text: label, level: 2 });
+      htmlParts.push(`<h2 id="${id}">${escapeHtml(label)}</h2>`);
+      continue;
+    }
+
+    if (trimmed.startsWith('# ')) {
+      const { id, label } = normalizeHeading(trimmed.slice(2));
+      toc.push({ id, text: label, level: 1 });
+      htmlParts.push(`<h1 id="${id}">${escapeHtml(label)}</h1>`);
+      continue;
+    }
+
+    htmlParts.push(`<p>${escapeHtml(trimmed)}</p>`);
+  }
+
+  closeList();
+
+  return {
+    htmlContent: htmlParts.join(''),
+    tableOfContents: toc
+  };
+}
+
 export async function processMarkdownContent(content: string): Promise<{
   htmlContent: string;
   tableOfContents: TocItem[];
@@ -127,49 +204,10 @@ export async function processMarkdownContent(content: string): Promise<{
     return markdownCache.get(content)!;
   }
 
-  const toc: TocItem[] = [];
+  const parsed = naiveMarkdownToHtml(content);
+  markdownCache.set(content, parsed);
 
-  const result = await remark()
-    .use(remarkGfm)
-    .use(() => (tree) => {
-      const visit = (node: any) => {
-        if (node.type === 'heading' && node.depth <= 3) {
-          const text = node.children
-            .filter((child: any) => child.type === 'text')
-            .map((child: any) => child.value)
-            .join('');
-
-          if (text) {
-            const id = text
-              .toLowerCase()
-              .replace(/[^\w\s-]/g, '')
-              .trim()
-              .replace(/\s+/g, '-');
-
-            toc.push({ id, text, level: node.depth });
-          }
-        }
-
-        if (node.children) {
-          node.children.forEach(visit);
-        }
-      };
-
-      visit(tree);
-    })
-    .use(remarkRehype)
-    .use(rehypeSanitize)
-    .use(rehypeStringify)
-    .process(content);
-
-  const payload = {
-    htmlContent: result.toString(),
-    tableOfContents: toc
-  };
-
-  markdownCache.set(content, payload);
-
-  return payload;
+  return parsed;
 }
 
 export function getRelatedPosts(currentPost: BlogPost, limit = 4): BlogPost[] {

@@ -75,6 +75,7 @@ function resolveModulePath(basePath, ext) {
 
 const siteModule = loadTsModule('src/config/site.ts');
 const seoModule = loadTsModule('src/config/seo.ts');
+const calculatorConstants = loadTsModule('src/features/calculators/core/constants.ts');
 
 const siteConfig = siteModule.siteConfig;
 const globalSeoConfig = seoModule.getGlobalSeoConfig();
@@ -83,46 +84,58 @@ const warnings = [];
 const errors = [];
 
 if (!siteConfig) {
-  errors.push('未能加载 siteConfig，请检查 src/config/site.ts');
+  errors.push('Failed to load siteConfig. Check src/config/site.ts.');
 }
 
 if (siteConfig) {
   if (siteConfig.domain === 'cpmcalculation.com') {
-    warnings.push('请在 src/config/site.ts 中更新 domain，避免使用模板默认值。');
+    warnings.push('Update domain in src/config/site.ts instead of using the template default.');
   }
   if (siteConfig.contactEmail === 'hello@cpmcalculation.com') {
-    warnings.push('请在 src/config/site.ts 中更新 contactEmail。');
+    warnings.push('Update contactEmail in src/config/site.ts.');
   }
   if (!siteConfig.announcement?.message) {
-    warnings.push('公告栏内容为空，可在 src/config/site.ts 中设置 announcement。');
+    warnings.push('Announcement banner is empty. Configure announcement in src/config/site.ts.');
   }
   const ogImagePath = resolve(projectRoot, 'public', siteConfig.defaultOgImage.replace(/^\//, ''));
   if (!existsSync(ogImagePath)) {
-    errors.push(`未找到默认 OG 图片：${ogImagePath}`);
+    errors.push(`Default OG image is missing: ${ogImagePath}`);
   }
 }
 
 if (globalSeoConfig) {
   const missingDescriptions = Object.entries(globalSeoConfig.pages).filter(([, value]) => !value.description?.trim());
   if (missingDescriptions.length) {
-    errors.push(`以下页面缺少描述：${missingDescriptions.map(([key]) => key).join(', ')}`);
+    errors.push(`Missing descriptions for pages: ${missingDescriptions.map(([key]) => key).join(', ')}`);
   }
+}
+
+if (calculatorConstants?.FEDERAL_RATES_2025) {
+  const { dataYear } = calculatorConstants.FEDERAL_RATES_2025;
+  const currentYear = new Date().getFullYear();
+  if (dataYear < currentYear) {
+    warnings.push(`Federal capital gains data still references ${dataYear}. Confirm whether it should be updated to ${currentYear}.`);
+  }
+}
+
+if (!calculatorConstants?.STATE_CAPITAL_GAINS_DATA_SOURCE) {
+  warnings.push('State capital gains data source is missing. Document it in src/config/tax-rates/state-2025.ts.');
 }
 
 const postsDir = resolve(projectRoot, 'content/posts');
 if (!existsSync(postsDir)) {
-  warnings.push('content/posts 目录不存在，博客将不会展示文章。');
+  warnings.push('content/posts directory is missing, so the blog will not render any articles.');
 } else {
   const posts = readdirSync(postsDir).filter((file) => file.endsWith('.md') || file.endsWith('.mdx'));
   if (posts.length === 0) {
-    warnings.push('content/posts 目录中没有 Markdown/MDX 文件。');
+    warnings.push('No Markdown/MDX files found in content/posts.');
   }
 }
 
 const todoMatches = collectTodoMarkers(resolve(projectRoot, 'src'))
   .concat(collectTodoMarkers(resolve(projectRoot, 'content')));
 if (todoMatches.length) {
-  warnings.push(`请处理以下 TODO/FIXME：\n${todoMatches.join('\n')}`);
+  warnings.push(`Resolve the following TODO/FIXME markers:\n${todoMatches.join('\n')}`);
 }
 
 report();
@@ -155,21 +168,21 @@ function collectTodoMarkers(rootDir) {
 }
 
 function report() {
-  const status = errors.length ? '❌ 预检查未通过' : '✅ 预检查完成';
+  const status = errors.length ? '❌ Preflight failed' : '✅ Preflight complete';
   console.log(status);
 
   if (errors.length) {
-    console.log('\n需要立即处理的项:');
+    console.log('\nIssues that need immediate attention:');
     errors.forEach((error) => console.log(`  • ${error}`));
   }
 
   if (warnings.length) {
-    console.log('\n建议处理的项:');
+    console.log('\nSuggested follow-ups:');
     warnings.forEach((warning) => console.log(`  • ${warning}`));
   }
 
   if (!errors.length && !warnings.length) {
-    console.log('\n没有发现可疑项，可以继续部署流程。');
+    console.log('\nNo concerns detected. You can continue with deployment.');
   }
 
   process.exit(errors.length ? 1 : 0);
@@ -177,7 +190,7 @@ function report() {
 
 function typeCheckPrerequisites() {
   if (!ts || !ts.transpileModule) {
-    console.error('缺少 TypeScript 依赖，无法运行预检查。');
+    console.error('TypeScript dependency is missing; preflight cannot run.');
     process.exit(1);
   }
 }

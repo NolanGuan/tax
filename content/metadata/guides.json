@@ -1,0 +1,44 @@
+{
+  "capital-gains-tax-basics": {
+    "author": "Morgan Patel, CPA",
+    "reviewer": "Lauren Kim, CPA",
+    "sources": [
+      "IRS Publication 544",
+      "IRS Publication 550"
+    ],
+    "lastUpdated": "2025-02-10",
+    "nextReview": "2025-08-01"
+  },
+  "real-estate-capital-gains": {
+    "author": "Elena Rivera, CFP",
+    "reviewer": "Jamal Lewis, EA",
+    "sources": [
+      "IRS Publication 523",
+      "IRS Publication 527",
+      "California FTB Publication 1001"
+    ],
+    "lastUpdated": "2025-02-10",
+    "nextReview": "2025-09-15"
+  },
+  "crypto-tax": {
+    "author": "Jamie Chen, CFA",
+    "reviewer": "Priya Desai, CPA",
+    "sources": [
+      "IRS Notice 2014-21",
+      "Revenue Ruling 2019-24",
+      "Draft Instructions for Form 1099-DA"
+    ],
+    "lastUpdated": "2025-02-10",
+    "nextReview": "2025-07-31"
+  },
+  "tax-planning-scenarios": {
+    "author": "Morgan Patel, CPA",
+    "reviewer": "Lauren Kim, CPA",
+    "sources": [
+      "IRS Publication 505",
+      "IRS Publication 550"
+    ],
+    "lastUpdated": "2025-02-10",
+    "nextReview": "2025-09-30"
+  }
+}

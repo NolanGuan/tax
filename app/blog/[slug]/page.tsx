@@ -14,17 +14,14 @@ import {
 import { PostHeader, RelatedPosts } from '@/features/blog';
 import { SEOHead, StructuredData } from '@/features/seo';
 import { Breadcrumbs } from '@/features/layout';
-
-interface BlogPostPageProps {
-  params: { slug: string };
-}
+import { postsMetadata, type PostKey } from '@/content/metadata/posts';
 
 export function generateStaticParams() {
   return listPostSlugs().map((slug) => ({ slug }));
 }
 
-export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
-  const { slug } = params;
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
   const post = getPostBySlug(slug);
 
   if (!post) {
@@ -39,13 +36,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     title: post.seo?.title ?? post.title,
     description: post.seo?.description ?? post.excerpt,
     image: post.seo?.image ?? post.coverImage ?? siteConfig.defaultOgImage,
-    keywords: post.seo?.keywords,
     path: `/blog/${post.slug}`
   });
 }
 
-export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const { slug } = params;
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
   const post = getPostBySlug(slug);
 
   if (!post) {
@@ -56,16 +52,16 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const relatedPosts = getRelatedPosts(post, 3);
   const navigation = getPostNavigation(post.slug);
   const shareUrl = `https://${siteConfig.domain}/blog/${post.slug}`;
+  const meta = postsMetadata[post.slug as PostKey];
 
   const seoOverride = {
     title: post.seo?.title ?? post.title,
     description: post.seo?.description ?? post.excerpt,
-    keywords: post.seo?.keywords,
     image: post.seo?.image ?? post.coverImage,
     canonical: shareUrl
   };
 
-  const articleStructuredData = buildArticleStructuredData(post, shareUrl);
+  const articleStructuredData = buildArticleStructuredData(post, shareUrl, meta);
 
   return (
     <article className="mx-auto max-w-3xl space-y-12 px-4 py-16">
@@ -78,7 +74,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
           { label: post.title }
         ]}
       />
-      <PostHeader post={post} />
+      <PostHeader post={post} metadata={meta} />
 
       <BlogPostBody html={htmlContent} />
 
@@ -116,6 +112,27 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
       </nav>
 
       <RelatedPosts posts={relatedPosts} />
+
+      <section className="rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600 shadow-sm">
+        <h2 className="text-xl font-semibold text-gray-900">Tools to apply this insight</h2>
+        <ul className="mt-3 space-y-2">
+          <li>
+          <Link href="/calculator/capital-gains" className="text-blue-600 hover:underline">
+            Capital gains tax calculator
+          </Link>
+        </li>
+        <li>
+          <Link href="/calculator/scenario-planner" className="text-blue-600 hover:underline">
+            Scenario planner
+          </Link>
+          </li>
+          <li>
+            <Link href="/tax-rate" className="text-blue-600 hover:underline">
+              2025 federal & state capital gains rates
+            </Link>
+          </li>
+        </ul>
+      </section>
     </article>
   );
 }
@@ -128,12 +145,20 @@ function BlogPostBody({ html }: { html: string }) {
   );
 }
 
-function buildArticleStructuredData(post: BlogPost, url: string) {
+function buildArticleStructuredData(
+  post: BlogPost,
+  url: string,
+  metadata?: { author?: string; reviewer?: string; sources?: string[] }
+) {
   const ensureAbsolute = (imagePath?: string) => {
     if (!imagePath) return undefined;
     if (imagePath.startsWith('http')) return imagePath;
     return `https://${siteConfig.domain}${imagePath}`;
   };
+
+  const authorName = metadata?.author ?? post.author;
+  const reviewerName = metadata?.reviewer;
+  const citations = metadata?.sources ?? [];
 
   return {
     '@context': 'https://schema.org',
@@ -142,8 +167,17 @@ function buildArticleStructuredData(post: BlogPost, url: string) {
     description: post.seo?.description ?? post.excerpt,
     author: {
       '@type': 'Person',
-      name: post.author
+      name: authorName
     },
+    ...(reviewerName
+      ? {
+          reviewer: {
+            '@type': 'Person',
+            name: reviewerName
+          }
+        }
+      : {}),
+    ...(citations.length ? { citation: citations } : {}),
     datePublished: post.publishedAt,
     dateModified: post.updatedAt ?? post.publishedAt,
     mainEntityOfPage: url,
@@ -151,7 +185,8 @@ function buildArticleStructuredData(post: BlogPost, url: string) {
     publisher: {
       '@type': 'Organization',
       name: siteConfig.name,
-      url: `https://${siteConfig.domain}`
+      url: `https://${siteConfig.domain}`,
+      logo: ensureAbsolute(siteConfig.defaultOgImage)
     }
   };
 }

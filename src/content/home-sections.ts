@@ -8,10 +8,10 @@ import type {
 } from '@/features/sections';
 
 /**
- * 首页模块配置
+ * Home page section configuration
  *
- * 通过 i18n 字典与固定链接组合生成。若需要定制不同页面结构，
- * 可以按 locale 返回不同的 Section 配置。
+ * Combines the i18n dictionary with fixed link targets. Add locale-specific
+ * variations here if different layouts or content are required.
  */
 
 interface HomeSections {
@@ -21,7 +21,12 @@ interface HomeSections {
   cta: CtaBannerConfig;
 }
 
-const quickLinkTargets = ['/about', '/privacy', '/blog'] as const;
+const quickLinkTargets = [
+  '/calculator/capital-gains',
+  '/calculator/capital-gains-estimate',
+  '/guide/real-estate-capital-gains',
+  '/guide/crypto-tax'
+] as const;
 
 function resolveLocale(locale: string): string {
   const available = getAvailableLocales();
@@ -50,17 +55,18 @@ export function getHomePageSections(locale: string): HomeSections {
 
   return {
     hero: {
+      alignment: 'left',
       eyebrow: t('home.hero.eyebrow'),
       title: t('home.hero.title'),
       subtitle: t('home.hero.subtitle'),
       supportText: t('home.hero.support'),
       primaryCta: {
         label: t('home.hero.primaryCta'),
-        href: '/blog'
+        href: '/calculator/capital-gains-estimate'
       },
       secondaryCta: {
         label: t('home.hero.secondaryCta'),
-        href: '/about'
+        href: '/calculator'
       },
       image: {
         src: '/images/hero.png',
@@ -88,12 +94,11 @@ export function getHomePageSections(locale: string): HomeSections {
       description: t('home.cta.description'),
       primaryCta: {
         label: t('home.cta.primaryCta'),
-        href: '/terms'
+        href: '/calculator/scenario-planner'
       },
       secondaryCta: {
         label: t('home.cta.secondaryCta'),
-        href: siteConfig.social.github,
-        external: true
+        href: '/guide'
       },
       background: 'dark'
     }

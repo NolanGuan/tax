@@ -1,0 +1,42 @@
+{
+  "2025-federal-capital-gains-update": {
+    "author": "Morgan Patel, CPA",
+    "reviewer": "Lauren Kim, CPA",
+    "sources": [
+      "IRS Rev. Proc. 2024-23",
+      "IRS Publication 17"
+    ],
+    "lastUpdated": "2025-02-05",
+    "nextReview": "2025-10-15"
+  },
+  "california-vs-texas-capital-gains": {
+    "author": "Elena Rivera, CFP",
+    "reviewer": "Jamal Lewis, EA",
+    "sources": [
+      "California Franchise Tax Board",
+      "Texas Comptroller of Public Accounts"
+    ],
+    "lastUpdated": "2025-02-12",
+    "nextReview": "2025-08-30"
+  },
+  "tax-loss-harvesting-playbook": {
+    "author": "Jamie Chen, CFA",
+    "reviewer": "Morgan Patel, CPA",
+    "sources": [
+      "Capital Gains Navigator Scenario Planner data",
+      "IRS Publication 550"
+    ],
+    "lastUpdated": "2025-11-01",
+    "nextReview": "2026-11-01"
+  },
+  "sell-in-december-or-january": {
+    "author": "Morgan Patel, CPA",
+    "reviewer": "Lauren Kim, CPA",
+    "sources": [
+      "IRS Publication 544",
+      "IRS Publication 505"
+    ],
+    "lastUpdated": "2025-12-15",
+    "nextReview": "2026-10-01"
+  }
+}

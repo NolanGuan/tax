@@ -14,7 +14,6 @@ export interface PageSeoConfig {
   description: string;
   /** URL path starting with `/` */
   path: string;
-  keywords?: string[];
   image?: string;
   robots?: Metadata['robots'];
   structuredData?: Array<Record<string, any>>;
@@ -23,7 +22,6 @@ export interface PageSeoConfig {
 interface GlobalSeoConfig {
   siteUrl: string;
   defaultImage: string;
-  defaultKeywords: string[];
   twitter: {
     site?: string;
     creator?: string;
@@ -45,11 +43,11 @@ interface GlobalSeoConfig {
 }
 
 /**
- * SEO 配置
+ * SEO configuration
  *
- * - 每个 pageKey 应包含 title / description / path
- * - keywords、structuredData 可根据项目需求扩展
- * - sitemap / robots 设置用于自动生成 sitemap.xml 与 robots.txt
+ * - Each pageKey must define title / description / path
+ * - Extend structuredData as needed for additional schema blocks
+ * - sitemap / robots settings drive the generated sitemap.xml and robots.txt
  */
 
 const siteUrl = `https://${siteConfig.domain}`;
@@ -57,25 +55,16 @@ const siteUrl = `https://${siteConfig.domain}`;
 const seoConfig: GlobalSeoConfig = {
   siteUrl,
   defaultImage: siteConfig.defaultOgImage,
-  defaultKeywords: [
-    'CPM calculator',
-    'cost per mille',
-    'digital advertising',
-    'marketing ROI',
-    'CPM formula',
-    'advertising calculator'
-  ],
   twitter: {
-    site: siteConfig.social.twitter,
-    creator: '@cpmcalculation'
+    site: '@GainTaxCalc',
+    creator: '@GainTaxCalc'
   },
   pages: {
     home: {
-      title: 'CPM Calculator - Free Online Cost Per Mille Calculator | CPMCalculation',
+      title: 'Gain Tax Calculator – Capital Gains Tax Calculator & Planning Tools',
       description:
-        'Free online CPM calculator for digital advertising campaigns. Calculate cost per mille, analyze marketing ROI, and optimize your ad spend with professional tools.',
+        'Gain Tax Calculator gives you accurate 2025 capital gains tax estimates, state comparisons, and scenario planning for real estate, crypto, and investment portfolios.',
       path: '/',
-      keywords: ['CPM calculator', 'cost per mille calculator', 'digital advertising ROI', 'marketing calculator'],
       structuredData: [
         {
           '@context': 'https://schema.org',
@@ -83,7 +72,7 @@ const seoConfig: GlobalSeoConfig = {
           name: siteConfig.name,
           url: siteUrl,
           description:
-            'Professional CPM calculator tool for digital marketers. Calculate cost per mille, analyze campaign performance, and optimize advertising budgets.',
+            'Gain Tax Calculator provides capital gains tax calculators for federal, state, real estate, and cryptocurrency scenarios.',
           applicationCategory: 'BusinessApplication',
           operatingSystem: 'Any',
           offers: {
@@ -99,43 +88,39 @@ const seoConfig: GlobalSeoConfig = {
       ]
     },
     calculator: {
-      title: 'CPM Calculator Tool - Calculate Cost Per Mille | CPMCalculation',
-      description: 'Professional CPM calculator tool. Input your campaign cost and impressions to instantly calculate cost per mille and optimize your digital advertising spend.',
-      path: '/calculator',
-      keywords: ['CPM calculator tool', 'cost per mille calculation', 'advertising ROI', 'digital marketing calculator']
+      title: 'Capital Gains Calculators',
+      description:
+        'Explore Gain Tax Calculator tools for netting gains, modeling real estate exclusions, estimating crypto taxes, and comparing planning scenarios.',
+      path: '/calculator'
     },
     about: {
-      title: 'About CPMCalculation - Professional CPM Calculator Tool',
-      description: 'Learn about CPMCalculation, the leading free CPM calculator for digital marketers and advertisers to optimize campaign performance.',
-      path: '/about',
-      keywords: ['About CPMCalculation', 'CPM calculator team', 'digital marketing tools']
+      title: 'About Gain Tax Calculator',
+      description: 'Meet the tax professionals and product team behind Gain Tax Calculator and its capital gains planning tools.',
+      path: '/about'
     },
     blog: {
-      title: 'CPMCalculation Blog - Digital Marketing Insights & Tips',
-      description: 'Expert insights on CPM optimization, digital advertising strategies, and marketing ROI analysis to improve your campaign performance.',
+      title: 'Gain Tax Calculator Blog',
+      description: 'Expert insights on capital gains taxes, timing strategies, tax-loss harvesting, and state-level planning updates from Gain Tax Calculator.',
       path: '/blog',
-      keywords: ['CPM marketing blog', 'digital advertising tips', 'marketing ROI strategies', 'CPM optimization'],
       structuredData: [
         {
           '@context': 'https://schema.org',
           '@type': 'Blog',
-          name: 'CPMCalculation Blog',
-          description: 'Expert insights on CPM optimization, digital advertising strategies, and marketing ROI analysis.',
+          name: 'Gain Tax Calculator Blog',
+          description: 'Capital gains tax planning guidance, sale timing strategies, and cross-asset insights from Gain Tax Calculator.',
           url: `${siteUrl}/blog`
         }
       ]
     },
     'privacy-policy': {
-      title: 'Privacy Policy - CPMCalculation',
-      description: 'Your privacy is our priority. Learn how we protect your data when using CPMCalculation and our CPM calculator tools.',
-      path: '/privacy',
-      keywords: ['CPMCalculation privacy policy', 'calculator data protection']
+      title: 'Privacy Policy – Gain Tax Calculator',
+      description: 'Learn how Gain Tax Calculator protects your data while delivering secure capital gains tax calculations.',
+      path: '/privacy'
     },
     'terms-of-service': {
-      title: 'Terms of Service - CPMCalculation',
-      description: 'Read our terms of service for using CPMCalculation CPM calculator and related digital advertising tools.',
-      path: '/terms',
-      keywords: ['CPMCalculation terms', 'calculator service agreement']
+      title: 'Terms of Service – Gain Tax Calculator',
+      description: 'Review the terms and disclaimers that govern use of the Gain Tax Calculator tools and guides.',
+      path: '/terms'
     }
   },
   sitemap: {
@@ -168,9 +153,9 @@ export function buildPageMetadata(page: PageKey, overrides?: Partial<PageSeoConf
     ...overrides
   };
 
-  const canonical = `${seoConfig.siteUrl}${pageConfig.path}`;
+  const normalizedPath = pageConfig.path.startsWith('/') ? pageConfig.path : `/${pageConfig.path}`;
+  const canonical = `${seoConfig.siteUrl}${normalizedPath}`;
   const imagePath = pageConfig.image || seoConfig.defaultImage;
-  const keywords = pageConfig.keywords ?? seoConfig.defaultKeywords;
 
   return {
     title: pageConfig.title,
@@ -179,7 +164,6 @@ export function buildPageMetadata(page: PageKey, overrides?: Partial<PageSeoConf
     alternates: {
       canonical
     },
-    keywords,
     robots: pageConfig.robots,
     openGraph: {
       title: pageConfig.title,

@@ -15,7 +15,7 @@ export default function BlogIndexPage() {
       <StructuredData pageKey="blog" id="blog-structured-data" />
       <header className="space-y-3 text-center">
         <h1 className="text-4xl font-bold text-gray-900">Blog</h1>
-        <p className="text-gray-600">Strategies, updates, and progression tips for Umamusume: Pretty Derby.</p>
+        <p className="text-gray-600">Capital gains tax updates, planning strategies, and expert commentary.</p>
       </header>
 
       <PostList posts={posts} />

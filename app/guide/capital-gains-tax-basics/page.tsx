@@ -1,0 +1,190 @@
+import type { Metadata } from 'next';
+import { buildPageMetadata } from '@/config/seo';
+import { SEOHead, StructuredData } from '@/features/seo';
+import { Breadcrumbs } from '@/features/layout/components/Breadcrumbs';
+import { FAQSection } from '@/features/faq/FAQSection';
+import { guidesMetadata } from '@/content/metadata/guides';
+
+export const metadata: Metadata = buildPageMetadata('blog', {
+  title: 'Capital gains tax basics',
+  description:
+    'Foundational guide explaining how capital gains taxes are calculated, the difference between short-term and long-term treatment, and key thresholds for 2025.',
+  path: '/guide/capital-gains-tax-basics'
+});
+
+export default function CapitalGainsTaxBasicsGuidePage() {
+  const meta = guidesMetadata['capital-gains-tax-basics'];
+  const faqItems = [
+    {
+      question: 'When do long-term capital gains rates apply?',
+      answer: 'You must hold the asset for more than 365 days before the sale date. The clock starts the day after acquisition and stops on the sale date.'
+    },
+    {
+      question: 'Do I owe tax if I reinvest the proceeds immediately?',
+      answer: 'Yes. Selling or swapping an asset triggers tax even if you reinvest the proceeds into another investment right away.'
+    },
+    {
+      question: 'What if my capital losses exceed my gains?',
+      answer: 'You can offset gains dollar for dollar. After that you may deduct up to $3,000 of net capital losses against ordinary income each year and carry the remainder forward.'
+    }
+  ];
+
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqItems.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: item.answer
+      }
+    }))
+  };
+
+  const tableOfContents = [
+    { id: 'taxable-events', label: 'What counts as a taxable event?' },
+    { id: 'holding-periods', label: 'Short-term vs. long-term holding periods' },
+    { id: 'cost-basis', label: 'How cost basis works' },
+    { id: 'thresholds-2025', label: 'Key 2025 thresholds' },
+    { id: 'next-steps', label: 'Putting the rules to work' }
+  ];
+
+  return (
+    <div className="mx-auto max-w-3xl space-y-10 px-4 py-16">
+      <SEOHead
+        pageKey="blog"
+        title="Capital gains tax basics"
+        description="Understand how capital gains are calculated, when long-term rates apply, and which events trigger taxes."
+        canonical="/guide/capital-gains-tax-basics"
+      />
+      <StructuredData data={faqSchema} id="capital-gains-basics-faq" />
+
+      <Breadcrumbs
+        items={[
+          { label: 'Home', href: '/' },
+          { label: 'Guide', href: '/guide' },
+          { label: 'Capital gains tax basics' }
+        ]}
+      />
+
+      <header className="space-y-2">
+        <p className="text-xs font-semibold uppercase tracking-wider text-blue-600">Guide</p>
+        <h1 className="text-4xl font-bold text-gray-900">Capital gains tax basics</h1>
+        <p className="text-sm text-gray-500">Updated {meta.lastUpdated} • Next review {meta.nextReview}</p>
+      </header>
+
+      <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm text-sm text-gray-600">
+        <dl className="grid gap-2 md:grid-cols-2">
+          <div>
+            <dt className="font-semibold text-gray-900">Author</dt>
+            <dd>{meta.author}</dd>
+          </div>
+          <div>
+            <dt className="font-semibold text-gray-900">Reviewer</dt>
+            <dd>{meta.reviewer}</dd>
+          </div>
+          <div className="md:col-span-2">
+            <dt className="font-semibold text-gray-900">Sources</dt>
+            <dd>
+              <ul className="list-disc space-y-1 pl-5">
+                {meta.sources.map((source) => (
+                  <li key={source}>{source}</li>
+                ))}
+              </ul>
+            </dd>
+          </div>
+        </dl>
+      </section>
+
+      <nav aria-label="Table of contents" className="rounded-2xl border border-blue-100 bg-blue-50 p-6 text-sm text-blue-900">
+        <p className="font-semibold">In this guide</p>
+        <ul className="mt-3 space-y-2">
+          {tableOfContents.map((item) => (
+            <li key={item.id}>
+              <a href={`#${item.id}`} className="hover:underline">
+                {item.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+
+      <section className="space-y-5 text-gray-700">
+        <p>
+          Capital gains tax applies when you dispose of a capital asset for more than its adjusted basis. Stocks, real estate, crypto, NFTs, business interests, and even collectibles fall under the rules. How long you held the asset determines whether the gain is short-term (taxed like ordinary income) or long-term (taxed at the preferential 0%, 15%, or 20% brackets).
+        </p>
+
+        <h2 id="taxable-events" className="text-2xl font-semibold text-gray-900">What counts as a taxable event?</h2>
+        <ul className="list-disc space-y-2 pl-6 text-sm">
+          <li>Selling an investment for cash or converting one crypto asset into another.</li>
+          <li>Spending appreciated property on goods or services (for example, paying with crypto).</li>
+          <li>Receiving a distribution from a partnership or trust that includes capital gains.</li>
+          <li>Being paid out when a company is acquired or a fund is liquidated.</li>
+          <li>Claiming casualty or theft losses in excess of basis (rare, but taxable when insurance is involved).</li>
+        </ul>
+
+        <p className="text-sm text-gray-600">
+          IRS references: Publication 544 (Sales and Other Dispositions of Assets) and Publication 550 (Investment Income and Expenses).
+        </p>
+
+        <h2 id="holding-periods" className="text-2xl font-semibold text-gray-900">Short-term vs. long-term holding periods</h2>
+        <p>
+          Holding periods begin the day after you acquire the asset and end on the day you dispose of it. A holding period of 365 days or less is short-term and taxed using the ordinary income brackets for your filing status. Holding the asset for 366 days or longer qualifies for long-term capital gains rates.
+        </p>
+        <p>
+          Example: You buy stock on March 1, 2024. The first day of your holding period is March 2. If you sell on March 1, 2025, you held the stock for 365 days and owe short-term tax. Selling on March 2, 2025 moves you into the long-term bracket.
+        </p>
+
+        <h2 id="cost-basis" className="text-2xl font-semibold text-gray-900">How cost basis works</h2>
+        <p>
+          Your adjusted basis is the original purchase price plus the cost of acquiring the asset (commissions, fees) and any capital improvements. Reductions such as depreciation or casualty losses lower basis. Organizing documentation is crucial because a higher basis reduces your taxable gain.
+        </p>
+        <ul className="list-disc space-y-2 pl-6 text-sm">
+          <li>Brokerage statements provide basis for most stock and ETF transactions.</li>
+          <li>For real estate, add settlement costs and qualified renovations. Keep receipts.</li>
+          <li>Crypto basis tracking depends on exchange exports and wallet records—FIFO is the default if you do not identify lots.</li>
+        </ul>
+
+        <h2 id="thresholds-2025" className="text-2xl font-semibold text-gray-900">Key 2025 thresholds</h2>
+        <p>The 2025 long-term brackets are:</p>
+        <ul className="list-disc space-y-2 pl-6 text-sm">
+          <li>0% rate up to $47,025 (single), $94,050 (married filing jointly).</li>
+          <li>15% rate up to $518,900 (single), $583,750 (married filing jointly).</li>
+          <li>20% rate above those thresholds.</li>
+        </ul>
+        <p>
+          Short-term gains stack on top of your other taxable income, so the marginal rate depends on where you fall inside the ordinary income brackets. High earners may also owe the 3.8% Net Investment Income Tax.
+        </p>
+
+        <h2 id="next-steps" className="text-2xl font-semibold text-gray-900">Putting the rules to work</h2>
+        <p>
+          Use the capital gains calculator to price out a sale with your actual basis and sale price. Then open the scenario planner to test what happens if you wait until the gain qualifies for long-term treatment, relocate to a different state, or harvest losses to offset the gain.
+        </p>
+      </section>
+
+      <FAQSection items={faqItems} />
+
+      <section className="rounded-2xl border border-gray-200 bg-white p-6 text-sm text-gray-600 shadow-sm">
+        <h2 className="text-xl font-semibold text-gray-900">Apply this guide with our tools</h2>
+        <ul className="mt-3 space-y-2">
+          <li>
+            <a href="/calculator/capital-gains" className="text-blue-600 hover:underline">
+              Capital gains tax calculator
+            </a>
+          </li>
+          <li>
+            <a href="/calculator/real-estate-capital-gains" className="text-blue-600 hover:underline">
+              Real estate capital gains calculator
+            </a>
+          </li>
+          <li>
+            <a href="/calculator/scenario-planner" className="text-blue-600 hover:underline">
+              Scenario planner
+            </a>
+          </li>
+        </ul>
+      </section>
+    </div>
+  );
+}

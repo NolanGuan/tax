@@ -1,50 +1,51 @@
 {
   "home": {
     "hero": {
-      "eyebrow": "Professional Marketing Tools",
-      "title": "The most accurate CPM calculator for digital advertising",
-      "subtitle": "Calculate cost per mille instantly, analyze campaign performance, and optimize your advertising budget with our professional-grade tools.",
-      "support": "All calculations are based on industry-standard formulas and updated regularly to reflect the latest digital advertising trends.",
-      "primaryCta": "Try CPM Calculator",
-      "secondaryCta": "Learn More",
+      "eyebrow": "Gain Tax Calculator",
+      "title": "Gain Tax Calculator delivers instant capital gains answers",
+      "subtitle": "Project federal and state capital gains taxes in minutes and see every lever that changes what you owe.",
+      "support": "Use purpose-built calculators for investments, real estate, and crypto to compare holding periods, locations, and deductions before you file.",
+      "primaryCta": "Open Gain Tax Calculator",
+      "secondaryCta": "Browse all calculators",
       "badges": [
-        "Instant calculations",
-        "Industry standards",
-        "Free to use"
+        "Accurate 2025 rates",
+        "CPA-reviewed formulas",
+        "Scenario planning built-in"
       ]
     },
     "features": {
-      "title": "Everything you need for CPM analysis",
-      "description": "Professional tools designed to help digital marketers make data-driven decisions and optimize advertising spend.",
+      "title": "Why investors trust Gain Tax Calculator",
+      "description": "Every workflow starts with the core capital gains calculator, then layers on strategy guidance tailored to each asset.",
       "items": [
         {
-          "title": "Real-time CPM calculations",
-          "description": "Instantly calculate cost per mille, CPM, and other key metrics with our precision calculator."
+          "title": "Guided capital gains calculator",
+          "description": "Enter sale details once to see federal, state, and NIIT outcomes across filing statuses and holding periods."
         },
         {
-          "title": "Campaign optimization",
-          "description": "Get insights on how to improve your advertising performance and maximize ROI."
+          "title": "Strategy comparisons made simple",
+          "description": "Model sale timing, income shifts, and residency moves side by side to spot the lowest tax liability."
         },
         {
-          "title": "Marketing insights",
-          "description": "Expert guides and benchmarks to help you understand industry trends and best practices."
+          "title": "Expert context at every step",
+          "description": "Follow plain-language explanations that translate IRS rules into the actions relevant to your situation."
         }
       ]
     },
     "links": {
-      "title": "Get started with CPM analysis",
-      "description": "Use these tools and resources to optimize your digital advertising campaigns.",
+      "title": "Start with the calculator you need",
+      "description": "Jump straight into the Gain Tax Calculator modules for your next decision.",
       "items": [
-        "CPM Calculator",
-        "Marketing Blog",
-        "Campaign Tips"
+        "Capital gains tax calculator",
+        "Capital gains estimate",
+        "Real estate planning",
+        "Crypto tax rules"
       ]
     },
     "cta": {
-      "title": "Ready to optimize your advertising campaigns?",
-      "description": "Start using our professional CPM calculator today and make data-driven decisions for your digital marketing.",
-      "primaryCta": "Start Calculating",
-      "secondaryCta": "Read Marketing Blog"
+      "title": "Stay proactive with Gain Tax Calculator",
+      "description": "Track gain thresholds, plan loss harvesting, and revisit scenarios whenever the market moves.",
+      "primaryCta": "Launch scenario planner",
+      "secondaryCta": "Explore capital gains guides"
     }
   }
 }

@@ -4,12 +4,14 @@ import './globals.css';
 import { SiteShell } from '@/features/layout';
 import { siteConfig } from '@/config/site';
 import { SiteConfigProvider } from '@/config/site-context';
+import { OrganizationSchema } from '@/features/seo';
+import { GoogleAnalytics } from '@/features/analytics';
 
 export const metadata: Metadata = {
   metadataBase: new URL(`https://${siteConfig.domain}`),
   title: {
     default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`
+    template: '%s | GTC'
   },
   description: siteConfig.tagline,
   icons: {
@@ -23,9 +25,14 @@ interface RootLayoutProps {
 
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
-    <html lang="en">
+    <html lang={siteConfig.defaultLocale}>
+      <head>
+        <link rel="alternate" type="application/rss+xml" title="Gain Tax Calculator Blog" href="/feed.xml" />
+      </head>
       <body className="min-h-screen bg-gray-50 text-gray-900 antialiased">
         <SiteConfigProvider value={siteConfig}>
+          <GoogleAnalytics />
+          <OrganizationSchema />
           <SiteShell>{children}</SiteShell>
         </SiteConfigProvider>
       </body>

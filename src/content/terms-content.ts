@@ -1,28 +1,28 @@
 export const termsContent = {
   title: 'Terms of service',
-  lastUpdated: 'Last updated: January 15, 2025',
+  lastUpdated: 'Last updated: February 10, 2025',
   sections: [
     {
       heading: 'Acceptance of terms',
       paragraphs: [
-        'By using Umamusume Guide you agree to follow these terms. If you disagree with any part you should stop using the site immediately.'
+        'By using Capital Gains Navigator you agree to these terms. If you do not accept them, discontinue use of the site immediately.'
       ]
     },
     {
-      heading: 'Content and attribution',
+      heading: 'Informational purpose only',
       paragraphs: [
-        'Guides, screenshots, and data belong to their respective owners. You may reference our articles with attribution, but do not republish them in bulk.'
+        'Our calculators and articles are educational tools. They do not constitute legal, tax, or investment advice and should be reviewed with a qualified professional before you act.'
       ]
     },
     {
-      heading: 'Disclaimer',
+      heading: 'Accuracy of data sources',
       paragraphs: [
-        'All information is provided as-is. Game updates can invalidate strategies, and we are not responsible for missed rankings or rewards.'
+        'We maintain IRS and state tax data with professional review, but tax law changes can occur without notice. Always confirm critical thresholds against official publications.'
       ]
     }
   ],
   contact: {
     heading: 'Need clarification?',
-    description: 'Talk to us if something in these terms is unclear or you need permission for a special use case.'
+    description: 'Email support@capitalgainsnavigator.com for compliance questions or special usage requests.'
   }
 };

@@ -1,4 +1,6 @@
 import Link from 'next/link';
+import { StructuredData } from '@/features/seo';
+import { siteConfig } from '@/config/site';
 
 export interface BreadcrumbItem {
   label: string;
@@ -14,8 +16,20 @@ export function Breadcrumbs({ items }: BreadcrumbsProps) {
     return null;
   }
 
+  const breadcrumbData = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: items.map((item, index) => ({
+      '@type': 'ListItem',
+      position: index + 1,
+      name: item.label,
+      item: item.href ? `https://${siteConfig.domain}${item.href}` : undefined
+    }))
+  };
+
   return (
     <nav aria-label="Breadcrumb" className="text-sm text-gray-500">
+      <StructuredData data={breadcrumbData} id="breadcrumb-schema" />
       <ol className="flex flex-wrap items-center gap-2">
         {items.map((item, index) => {
           const isLast = index === items.length - 1;

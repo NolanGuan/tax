@@ -25,6 +25,32 @@ export default function sitemap(): MetadataRoute.Sitemap {
     } satisfies MetadataRoute.Sitemap[number];
   });
 
+  const calculatorRoutes = [
+    '/calculator',
+    '/calculator/capital-gains',
+    '/calculator/capital-gains-estimate',
+    '/calculator/real-estate-capital-gains',
+    '/calculator/crypto-tax',
+    '/calculator/scenario-planner'
+  ];
+
+  const guideRoutes = [
+    '/guide',
+    '/guide/capital-gains-tax-basics',
+    '/guide/real-estate-capital-gains',
+    '/guide/crypto-tax',
+    '/guide/tax-planning-scenarios'
+  ];
+
+  const auxiliaryRoutes = ['/tax-rate'];
+
+  const additionalEntries: MetadataRoute.Sitemap = [...calculatorRoutes, ...guideRoutes, ...auxiliaryRoutes].map((path) => ({
+    url: `${globalConfig.siteUrl}${path}`,
+    lastModified: today,
+    changeFrequency: path.startsWith('/guide') ? 'monthly' : 'weekly',
+    priority: path === '/calculator' ? 0.9 : path.startsWith('/calculator') ? 0.85 : 0.7
+  }));
+
   const blogEntries = getBlogSitemapData().map((post) => ({
     url: `${globalConfig.siteUrl}${post.url}`,
     lastModified: post.lastModified,
@@ -32,5 +58,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: post.priority
   } satisfies MetadataRoute.Sitemap[number]));
 
-  return [...staticEntries, ...blogEntries];
+  const combined = [...staticEntries, ...additionalEntries, ...blogEntries];
+
+  const uniqueByUrl = new Map<string, MetadataRoute.Sitemap[number]>();
+  combined.forEach((entry) => {
+    uniqueByUrl.set(entry.url, entry);
+  });
+
+  return Array.from(uniqueByUrl.values());
 }

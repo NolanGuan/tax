@@ -1,5 +1,4 @@
 import en from '@/content/locales/en.json';
-import zh from '@/content/locales/zh.json';
 import { siteConfig } from '@/config/site';
 
 type Dictionaries = {
@@ -7,8 +6,7 @@ type Dictionaries = {
 };
 
 const dictionaries: Dictionaries = {
-  en,
-  zh
+  en
 };
 
 const defaultLocale = siteConfig.defaultLocale || 'en';

@@ -28,20 +28,20 @@ export interface AboutContent {
 }
 
 export const aboutContent: AboutContent = {
-  title: 'About CPMCalculation',
-  lastUpdated: 'Last updated: January 2025',
+  title: 'About Capital Gains Navigator',
+  lastUpdated: 'Last updated: February 2025',
   intro: {
-    heading: 'Your professional CPM calculation resource',
+    heading: 'A planning desk for every capital gains decision',
     paragraphs: [
-      'CPMCalculation exists to make digital advertising ROI analysis simple and accessible. Whether you are planning your first campaign or optimizing multi-channel ad spend, we provide the tools and insights you need in one place.',
-      'The project started as a simple calculator for marketers, then grew into a comprehensive platform offering advanced CPM analysis, campaign optimization tools, and industry benchmarks that evolve with the digital advertising landscape.'
+      'Capital Gains Navigator helps investors, homeowners, and crypto traders model the real tax impact of each transaction before they commit.',
+      'We combine rigorously maintained tax data with expert-reviewed calculators so you can see the downstream effects of timing, filing status, and income shifts in minutes.'
     ]
   },
   mission: {
-    heading: 'Built by marketers, updated with industry trends',
+    heading: 'Built by tax professionals, engineered for clarity',
     paragraphs: [
-      'We monitor advertising platform changes, new targeting options, and performance metrics so you can focus on creating effective campaigns rather than recalculating everything.',
-      'Every calculation method and insight is reviewed by digital marketing professionals before implementation. Accuracy matters when you are investing your advertising budget.'
+      'Our CPA partners review every calculation engine update against current IRS guidance and state-level rulings.',
+      'We believe transparent, source-linked tax math is essential. Every assumption is documented, and every output is designed to help you explain decisions to clients, partners, or your future self.'
     ]
   },
   features: {
@@ -49,26 +49,26 @@ export const aboutContent: AboutContent = {
     items: [
       {
         icon: '🧮',
-        title: 'CPM Calculator',
-        description: 'Instantly calculate cost per mille, CPM, and other key advertising metrics with our professional-grade calculator tools.'
+        title: 'Capital gains calculators',
+        description: 'Model federal and state capital gains taxes with detailed breakdowns for short-term and long-term scenarios.'
+      },
+      {
+        icon: '🏠',
+        title: 'Real estate insights',
+        description: 'Run primary residence exclusion tests, depreciation recapture calculations, and home improvement adjustments.'
       },
       {
         icon: '📊',
-        title: 'Campaign Analytics',
-        description: 'Analyze your advertising performance across different platforms and optimize your spending for maximum ROI.'
-      },
-      {
-        icon: '💡',
-        title: 'Marketing Insights',
-        description: 'Expert guides on digital advertising strategies, CPM optimization techniques, and industry best practices.'
+        title: 'Strategy playbooks',
+        description: 'Follow evidence-based guides covering tax-loss harvesting, relocation planning, and sale timing comparisons.'
       }
     ]
   },
   contact: {
-    title: 'Stay in touch',
-    description: 'Send feedback, report calculation issues, or suggest new features—every input helps improve the tools for the entire marketing community.',
-    github: { label: 'View the repo on GitHub', href: 'https://github.com/cpmcalculation' },
-    emailLabel: 'hello@cpmcalculation.com'
+    title: 'Connect with the team',
+    description: 'Share feedback, ask tax logic questions, or request new calculators—your input shapes our roadmap.',
+    github: { label: 'View the repo on GitHub', href: 'https://github.com/capitalgainsnavigator' },
+    emailLabel: 'support@capitalgainsnavigator.com'
   }
 };
 
