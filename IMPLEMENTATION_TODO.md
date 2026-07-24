@@ -42,7 +42,7 @@
 - [x] 正式域名回归：HTTPS/状态码/canonical/robots/sitemap/ads.txt/内部链接/移动端/计算器。
 - [x] 在 Search Console 提交 `https://gaintaxcalculator.com/sitemap.xml`，状态成功并发现 21 个网页。
 - [ ] AdSense 后台人工门禁：账号唯一性、申请人资格、站点所有权、Sites 状态、Policy Center、publisher ID。
-  - [x] `ads.txt` 的 `pub-8638451866433811` 与当前 AdSense 账号一致。
+  - [x] 当前 AdSense 账号状态为“使用中”、可用产品为“内容广告”，且 `ads.txt` 的 `pub-8638451866433811` 与账号一致。
   - [x] Cloudflare、Vercel 和 Search Console 域名控制证据已验证。
   - [x] Policy Center 显示目前不存在任何问题。
   - [ ] 账号唯一性和申请人资格仍需账号所有者确认。
