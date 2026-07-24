@@ -1,7 +1,12 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import { calculateCapitalGains, type CapitalGainsBreakdown, type FilingStatus } from '@/features/calculators/core';
+import {
+  calculateCapitalGains,
+  CURRENT_TAX_YEAR,
+  type CapitalGainsBreakdown,
+  type FilingStatus
+} from '@/features/calculators/core';
 
 interface FormState {
   purchasePrice: string;
@@ -117,6 +122,9 @@ export function QuickEstimateForm() {
         if (saleDate <= purchaseDate) {
           issues.push('Sale date must be after the purchase date.');
         }
+        if (new Date(saleDate).getUTCFullYear() !== CURRENT_TAX_YEAR) {
+          issues.push(`Sale date must be in tax year ${CURRENT_TAX_YEAR}.`);
+        }
 
         const maxHoldingPeriodDays = 365 * 30;
         const holdingPeriodDays = Math.floor((saleDate - purchaseDate) / (1000 * 60 * 60 * 24));
@@ -144,7 +152,7 @@ export function QuickEstimateForm() {
     const taxableIncome = parseCurrency(form.taxableIncome);
 
     const breakdown = calculateCapitalGains({
-      taxYear: 2025,
+      taxYear: CURRENT_TAX_YEAR,
       filingStatus: form.filingStatus,
       taxableIncome,
       state: form.state,
@@ -169,7 +177,7 @@ export function QuickEstimateForm() {
       <div className="space-y-2">
         <h2 className="text-2xl font-semibold text-gray-900">Run a quick Gain Tax Calculator estimate</h2>
         <p className="text-sm text-gray-600">
-          Enter the basics for a single asset sale to preview 2025 federal and state capital gains tax before you commit to the transaction.
+          Enter a single asset sale to preview a {CURRENT_TAX_YEAR} federal and simplified state estimate.
         </p>
       </div>
 
@@ -219,6 +227,8 @@ export function QuickEstimateForm() {
           <input
             type="date"
             value={form.saleDate}
+            min={`${CURRENT_TAX_YEAR}-01-01`}
+            max={`${CURRENT_TAX_YEAR}-12-31`}
             onChange={(event) => handleChange('saleDate', event.target.value)}
             lang="en"
             placeholder="YYYY-MM-DD"
@@ -319,6 +329,10 @@ export function QuickEstimateForm() {
             <p>State rate: {(result.details.stateRate * 100).toFixed(2)}%</p>
             <p>Effective rate: {(result.effectiveRate * 100).toFixed(1)}%</p>
           </div>
+          <p className="md:col-span-2 text-xs text-blue-800">
+            Educational {CURRENT_TAX_YEAR} estimate only. The state amount applies a simplified selected rate.
+            NIIT, local taxes, deductions, surcharges, and special asset rules are not included.
+          </p>
         </div>
       ) : null}
     </div>

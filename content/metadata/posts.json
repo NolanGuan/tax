@@ -1,42 +1,41 @@
 {
-  "2025-federal-capital-gains-update": {
-    "author": "Morgan Patel, CPA",
-    "reviewer": "Lauren Kim, CPA",
+  "2026-federal-capital-gains-update": {
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "IRS Rev. Proc. 2024-23",
-      "IRS Publication 17"
+      "https://www.irs.gov/irb/2025-45_IRB",
+      "https://www.irs.gov/individuals/net-investment-income-tax"
     ],
-    "lastUpdated": "2025-02-05",
-    "nextReview": "2025-10-15"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   },
   "california-vs-texas-capital-gains": {
-    "author": "Elena Rivera, CFP",
-    "reviewer": "Jamal Lewis, EA",
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "California Franchise Tax Board",
-      "Texas Comptroller of Public Accounts"
+      "https://www.ftb.ca.gov/file/personal/residency-status/index.html",
+      "https://comptroller.texas.gov/economy/fiscal-notes/industry/2025/small-biz-info/"
     ],
-    "lastUpdated": "2025-02-12",
-    "nextReview": "2025-08-30"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   },
   "tax-loss-harvesting-playbook": {
-    "author": "Jamie Chen, CFA",
-    "reviewer": "Morgan Patel, CPA",
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "Capital Gains Navigator Scenario Planner data",
-      "IRS Publication 550"
+      "https://www.irs.gov/publications/p550"
     ],
-    "lastUpdated": "2025-11-01",
-    "nextReview": "2026-11-01"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   },
   "sell-in-december-or-january": {
-    "author": "Morgan Patel, CPA",
-    "reviewer": "Lauren Kim, CPA",
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "IRS Publication 544",
-      "IRS Publication 505"
+      "https://www.irs.gov/publications/p544",
+      "https://www.irs.gov/publications/p505"
     ],
-    "lastUpdated": "2025-12-15",
-    "nextReview": "2026-10-01"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   }
 }

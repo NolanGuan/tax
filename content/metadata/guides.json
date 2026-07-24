@@ -1,44 +1,44 @@
 {
   "capital-gains-tax-basics": {
-    "author": "Morgan Patel, CPA",
-    "reviewer": "Lauren Kim, CPA",
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "IRS Publication 544",
-      "IRS Publication 550"
+      "https://www.irs.gov/publications/p544",
+      "https://www.irs.gov/publications/p550",
+      "https://www.irs.gov/irb/2025-45_IRB"
     ],
-    "lastUpdated": "2025-02-10",
-    "nextReview": "2025-08-01"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   },
   "real-estate-capital-gains": {
-    "author": "Elena Rivera, CFP",
-    "reviewer": "Jamal Lewis, EA",
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "IRS Publication 523",
-      "IRS Publication 527",
-      "California FTB Publication 1001"
+      "https://www.irs.gov/publications/p523",
+      "https://www.irs.gov/publications/p527"
     ],
-    "lastUpdated": "2025-02-10",
-    "nextReview": "2025-09-15"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   },
   "crypto-tax": {
-    "author": "Jamie Chen, CFA",
-    "reviewer": "Priya Desai, CPA",
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "IRS Notice 2014-21",
-      "Revenue Ruling 2019-24",
-      "Draft Instructions for Form 1099-DA"
+      "https://www.irs.gov/businesses/small-businesses-self-employed/digital-assets",
+      "https://www.irs.gov/irb/2014-16_IRB#NOT-2014-21",
+      "https://www.irs.gov/irb/2019-44_IRB#REV-RUL-2019-24"
     ],
-    "lastUpdated": "2025-02-10",
-    "nextReview": "2025-07-31"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   },
   "tax-planning-scenarios": {
-    "author": "Morgan Patel, CPA",
-    "reviewer": "Lauren Kim, CPA",
+    "author": "Gain Tax Calculator Editorial Team",
+    "reviewer": "",
     "sources": [
-      "IRS Publication 505",
-      "IRS Publication 550"
+      "https://www.irs.gov/publications/p505",
+      "https://www.irs.gov/publications/p550"
     ],
-    "lastUpdated": "2025-02-10",
-    "nextReview": "2025-09-30"
+    "lastUpdated": "2026-07-24",
+    "nextReview": "2026-10-31"
   }
 }

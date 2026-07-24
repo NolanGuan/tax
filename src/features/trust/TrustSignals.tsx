@@ -1,18 +1,18 @@
 export function TrustSignals() {
   const items = [
     {
-      title: 'CPA-reviewed logic',
-      description: 'Calculation engines vetted by a network of credentialed tax professionals.',
-      icon: '🧾'
+      title: 'Transparent estimates',
+      description: 'The supported tax year, assumptions, and important calculation limits are stated next to each result.',
+      icon: '🧮'
     },
     {
       title: 'Source-linked data',
-      description: 'Every tax rate references current IRS publications and state revenue notices.',
+      description: 'Federal tables link to the IRS, and selected state assumptions identify their public sources.',
       icon: '📚'
     },
     {
       title: 'Secure inputs',
-      description: 'Calculations run in-memory only—no investment data is ever stored or sold.',
+      description: 'Calculator inputs stay in your browser and are not sent to our analytics tools.',
       icon: '🔒'
     }
   ];

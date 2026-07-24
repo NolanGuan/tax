@@ -22,6 +22,7 @@ export interface ScenarioAdjustments {
 
 export interface ScenarioResult {
   label: string;
+  saleDate: string;
   capitalGains: CapitalGainsBreakdown;
   totalTax: number;
 }

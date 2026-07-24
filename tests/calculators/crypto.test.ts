@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { calculateCryptoTaxes } from '@/features/calculators/crypto';
 
 const baseInput = {
-  taxYear: 2025,
+  taxYear: 2026,
   filingStatus: 'single' as const,
   taxableIncome: 85000,
   state: 'CA'
@@ -33,7 +33,7 @@ describe('calculateCryptoTaxes', () => {
           id: 'sell-1',
           asset: 'BTC',
           type: 'sell',
-          date: '2025-01-01',
+          date: '2026-01-01',
           quantity: 0.75,
           proceedsUSD: 30000
         }
@@ -60,7 +60,7 @@ describe('calculateCryptoTaxes', () => {
           id: 'sell-eth',
           asset: 'ETH',
           type: 'sell',
-          date: '2025-06-01',
+          date: '2026-06-01',
           quantity: 1,
           proceedsUSD: 4000
         }

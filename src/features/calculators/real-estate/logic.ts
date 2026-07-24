@@ -1,4 +1,4 @@
-import { calculateCapitalGains } from '@/features/calculators/core';
+import { calculateCapitalGains, findStateRate } from '@/features/calculators/core';
 import type {
   RealEstateCalculatorInput,
   RealEstateCalculatorResult,
@@ -8,6 +8,7 @@ import type {
 
 const SINGLE_EXCLUSION = 250_000;
 const MARRIED_EXCLUSION = 500_000;
+const MAX_UNRECAPTURED_SECTION_1250_RATE = 0.25;
 
 function determineExclusionLimit(filingStatus: string): number {
   return filingStatus === 'married_joint' ? MARRIED_EXCLUSION : SINGLE_EXCLUSION;
@@ -22,11 +23,9 @@ function evaluatePrimaryResidenceExclusion(
     transaction.ownershipMonthsLastFiveYears >= 24 &&
     transaction.useMonthsLastFiveYears >= 24;
 
-  const maxExclusion = eligible ? determineExclusionLimit(filingStatus) : 0;
-
   return {
     eligible,
-    maxExclusion,
+    maxExclusion: eligible ? determineExclusionLimit(filingStatus) : 0,
     exclusionUsed: 0
   };
 }
@@ -36,110 +35,95 @@ function computeAdjustedBasis(transaction: RealEstateTransaction): number {
   return Math.max(0, base - transaction.depreciationRecaptured);
 }
 
-function buildCapitalGainTransactions(input: RealEstateCalculatorInput) {
-  return input.transactions.map((transaction) => {
-    const adjustedBasis = computeAdjustedBasis(transaction);
-    const grossGain = transaction.salePrice - transaction.sellingExpenses - adjustedBasis;
-
-    return {
-      id: transaction.id,
-      label: transaction.label,
-      purchasePrice: adjustedBasis,
-      salePrice: transaction.salePrice - transaction.sellingExpenses,
-      purchaseDate: transaction.purchaseDate,
-      saleDate: transaction.saleDate,
-      grossGain,
-      adjustedBasis
-    };
-  });
-}
-
 export function calculateRealEstateCapitalGains(
   input: RealEstateCalculatorInput
 ): RealEstateCalculatorResult {
-  const transactionsWithBasis = buildCapitalGainTransactions(input);
-
-  const baseResult = calculateCapitalGains({
-    taxYear: input.taxYear,
-    filingStatus: input.filingStatus,
-    taxableIncome: input.taxableIncome,
-    state: input.state,
-    transactions: transactionsWithBasis.map((tx) => ({
-      id: tx.id,
-      label: tx.label,
-      purchasePrice: tx.purchasePrice,
-      salePrice: tx.salePrice,
-      purchaseDate: tx.purchaseDate,
-      saleDate: tx.saleDate
-    }))
-  });
-
   let totalExclusionApplied = 0;
   let totalDepreciationRecapture = 0;
 
-  const detailedTransactions = transactionsWithBasis.map((tx) => {
-    const originalTransaction = input.transactions.find((item) => item.id === tx.id);
-    if (!originalTransaction) {
-      throw new Error('Real estate transaction mismatch');
-    }
+  const detailedTransactions = input.transactions.map((transaction) => {
+    const adjustedBasis = computeAdjustedBasis(transaction);
+    const grossGain = transaction.salePrice - transaction.sellingExpenses - adjustedBasis;
+    const exclusionInfo = evaluatePrimaryResidenceExclusion(transaction, input.filingStatus);
 
-    const exclusionInfo = evaluatePrimaryResidenceExclusion(originalTransaction, input.filingStatus);
-
-    // IRS rules: exclusion cannot offset depreciation recapture
-    const depreciationRecaptureTaxable = Math.min(
-      originalTransaction.depreciationRecaptured,
-      Math.max(0, tx.grossGain)
+    // Depreciation previously allowed reduces basis and cannot be sheltered by §121.
+    const depreciationRecapture = Math.min(
+      transaction.depreciationRecaptured,
+      Math.max(0, grossGain)
     );
+    const gainEligibleForExclusion = grossGain - depreciationRecapture;
+    const exclusionUsed =
+      exclusionInfo.eligible && gainEligibleForExclusion > 0
+        ? Math.min(gainEligibleForExclusion, exclusionInfo.maxExclusion)
+        : 0;
 
-    const remainingGain = tx.grossGain - depreciationRecaptureTaxable;
-    let exclusionUsed = 0;
+    // Loss on a personal residence is not deductible. Rental/investment losses remain in the estimate.
+    const gainAfterExclusion = gainEligibleForExclusion - exclusionUsed;
+    const taxableGain = transaction.isPrimaryResidence
+      ? Math.max(0, gainAfterExclusion)
+      : gainAfterExclusion;
 
-    if (exclusionInfo.eligible && remainingGain > 0) {
-      exclusionUsed = Math.min(remainingGain, exclusionInfo.maxExclusion);
-      exclusionInfo.exclusionUsed = exclusionUsed;
-    }
-
-    const taxableGain = Math.max(0, remainingGain - exclusionUsed);
     totalExclusionApplied += exclusionUsed;
-    totalDepreciationRecapture += depreciationRecaptureTaxable;
+    totalDepreciationRecapture += depreciationRecapture;
 
     const holdingPeriodDays = Math.max(
       0,
       Math.floor(
-        (Date.parse(originalTransaction.saleDate) - Date.parse(originalTransaction.purchaseDate)) /
+        (Date.parse(transaction.saleDate) - Date.parse(transaction.purchaseDate)) /
           (1000 * 60 * 60 * 24)
       )
     );
 
-    const isLongTerm = holdingPeriodDays > 365;
-
     return {
-      id: tx.id,
-      label: tx.label,
+      id: transaction.id,
+      label: transaction.label,
+      purchaseDate: transaction.purchaseDate,
+      saleDate: transaction.saleDate,
       holdingPeriodDays,
-      isLongTerm,
-      grossGain: tx.grossGain,
-      adjustedBasis: tx.adjustedBasis,
+      isLongTerm: holdingPeriodDays > 365,
+      grossGain,
+      adjustedBasis,
       exclusionUsed,
       taxableGain,
-      depreciationRecapture: depreciationRecaptureTaxable
+      depreciationRecapture
     };
   });
 
-  const federalTaxWithRecapture = baseResult.federalTax;
-  const stateTaxWithRecapture = baseResult.stateTax;
+  const capitalGainResult = calculateCapitalGains({
+    taxYear: input.taxYear,
+    filingStatus: input.filingStatus,
+    taxableIncome: input.taxableIncome,
+    state: input.state,
+    transactions: detailedTransactions.map((transaction) => ({
+      id: transaction.id,
+      label: transaction.label,
+      purchasePrice: 0,
+      salePrice: transaction.taxableGain,
+      purchaseDate: transaction.purchaseDate,
+      saleDate: transaction.saleDate
+    }))
+  });
+
+  // Unrecaptured §1250 gain is taxed at a maximum 25%; this deliberately uses that
+  // ceiling and is labeled as an estimate in the UI.
+  const federalRecaptureEstimate =
+    totalDepreciationRecapture * MAX_UNRECAPTURED_SECTION_1250_RATE;
+  const stateRecaptureEstimate =
+    totalDepreciationRecapture * findStateRate(input.state);
+  const federalTax = capitalGainResult.federalTax + federalRecaptureEstimate;
+  const stateTax = capitalGainResult.stateTax + stateRecaptureEstimate;
 
   return {
     totals: {
-      longTermGain: baseResult.longTermGain,
-      shortTermGain: baseResult.shortTermGain,
+      longTermGain: capitalGainResult.longTermGain,
+      shortTermGain: capitalGainResult.shortTermGain,
       depreciationRecapture: totalDepreciationRecapture,
       exclusionApplied: totalExclusionApplied,
-      netCapitalGain: baseResult.netCapitalGain,
-      federalTax: federalTaxWithRecapture,
-      stateTax: stateTaxWithRecapture,
-      totalTax: baseResult.totalTax
+      netCapitalGain: capitalGainResult.netCapitalGain + totalDepreciationRecapture,
+      federalTax,
+      stateTax,
+      totalTax: federalTax + stateTax
     },
-    transactions: detailedTransactions
+    transactions: detailedTransactions.map(({ purchaseDate, saleDate, ...transaction }) => transaction)
   };
 }

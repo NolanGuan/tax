@@ -13,13 +13,13 @@ import { getGlobalSeoConfig, getPageSeo, getSitemapConfig, type PageKey } from '
 export default function sitemap(): MetadataRoute.Sitemap {
   const globalConfig = getGlobalSeoConfig();
   const sitemapConfig = getSitemapConfig();
-  const today = new Date();
+  const siteContentUpdatedAt = new Date('2026-07-24T00:00:00.000Z');
 
   const staticEntries = Object.entries(sitemapConfig).map(([pageKey, settings]) => {
     const page = getPageSeo(pageKey as PageKey);
     return {
       url: `${globalConfig.siteUrl}${page.path}`,
-      lastModified: today,
+      lastModified: siteContentUpdatedAt,
       changeFrequency: settings.changeFrequency,
       priority: settings.priority
     } satisfies MetadataRoute.Sitemap[number];
@@ -28,7 +28,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
   const calculatorRoutes = [
     '/calculator',
     '/calculator/capital-gains',
-    '/calculator/capital-gains-estimate',
     '/calculator/real-estate-capital-gains',
     '/calculator/crypto-tax',
     '/calculator/scenario-planner'
@@ -46,7 +45,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const additionalEntries: MetadataRoute.Sitemap = [...calculatorRoutes, ...guideRoutes, ...auxiliaryRoutes].map((path) => ({
     url: `${globalConfig.siteUrl}${path}`,
-    lastModified: today,
+    lastModified: siteContentUpdatedAt,
     changeFrequency: path.startsWith('/guide') ? 'monthly' : 'weekly',
     priority: path === '/calculator' ? 0.9 : path.startsWith('/calculator') ? 0.85 : 0.7
   }));

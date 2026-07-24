@@ -6,6 +6,7 @@ export type PageKey =
   | 'calculator'
   | 'about'
   | 'blog'
+  | 'contact'
   | 'privacy-policy'
   | 'terms-of-service';
 
@@ -56,14 +57,14 @@ const seoConfig: GlobalSeoConfig = {
   siteUrl,
   defaultImage: siteConfig.defaultOgImage,
   twitter: {
-    site: '@GainTaxCalc',
-    creator: '@GainTaxCalc'
+    site: undefined,
+    creator: undefined
   },
   pages: {
     home: {
       title: 'Gain Tax Calculator – Capital Gains Tax Calculator & Planning Tools',
       description:
-        'Gain Tax Calculator gives you accurate 2025 capital gains tax estimates, state comparisons, and scenario planning for real estate, crypto, and investment portfolios.',
+        'Estimate 2026 federal and selected state capital gains taxes for investments, real estate, and crypto with transparent assumptions and source-linked tables.',
       path: '/',
       structuredData: [
         {
@@ -95,7 +96,7 @@ const seoConfig: GlobalSeoConfig = {
     },
     about: {
       title: 'About Gain Tax Calculator',
-      description: 'Meet the tax professionals and product team behind Gain Tax Calculator and its capital gains planning tools.',
+      description: 'Learn how Gain Tax Calculator builds educational capital gains estimates, what sources it uses, and where its calculations are limited.',
       path: '/about'
     },
     blog: {
@@ -111,6 +112,11 @@ const seoConfig: GlobalSeoConfig = {
           url: `${siteUrl}/blog`
         }
       ]
+    },
+    contact: {
+      title: 'Contact Gain Tax Calculator',
+      description: 'Contact Gain Tax Calculator with a question, correction, accessibility request, or privacy inquiry.',
+      path: '/contact'
     },
     'privacy-policy': {
       title: 'Privacy Policy – Gain Tax Calculator',
@@ -128,12 +134,13 @@ const seoConfig: GlobalSeoConfig = {
     calculator: { priority: 0.9, changeFrequency: 'weekly' },
     about: { priority: 0.6, changeFrequency: 'monthly' },
     blog: { priority: 0.8, changeFrequency: 'weekly' },
+    contact: { priority: 0.5, changeFrequency: 'yearly' },
     'privacy-policy': { priority: 0.4, changeFrequency: 'yearly' },
     'terms-of-service': { priority: 0.4, changeFrequency: 'yearly' }
   },
   robots: {
     defaultAllow: ['/'],
-    defaultDisallow: ['/admin', '/api', '/drafts', '/_next'],
+    defaultDisallow: ['/admin', '/api', '/drafts'],
     extraRules: [
       {
         userAgent: ['AhrefsBot', 'MJ12bot'],

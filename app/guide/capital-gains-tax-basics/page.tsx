@@ -4,11 +4,12 @@ import { SEOHead, StructuredData } from '@/features/seo';
 import { Breadcrumbs } from '@/features/layout/components/Breadcrumbs';
 import { FAQSection } from '@/features/faq/FAQSection';
 import { guidesMetadata } from '@/content/metadata/guides';
+import { SourceList } from '@/features/sources/SourceList';
 
 export const metadata: Metadata = buildPageMetadata('blog', {
   title: 'Capital gains tax basics',
   description:
-    'Foundational guide explaining how capital gains taxes are calculated, the difference between short-term and long-term treatment, and key thresholds for 2025.',
+    'Foundational guide explaining capital gains calculations, short-term and long-term treatment, and key 2026 federal thresholds.',
   path: '/guide/capital-gains-tax-basics'
 });
 
@@ -46,7 +47,7 @@ export default function CapitalGainsTaxBasicsGuidePage() {
     { id: 'taxable-events', label: 'What counts as a taxable event?' },
     { id: 'holding-periods', label: 'Short-term vs. long-term holding periods' },
     { id: 'cost-basis', label: 'How cost basis works' },
-    { id: 'thresholds-2025', label: 'Key 2025 thresholds' },
+    { id: 'thresholds-2026', label: 'Key 2026 thresholds' },
     { id: 'next-steps', label: 'Putting the rules to work' }
   ];
 
@@ -87,11 +88,7 @@ export default function CapitalGainsTaxBasicsGuidePage() {
           <div className="md:col-span-2">
             <dt className="font-semibold text-gray-900">Sources</dt>
             <dd>
-              <ul className="list-disc space-y-1 pl-5">
-                {meta.sources.map((source) => (
-                  <li key={source}>{source}</li>
-                ))}
-              </ul>
+              <SourceList sources={meta.sources} />
             </dd>
           </div>
         </dl>
@@ -133,7 +130,7 @@ export default function CapitalGainsTaxBasicsGuidePage() {
           Holding periods begin the day after you acquire the asset and end on the day you dispose of it. A holding period of 365 days or less is short-term and taxed using the ordinary income brackets for your filing status. Holding the asset for 366 days or longer qualifies for long-term capital gains rates.
         </p>
         <p>
-          Example: You buy stock on March 1, 2024. The first day of your holding period is March 2. If you sell on March 1, 2025, you held the stock for 365 days and owe short-term tax. Selling on March 2, 2025 moves you into the long-term bracket.
+          Example: You buy stock on March 1, 2025. The first day of your holding period is March 2. If you sell on March 1, 2026, you held the stock for 365 days and have a short-term holding period. Selling on March 2, 2026 moves the transaction into long-term treatment.
         </p>
 
         <h2 id="cost-basis" className="text-2xl font-semibold text-gray-900">How cost basis works</h2>
@@ -143,18 +140,18 @@ export default function CapitalGainsTaxBasicsGuidePage() {
         <ul className="list-disc space-y-2 pl-6 text-sm">
           <li>Brokerage statements provide basis for most stock and ETF transactions.</li>
           <li>For real estate, add settlement costs and qualified renovations. Keep receipts.</li>
-          <li>Crypto basis tracking depends on exchange exports and wallet records—FIFO is the default if you do not identify lots.</li>
+          <li>Crypto basis tracking depends on exchange exports and wallet records. This site calculator uses FIFO, but tax-return method and identification requirements must be verified separately.</li>
         </ul>
 
-        <h2 id="thresholds-2025" className="text-2xl font-semibold text-gray-900">Key 2025 thresholds</h2>
-        <p>The 2025 long-term brackets are:</p>
+        <h2 id="thresholds-2026" className="text-2xl font-semibold text-gray-900">Key 2026 thresholds</h2>
+        <p>The 2026 long-term brackets published in IRS Revenue Procedure 2025-32 are:</p>
         <ul className="list-disc space-y-2 pl-6 text-sm">
-          <li>0% rate up to $47,025 (single), $94,050 (married filing jointly).</li>
-          <li>15% rate up to $518,900 (single), $583,750 (married filing jointly).</li>
+          <li>0% rate up to $49,450 (single), $98,900 (married filing jointly).</li>
+          <li>15% rate up to $545,500 (single), $613,700 (married filing jointly).</li>
           <li>20% rate above those thresholds.</li>
         </ul>
         <p>
-          Short-term gains stack on top of your other taxable income, so the marginal rate depends on where you fall inside the ordinary income brackets. High earners may also owe the 3.8% Net Investment Income Tax.
+          Short-term gains stack on top of other taxable income, so the marginal rate depends on the ordinary income brackets. Some taxpayers may also owe the 3.8% Net Investment Income Tax; the site calculator does not estimate NIIT.
         </p>
 
         <h2 id="next-steps" className="text-2xl font-semibold text-gray-900">Putting the rules to work</h2>

@@ -23,7 +23,7 @@ interface HomeSections {
 
 const quickLinkTargets = [
   '/calculator/capital-gains',
-  '/calculator/capital-gains-estimate',
+  '/calculator/capital-gains',
   '/guide/real-estate-capital-gains',
   '/guide/crypto-tax'
 ] as const;
@@ -62,7 +62,7 @@ export function getHomePageSections(locale: string): HomeSections {
       supportText: t('home.hero.support'),
       primaryCta: {
         label: t('home.hero.primaryCta'),
-        href: '/calculator/capital-gains-estimate'
+        href: '/calculator/capital-gains'
       },
       secondaryCta: {
         label: t('home.hero.secondaryCta'),

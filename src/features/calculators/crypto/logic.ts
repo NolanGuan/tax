@@ -1,4 +1,4 @@
-import { FEDERAL_RATES_2025, findStateRate } from '@/features/calculators/core/constants';
+import { FEDERAL_RATES, findStateRate } from '@/features/calculators/core/constants';
 import { calculateCapitalGains } from '@/features/calculators/core';
 import type {
   CryptoCalculatorInput,
@@ -50,7 +50,7 @@ function calculateOrdinaryIncrement(
   baseIncome: number,
   additionalIncome: number
 ): { federal: number; marginalRate: number } {
-  const brackets = FEDERAL_RATES_2025.ordinaryIncome[filingStatus as keyof typeof FEDERAL_RATES_2025.ordinaryIncome];
+  const brackets = FEDERAL_RATES.ordinaryIncome[filingStatus as keyof typeof FEDERAL_RATES.ordinaryIncome];
   if (!brackets) {
     return { federal: 0, marginalRate: 0 };
   }
@@ -228,8 +228,8 @@ export function calculateCryptoTaxes(input: CryptoCalculatorInput): CryptoCalcul
             label: 'No disposals',
             purchasePrice: 0,
             salePrice: 0,
-            purchaseDate: input.transactions[0]?.date ?? '2025-01-01',
-            saleDate: input.transactions[0]?.date ?? '2025-01-01'
+            purchaseDate: `${input.taxYear}-01-01`,
+            saleDate: `${input.taxYear}-01-01`
           }
         ]
   });

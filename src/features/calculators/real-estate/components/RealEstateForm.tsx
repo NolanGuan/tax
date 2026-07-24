@@ -7,7 +7,7 @@ import type {
   RealEstateCalculatorResult,
   RealEstateTransaction
 } from '@/features/calculators/real-estate';
-import type { FilingStatus } from '@/features/calculators/core';
+import { CURRENT_TAX_YEAR, type FilingStatus } from '@/features/calculators/core';
 
 interface FormState extends Omit<RealEstateCalculatorInput, 'transactions'> {
   transactions: Array<RealEstateTransaction & { key: string }>;
@@ -19,7 +19,7 @@ const DEFAULT_TRANSACTION: RealEstateTransaction = {
   purchasePrice: 300000,
   salePrice: 550000,
   purchaseDate: '2018-01-01',
-  saleDate: '2025-02-01',
+  saleDate: '2026-02-01',
   capitalImprovements: 25000,
   sellingExpenses: 20000,
   depreciationRecaptured: 0,
@@ -29,7 +29,7 @@ const DEFAULT_TRANSACTION: RealEstateTransaction = {
 };
 
 const DEFAULT_STATE: FormState = {
-  taxYear: 2025,
+  taxYear: CURRENT_TAX_YEAR,
   filingStatus: 'married_joint',
   taxableIncome: 120000,
   state: 'CA',
@@ -119,6 +119,8 @@ export function RealEstateForm() {
           issues.push(`Transaction ${transaction.label ?? transaction.id} has invalid dates.`);
         } else if (sale <= purchase) {
           issues.push(`Sale date must come after purchase date for ${transaction.label ?? transaction.id}.`);
+        } else if (new Date(sale).getUTCFullYear() !== CURRENT_TAX_YEAR) {
+          issues.push(`Sale date must be in tax year ${CURRENT_TAX_YEAR} for ${transaction.label ?? transaction.id}.`);
         }
       }
 
@@ -442,6 +444,11 @@ export function RealEstateForm() {
                 <p>Total tax: ${result.totals.totalTax.toLocaleString('en-US')}</p>
               </div>
             </div>
+            <p className="mt-4 text-xs text-blue-800">
+              Educational {CURRENT_TAX_YEAR} estimate. Depreciation recapture uses the 25% federal maximum and the
+              selected state headline rate. NIIT, local tax, partial exclusions, nonqualified use, installment sales,
+              and other property-specific rules are not modeled.
+            </p>
           </section>
 
           <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">

@@ -14,7 +14,7 @@ export default function HomePage() {
   const toolHighlights = [
     {
       title: 'Capital gains calculator',
-      description: 'Run Gain Tax Calculator estimates with federal, state, and NIIT breakdowns before you execute a trade.',
+      description: 'Run a 2026 federal and simplified state estimate before you execute a trade.',
       href: '/calculator/capital-gains'
     },
     {

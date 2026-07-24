@@ -1,4 +1,4 @@
-import { FEDERAL_RATES_2025, findStateRate } from './constants';
+import { CURRENT_TAX_YEAR, FEDERAL_RATES, findStateRate } from './constants';
 import type {
   CapitalGainsBreakdown,
   CapitalGainsInput,
@@ -20,11 +20,42 @@ function getHoldingPeriodDays(transaction: CapitalGainsTransaction): number {
 }
 
 function resolveOrdinaryBrackets(status: FilingStatus): OrdinaryIncomeBracket[] {
-  return FEDERAL_RATES_2025.ordinaryIncome[status];
+  return FEDERAL_RATES.ordinaryIncome[status];
 }
 
 function resolveLongTermBrackets(status: FilingStatus): LongTermCapitalGainsBracket[] {
-  return FEDERAL_RATES_2025.longTermCapitalGains[status];
+  return FEDERAL_RATES.longTermCapitalGains[status];
+}
+
+function netGainsByHoldingPeriod(
+  shortTermGain: number,
+  longTermGain: number
+): { taxableShortTermGain: number; taxableLongTermGain: number } {
+  if (shortTermGain >= 0 && longTermGain >= 0) {
+    return {
+      taxableShortTermGain: shortTermGain,
+      taxableLongTermGain: longTermGain
+    };
+  }
+
+  if (shortTermGain <= 0 && longTermGain <= 0) {
+    return {
+      taxableShortTermGain: 0,
+      taxableLongTermGain: 0
+    };
+  }
+
+  const netGain = shortTermGain + longTermGain;
+  if (netGain <= 0) {
+    return {
+      taxableShortTermGain: 0,
+      taxableLongTermGain: 0
+    };
+  }
+
+  return shortTermGain > 0
+    ? { taxableShortTermGain: netGain, taxableLongTermGain: 0 }
+    : { taxableShortTermGain: 0, taxableLongTermGain: netGain };
 }
 
 function calculateBracketTax(brackets: OrdinaryIncomeBracket[], income: number): number {
@@ -132,12 +163,39 @@ function calculateLongTermIncrement(
 }
 
 export function calculateCapitalGains(input: CapitalGainsInput): CapitalGainsBreakdown {
+  if (input.taxYear !== CURRENT_TAX_YEAR) {
+    throw new RangeError(`Only tax year ${CURRENT_TAX_YEAR} is supported.`);
+  }
+  if (!Number.isFinite(input.taxableIncome) || input.taxableIncome < 0) {
+    throw new RangeError('Taxable income must be a non-negative finite number.');
+  }
+
   const transactions = input.transactions.length ? input.transactions : [];
 
   let longTermGain = 0;
   let shortTermGain = 0;
 
   for (const transaction of transactions) {
+    const purchaseTimestamp = Date.parse(transaction.purchaseDate);
+    const saleTimestamp = Date.parse(transaction.saleDate);
+    if (Number.isNaN(purchaseTimestamp) || Number.isNaN(saleTimestamp)) {
+      throw new RangeError(`Transaction ${transaction.id} must use valid ISO dates.`);
+    }
+    if (saleTimestamp < purchaseTimestamp) {
+      throw new RangeError(`Transaction ${transaction.id} has a sale date before its purchase date.`);
+    }
+    if (new Date(saleTimestamp).getUTCFullYear() !== input.taxYear) {
+      throw new RangeError(`Transaction ${transaction.id} must be sold in tax year ${input.taxYear}.`);
+    }
+    if (
+      !Number.isFinite(transaction.purchasePrice) ||
+      !Number.isFinite(transaction.salePrice) ||
+      transaction.purchasePrice < 0 ||
+      transaction.salePrice < 0
+    ) {
+      throw new RangeError(`Transaction ${transaction.id} must use non-negative finite prices.`);
+    }
+
     const holdingDays = getHoldingPeriodDays(transaction);
     const gain = transaction.salePrice - transaction.purchasePrice;
 
@@ -149,17 +207,21 @@ export function calculateCapitalGains(input: CapitalGainsInput): CapitalGainsBre
   }
 
   const netCapitalGain = longTermGain + shortTermGain;
+  const { taxableShortTermGain, taxableLongTermGain } = netGainsByHoldingPeriod(
+    shortTermGain,
+    longTermGain
+  );
 
   const { tax: federalShortTermTax, marginalRate } = calculateOrdinaryIncrement(
     input.filingStatus,
     input.taxableIncome,
-    Math.max(shortTermGain, 0)
+    taxableShortTermGain
   );
 
   const { tax: federalLongTermTax, appliedRate } = calculateLongTermIncrement(
     input.filingStatus,
-    input.taxableIncome + Math.max(shortTermGain, 0),
-    Math.max(longTermGain, 0)
+    input.taxableIncome + taxableShortTermGain,
+    taxableLongTermGain
   );
 
   const nonNegativeNetGain = Math.max(netCapitalGain, 0);

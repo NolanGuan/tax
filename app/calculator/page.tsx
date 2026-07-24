@@ -19,14 +19,8 @@ const calculators = [
   {
     title: 'Capital gains tax calculator',
     description:
-      'Model federal and state tax outcomes for multiple transactions, including short-term and long-term netting.',
+      'Estimate 2026 federal and simplified state tax for one asset sale with short-term or long-term treatment.',
     href: '/calculator/capital-gains'
-  },
-  {
-    title: 'Capital gains estimate calculator',
-    description:
-      'Enter a purchase and sale to preview 2025 capital gains taxes before you dive into advanced planning.',
-    href: '/calculator/capital-gains-estimate'
   },
   {
     title: 'Real estate capital gains calculator',

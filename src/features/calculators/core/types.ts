@@ -53,10 +53,12 @@ export interface FederalRatesConfig {
   longTermCapitalGains: Record<FilingStatus, LongTermCapitalGainsBracket[]>;
   dataYear: number;
   dataSource: string;
+  dataSourceUrl: string;
 }
 
 export interface StateCapitalGainsRate {
   state: string;
   rate: number;
   notes?: string;
+  sourceUrl?: string;
 }

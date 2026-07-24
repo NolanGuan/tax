@@ -19,18 +19,29 @@ export function Footer() {
               </a>
             </p>
             <p>
-              Share feature requests at{' '}
-              <a className="text-blue-600 hover:text-blue-700" href="mailto:feedback@capitalgainsnavigator.com">
-                feedback@capitalgainsnavigator.com
+              Share feedback at{' '}
+              <a className="text-blue-600 hover:text-blue-700" href={`mailto:${contactEmail}`}>
+                {contactEmail}
               </a>
             </p>
             <div className="flex gap-4 text-blue-600">
-              <a href={social.github} target="_blank" rel="noreferrer" className="hover:text-blue-700">
-                GitHub
-              </a>
-              <a href={social.twitter} target="_blank" rel="noreferrer" className="hover:text-blue-700">
-                Twitter
-              </a>
+              {social.github ? (
+                <a href={social.github} target="_blank" rel="noreferrer" className="hover:text-blue-700">
+                  GitHub
+                </a>
+              ) : null}
+              {social.twitter ? (
+                <a href={social.twitter} target="_blank" rel="noreferrer" className="hover:text-blue-700">
+                  Twitter
+                </a>
+              ) : null}
+              <button
+                type="button"
+                className="hover:text-blue-700"
+                onClick={() => window.dispatchEvent(new Event('gtc:open-consent'))}
+              >
+                Privacy choices
+              </button>
             </div>
           </div>
         </div>

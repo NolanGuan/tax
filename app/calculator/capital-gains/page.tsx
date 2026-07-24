@@ -9,7 +9,7 @@ import { siteConfig } from '@/config/site';
 export const metadata: Metadata = buildPageMetadata('calculator', {
   title: 'Capital gains tax calculator',
   description:
-    'Estimate federal and state capital gains taxes across multiple assets, compare short-term and long-term rates, and understand your projected liability.',
+    'Estimate 2026 federal and simplified state capital gains tax for one asset sale and compare short-term with long-term treatment.',
   path: '/calculator/capital-gains'
 });
 
@@ -28,7 +28,7 @@ export default function CapitalGainsCalculatorPage() {
     {
       question: 'How are losses handled?',
       answer:
-        'If a transaction produces a net loss, it will reduce your overall gain and the calculator will cap total tax at zero. You can model additional harvesting strategies in the scenario planner.'
+        'If this sale produces a loss, the estimate caps tax at zero. It does not calculate the annual ordinary-income deduction or carryforwards. Use the scenario planner for a preliminary loss-harvesting comparison.'
     }
   ];
 
@@ -50,7 +50,7 @@ export default function CapitalGainsCalculatorPage() {
     '@type': 'FinancialProduct',
     name: 'Capital gains tax calculator',
     description:
-      'Interactive calculator that estimates federal and state capital gains taxes for multiple assets with short-term and long-term classification.',
+      'Interactive calculator that estimates 2026 federal and simplified state capital gains tax for one asset sale.',
     serviceType: 'Capital gains tax calculation',
     provider: {
       '@type': 'Organization',
@@ -81,7 +81,7 @@ export default function CapitalGainsCalculatorPage() {
       <header className="space-y-3 text-center">
         <h1 className="text-4xl font-bold text-gray-900">Capital gains tax calculator</h1>
         <p className="text-gray-600">
-          Model your 2025 federal and state capital gains taxes across multiple transactions. Enter purchase and sale details to preview holding period, netting, and tax outcomes.
+          Model a 2026 federal and simplified state estimate for one asset sale. Enter purchase and sale details to preview holding-period treatment and tax outcomes.
         </p>
       </header>
 
@@ -91,7 +91,7 @@ export default function CapitalGainsCalculatorPage() {
         <h2 className="text-2xl font-semibold text-gray-900">What this calculator covers</h2>
         <ul className="mt-4 grid gap-3 text-sm text-gray-600 md:grid-cols-2">
           <li className="rounded-xl border border-gray-200 bg-gray-50 p-4">Short-term vs. long-term classification based on holding period.</li>
-          <li className="rounded-xl border border-gray-200 bg-gray-50 p-4">Federal marginal rate calculations using 2025 brackets and filing status.</li>
+          <li className="rounded-xl border border-gray-200 bg-gray-50 p-4">Federal marginal rate calculations using 2026 brackets and filing status.</li>
           <li className="rounded-xl border border-gray-200 bg-gray-50 p-4">State-level capital gains rates for high-impact jurisdictions.</li>
           <li className="rounded-xl border border-gray-200 bg-gray-50 p-4">Effective rate and tax-to-proceeds comparisons for strategic planning.</li>
         </ul>

@@ -1,11 +1,11 @@
 export const termsContent = {
   title: 'Terms of service',
-  lastUpdated: 'Last updated: February 10, 2025',
+  lastUpdated: 'Last updated: July 24, 2026',
   sections: [
     {
       heading: 'Acceptance of terms',
       paragraphs: [
-        'By using Capital Gains Navigator you agree to these terms. If you do not accept them, discontinue use of the site immediately.'
+        'By using Gain Tax Calculator you agree to these terms. If you do not accept them, discontinue use of the site immediately.'
       ]
     },
     {
@@ -17,12 +17,12 @@ export const termsContent = {
     {
       heading: 'Accuracy of data sources',
       paragraphs: [
-        'We maintain IRS and state tax data with professional review, but tax law changes can occur without notice. Always confirm critical thresholds against official publications.'
+        'We link to the sources used for federal tables and selected state assumptions, but tax law and personal circumstances can change the result. Always confirm critical thresholds against official publications and a qualified professional.'
       ]
     }
   ],
   contact: {
     heading: 'Need clarification?',
-    description: 'Email support@capitalgainsnavigator.com for compliance questions or special usage requests.'
+    description: 'Email support@gaintaxcalculator.com for terms or compliance questions.'
   }
 };

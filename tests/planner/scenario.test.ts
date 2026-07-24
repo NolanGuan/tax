@@ -1,11 +1,11 @@
 import { describe, expect, it } from 'vitest';
-import { evaluateScenario } from '@/features/planner/scenario';
+import { evaluateScenario } from '@/features/planner/scenario/logic';
 
 const baseInput = {
   purchasePrice: 250000,
   purchaseDate: '2020-01-15',
   salePrice: 420000,
-  saleDate: '2025-11-01',
+  saleDate: '2026-11-01',
   taxableIncome: 110000,
   state: 'CA',
   filingStatus: 'married_joint' as const
@@ -23,6 +23,7 @@ describe('evaluateScenario', () => {
     });
 
     expect(result.capitalGains.netCapitalGain).toBeGreaterThan(0);
+    expect(result.saleDate).toBe('2026-12-01');
   });
 
   it('applies loss harvesting as an additional transaction', () => {
@@ -45,5 +46,21 @@ describe('evaluateScenario', () => {
     });
 
     expect(withLoss.capitalGains.netCapitalGain).toBeLessThan(withoutLoss.capitalGains.netCapitalGain);
+  });
+
+  it('caps adjusted dates to the supported tax year', () => {
+    const result = evaluateScenario(
+      { ...baseInput, saleDate: '2026-12-20' },
+      {
+        label: 'Year boundary',
+        saleDateOffsetDays: 60,
+        salePriceAdjustmentPercent: 0,
+        taxableIncomeAdjustment: 0,
+        state: undefined,
+        additionalLossHarvestUSD: 0
+      }
+    );
+
+    expect(result.saleDate).toBe('2026-12-31');
   });
 });

@@ -4,6 +4,7 @@ import { SEOHead, StructuredData } from '@/features/seo';
 import { Breadcrumbs } from '@/features/layout/components/Breadcrumbs';
 import { FAQSection } from '@/features/faq/FAQSection';
 import { guidesMetadata } from '@/content/metadata/guides';
+import { SourceList } from '@/features/sources/SourceList';
 
 export const metadata: Metadata = buildPageMetadata('blog', {
   title: 'Real estate capital gains guide',
@@ -88,11 +89,7 @@ export default function RealEstateCapitalGainsGuidePage() {
           <div className="md:col-span-2">
             <dt className="font-semibold text-gray-900">Sources</dt>
             <dd>
-              <ul className="list-disc space-y-1 pl-5">
-                {meta.sources.map((source) => (
-                  <li key={source}>{source}</li>
-                ))}
-              </ul>
+              <SourceList sources={meta.sources} />
             </dd>
           </div>
         </dl>
@@ -141,15 +138,15 @@ export default function RealEstateCapitalGainsGuidePage() {
 
         <h2 id="state-considerations" className="text-2xl font-semibold text-gray-900">State-level considerations</h2>
         <ul className="list-disc space-y-2 pl-6 text-sm">
-          <li><span className="font-semibold">California:</span> No special capital gains rate—your full gain is taxed as ordinary income. Be mindful of the 1% mental health surtax on taxable income above $1 million.</li>
-          <li><span className="font-semibold">New York:</span> High-income taxpayers in NYC face combined state + city rates exceeding 12%.</li>
-          <li><span className="font-semibold">Massachusetts:</span> A 4% surtax applies to combined income above $1 million.</li>
-          <li><span className="font-semibold">Washington:</span> The 7% excise tax applies to long-term capital gains over $250,000 but exempts primary residences up to $750,000 of gain.</li>
+          <li><span className="font-semibold">California:</span> Capital gain generally flows through the state income-tax system, while additional taxes and California-source rules can affect the result.</li>
+          <li><span className="font-semibold">New York:</span> State brackets and possible New York City tax mean a single headline state rate is not a full calculation.</li>
+          <li><span className="font-semibold">Massachusetts:</span> Income tax and a high-income surtax may apply; verify the current threshold and filing-year instructions.</li>
+          <li><span className="font-semibold">Washington:</span> Washington uses a tiered capital gains excise tax for covered long-term gains and provides exclusions and deductions. Confirm the current deduction and asset rules with the Department of Revenue.</li>
         </ul>
 
         <h2 id="real-estate-next-steps" className="text-2xl font-semibold text-gray-900">Next steps</h2>
         <p>
-          Use the real estate capital gains calculator to model your sale with actual improvement receipts and rental history. Then export the breakdown for your CPA or financial planner. If you are considering multiple sale windows, plug the numbers into the scenario planner to compare total tax across states or calendar years.
+          Use the real estate capital gains calculator to model your sale with actual improvement receipts and rental history. Record the breakdown for review with a qualified professional. If you are considering multiple sale windows inside 2026, use the scenario planner for a preliminary comparison.
         </p>
       </section>
 
@@ -170,7 +167,7 @@ export default function RealEstateCapitalGainsGuidePage() {
           </li>
           <li>
             <a href="/tax-rate" className="text-blue-600 hover:underline">
-              2025 capital gains tax rates by state
+              2026 capital gains tax assumptions by state
             </a>
           </li>
         </ul>

@@ -2,31 +2,31 @@
   "home": {
     "hero": {
       "eyebrow": "Gain Tax Calculator",
-      "title": "Gain Tax Calculator delivers instant capital gains answers",
-      "subtitle": "Project federal and state capital gains taxes in minutes and see every lever that changes what you owe.",
-      "support": "Use purpose-built calculators for investments, real estate, and crypto to compare holding periods, locations, and deductions before you file.",
+      "title": "Estimate 2026 capital gains taxes with transparent assumptions",
+      "subtitle": "Explore a federal and simplified state estimate in minutes, with the supported tax year and major limits shown clearly.",
+      "support": "Use educational calculators for investments, real estate, and crypto, then verify the result before filing or making a financial decision.",
       "primaryCta": "Open Gain Tax Calculator",
       "secondaryCta": "Browse all calculators",
       "badges": [
-        "Accurate 2025 rates",
-        "CPA-reviewed formulas",
-        "Scenario planning built-in"
+        "2026 federal tables",
+        "Official sources linked",
+        "Assumptions shown clearly"
       ]
     },
     "features": {
-      "title": "Why investors trust Gain Tax Calculator",
+      "title": "How Gain Tax Calculator supports planning",
       "description": "Every workflow starts with the core capital gains calculator, then layers on strategy guidance tailored to each asset.",
       "items": [
         {
           "title": "Guided capital gains calculator",
-          "description": "Enter sale details once to see federal, state, and NIIT outcomes across filing statuses and holding periods."
+          "description": "Enter sale details once to see a 2026 federal and simplified state estimate across filing statuses and holding periods."
         },
         {
           "title": "Strategy comparisons made simple",
           "description": "Model sale timing, income shifts, and residency moves side by side to spot the lowest tax liability."
         },
         {
-          "title": "Expert context at every step",
+          "title": "Plain-language context",
           "description": "Follow plain-language explanations that translate IRS rules into the actions relevant to your situation."
         }
       ]

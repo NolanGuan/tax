@@ -4,6 +4,7 @@ import { SEOHead, StructuredData } from '@/features/seo';
 import { Breadcrumbs } from '@/features/layout/components/Breadcrumbs';
 import { FAQSection } from '@/features/faq/FAQSection';
 import { guidesMetadata } from '@/content/metadata/guides';
+import { SourceList } from '@/features/sources/SourceList';
 
 export const metadata: Metadata = buildPageMetadata('blog', {
   title: 'Capital gains tax planning scenarios',
@@ -21,11 +22,11 @@ export default function TaxPlanningScenariosGuidePage() {
     },
     {
       question: 'Can the scenario planner model federal surtaxes?',
-      answer: 'Net Investment Income Tax and the additional Medicare surtax automatically apply once your income crosses the thresholds in our calculators.'
+      answer: 'No. The planner does not calculate Net Investment Income Tax, the additional Medicare tax, or alternative minimum tax. Evaluate those separately.'
     },
     {
       question: 'Where do I capture partial-year residency moves?',
-      answer: 'Use the state selector in each scenario to compare the capital gains rate in your current state versus the state you are moving to. Remember to prorate ordinary income separately with your CPA.'
+      answer: 'The state selector only compares simplified selected headline rates. It does not determine domicile, source income, or partial-year allocation; confirm those rules separately.'
     }
   ];
 
@@ -86,11 +87,7 @@ export default function TaxPlanningScenariosGuidePage() {
           <div className="md:col-span-2">
             <dt className="font-semibold text-gray-900">Sources</dt>
             <dd>
-              <ul className="list-disc space-y-1 pl-5">
-                {meta.sources.map((source) => (
-                  <li key={source}>{source}</li>
-                ))}
-              </ul>
+              <SourceList sources={meta.sources} />
             </dd>
           </div>
         </dl>
@@ -116,27 +113,27 @@ export default function TaxPlanningScenariosGuidePage() {
 
         <h2 id="scenario-long-term" className="text-2xl font-semibold text-gray-900">Scenario 1: Wait for long-term qualification</h2>
         <p>
-          Alex bought a $200,000 stock position on June 1, 2024 and wants to sell in May 2025. By waiting until June 2, 2025 the gain switches from short-term to long-term, dropping the federal rate from 32% to 15%. The scenario planner shows a $10,400 federal tax reduction even after accounting for market drift assumptions.
+          Alex bought a stock position on June 1, 2025 and is considering a sale in May 2026. Waiting until June 2, 2026 changes the holding period from short-term to long-term. The actual difference depends on taxable income, sale price, and filing status, so compare both dates and then verify the result.
         </p>
 
         <h2 id="scenario-relocation" className="text-2xl font-semibold text-gray-900">Scenario 2: Loss harvesting to fund a relocation</h2>
         <p>
-          Priya is selling a rental property in California and moving to Texas. By harvesting $15,000 in stock losses before closing and finalizing the sale after establishing Texas residency, she cuts state taxes to zero and offsets part of the gain federally. Model this by setting Scenario B’s state to TX and entering the planned loss harvest amount.
+          Priya is considering a move from California to Texas and a $15,000 stock loss. The state selector can illustrate the difference between selected headline rates, while the loss field shows a preliminary federal offset. It cannot determine domicile or source income. For example, gain from California real property can remain California-source after a move, so the zero-rate Texas scenario is not proof that California tax disappears.
         </p>
 
-        <h2 id="scenario-options" className="text-2xl font-semibold text-gray-900">Scenario 3: Exercising stock options</h2>
+        <h2 id="scenario-options" className="text-2xl font-semibold text-gray-900">Scenario 3: Know when this tool does not fit</h2>
         <p>
-          Quinn holds incentive stock options (ISOs) with significant AMT exposure. Exercising in January triggers AMT but qualifies for long-term treatment by the following year. Use Scenario A to capture an exercise-and-sell-same-year strategy, and Scenario B to model exercising this year and selling next year once the ISO holding period is satisfied.
+          Incentive stock options, employee stock purchase plans, installment sales, and like-kind exchanges require inputs and rules this planner does not have. It does not calculate option exercise income, alternative minimum tax, ISO holding-period tests, or multi-year tax. Use the planner only for a conventional capital-asset sale inside 2026 and evaluate those specialized transactions separately.
         </p>
 
         <h2 id="scenario-next-steps" className="text-2xl font-semibold text-gray-900">Applying the playbook</h2>
         <ul className="list-disc space-y-2 pl-6 text-sm">
           <li>Benchmark your current plan in Scenario A with actual dates, sale prices, and state.</li>
           <li>Copy the scenario and tweak one lever at a time—timing, income, or loss harvesting—to isolate the savings.</li>
-          <li>Record supporting documents (option agreements, improvement receipts, brokerage statements) alongside each scenario for audit readiness.</li>
+          <li>Record supporting documents such as improvement receipts and brokerage statements alongside each scenario.</li>
         </ul>
         <p>
-          Share the exported comparison with your CPA or wealth advisor to coordinate estimated payments or withholding changes before year-end.
+          Record the comparison and review it with a qualified tax or financial professional before changing estimated payments or withholding.
         </p>
       </section>
 
@@ -156,7 +153,7 @@ export default function TaxPlanningScenariosGuidePage() {
             </a>
           </li>
           <li>
-            <a href="/calculator/capital-gains-estimate" className="text-blue-600 hover:underline">
+            <a href="/calculator/capital-gains" className="text-blue-600 hover:underline">
               Capital gains estimate calculator
             </a>
           </li>

@@ -94,9 +94,6 @@ if (siteConfig) {
   if (siteConfig.contactEmail === 'hello@cpmcalculation.com') {
     warnings.push('Update contactEmail in src/config/site.ts.');
   }
-  if (!siteConfig.announcement?.message) {
-    warnings.push('Announcement banner is empty. Configure announcement in src/config/site.ts.');
-  }
   const ogImagePath = resolve(projectRoot, 'public', siteConfig.defaultOgImage.replace(/^\//, ''));
   if (!existsSync(ogImagePath)) {
     errors.push(`Default OG image is missing: ${ogImagePath}`);
@@ -108,18 +105,64 @@ if (globalSeoConfig) {
   if (missingDescriptions.length) {
     errors.push(`Missing descriptions for pages: ${missingDescriptions.map(([key]) => key).join(', ')}`);
   }
-}
-
-if (calculatorConstants?.FEDERAL_RATES_2025) {
-  const { dataYear } = calculatorConstants.FEDERAL_RATES_2025;
-  const currentYear = new Date().getFullYear();
-  if (dataYear < currentYear) {
-    warnings.push(`Federal capital gains data still references ${dataYear}. Confirm whether it should be updated to ${currentYear}.`);
+  if (globalSeoConfig.robots.defaultDisallow.includes('/_next')) {
+    errors.push('robots.txt must not block public /_next assets.');
   }
 }
 
+if (calculatorConstants?.FEDERAL_RATES) {
+  const { dataYear, dataSourceUrl } = calculatorConstants.FEDERAL_RATES;
+  if (dataYear !== calculatorConstants.CURRENT_TAX_YEAR) {
+    errors.push(`Federal rate year ${dataYear} does not match supported tax year ${calculatorConstants.CURRENT_TAX_YEAR}.`);
+  }
+  if (!dataSourceUrl?.startsWith('https://www.irs.gov/')) {
+    errors.push('Federal capital gains data must link to an official IRS source.');
+  }
+} else {
+  errors.push('Federal capital gains rate configuration is missing.');
+}
+
 if (!calculatorConstants?.STATE_CAPITAL_GAINS_DATA_SOURCE) {
-  warnings.push('State capital gains data source is missing. Document it in src/config/tax-rates/state-2025.ts.');
+  errors.push('State capital gains data source is missing. Document it in the active state rate configuration.');
+}
+
+const requiredFooterPaths = ['/blog', '/contact', '/privacy', '/terms'];
+const footerPaths = new Set([
+  ...(siteConfig?.footer?.links ?? []).map((item) => item.href),
+  ...(siteConfig?.footer?.resources ?? []).map((item) => item.href)
+]);
+const missingFooterPaths = requiredFooterPaths.filter((path) => !footerPaths.has(path));
+if (missingFooterPaths.length) {
+  errors.push(`Footer is missing required trust links: ${missingFooterPaths.join(', ')}`);
+}
+
+const layoutSource = readFileSync(resolve(projectRoot, 'app/layout.tsx'), 'utf8');
+if (!layoutSource.includes('<ConsentManager />')) {
+  errors.push('Root layout must load analytics through ConsentManager.');
+}
+
+const sitemapSource = readFileSync(resolve(projectRoot, 'app/sitemap.ts'), 'utf8');
+if (/lastModified:\s*(today|new Date\(\))/.test(sitemapSource)) {
+  errors.push('Sitemap lastModified must use a stable content date, not deployment time.');
+}
+
+const sourceText = collectSourceText([
+  resolve(projectRoot, 'app'),
+  resolve(projectRoot, 'src'),
+  resolve(projectRoot, 'content')
+]);
+for (const forbiddenClaim of [
+  'capitalgainsnavigator.com',
+  'CPA-reviewed formulas',
+  'Net Investment Income Tax and the additional Medicare surtax automatically apply'
+]) {
+  if (sourceText.includes(forbiddenClaim)) {
+    errors.push(`Forbidden stale or unsupported claim remains: ${forbiddenClaim}`);
+  }
+}
+
+if (/pagead2\.googlesyndication\.com|adsbygoogle/.test(sourceText)) {
+  errors.push('Advertising code is present before the external AdSense/CMP compliance gate is complete.');
 }
 
 const postsDir = resolve(projectRoot, 'content/posts');
@@ -130,6 +173,14 @@ if (!existsSync(postsDir)) {
   if (posts.length === 0) {
     warnings.push('No Markdown/MDX files found in content/posts.');
   }
+  const thinPosts = posts.filter((file) => {
+    const source = readFileSync(resolve(postsDir, file), 'utf8');
+    const body = source.replace(/^---[\s\S]*?---\s*/, '');
+    return body.trim().split(/\s+/).filter(Boolean).length < 500;
+  });
+  if (thinPosts.length) {
+    errors.push(`Indexable blog posts must contain at least 500 body words: ${thinPosts.join(', ')}`);
+  }
 }
 
 const todoMatches = collectTodoMarkers(resolve(projectRoot, 'src'))
@@ -139,6 +190,28 @@ if (todoMatches.length) {
 }
 
 report();
+
+function collectSourceText(rootDirs) {
+  const chunks = [];
+  const stack = [...rootDirs];
+  while (stack.length) {
+    const current = stack.pop();
+    if (!current || !existsSync(current)) {
+      continue;
+    }
+    const currentStat = statSync(current);
+    if (currentStat.isDirectory()) {
+      for (const entry of readdirSync(current)) {
+        stack.push(resolve(current, entry));
+      }
+      continue;
+    }
+    if (/\.(ts|tsx|js|mjs|json|md|mdx)$/.test(current)) {
+      chunks.push(readFileSync(current, 'utf8'));
+    }
+  }
+  return chunks.join('\n');
+}
 
 function collectTodoMarkers(rootDir) {
   const matches = [];

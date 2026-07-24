@@ -1,4 +1,4 @@
-import { calculateCapitalGains } from '@/features/calculators/core';
+import { calculateCapitalGains, CURRENT_TAX_YEAR } from '@/features/calculators/core';
 import type { BaseScenarioInput, ScenarioAdjustments, ScenarioResult } from './types';
 
 function addDays(date: string, offsetDays: number): string {
@@ -14,8 +14,20 @@ function percentAdjust(value: number, percent: number): number {
   return value * (1 + percent / 100);
 }
 
+function clampToSupportedYear(date: string): string {
+  const start = `${CURRENT_TAX_YEAR}-01-01`;
+  const end = `${CURRENT_TAX_YEAR}-12-31`;
+  if (date < start) {
+    return start;
+  }
+  if (date > end) {
+    return end;
+  }
+  return date;
+}
+
 export function evaluateScenario(base: BaseScenarioInput, adjustments: ScenarioAdjustments): ScenarioResult {
-  const adjustedSaleDate = addDays(base.saleDate, adjustments.saleDateOffsetDays);
+  const adjustedSaleDate = clampToSupportedYear(addDays(base.saleDate, adjustments.saleDateOffsetDays));
   const adjustedSalePrice = Math.max(0, percentAdjust(base.salePrice, adjustments.salePriceAdjustmentPercent));
   const adjustedState = adjustments.state ?? base.state;
   const adjustedIncome = Math.max(0, base.taxableIncome + adjustments.taxableIncomeAdjustment);
@@ -44,7 +56,7 @@ export function evaluateScenario(base: BaseScenarioInput, adjustments: ScenarioA
   }
 
   const capitalGains = calculateCapitalGains({
-    taxYear: new Date(adjustedSaleDate).getFullYear(),
+    taxYear: CURRENT_TAX_YEAR,
     filingStatus: base.filingStatus,
     taxableIncome: adjustedIncome,
     state: adjustedState,
@@ -53,6 +65,7 @@ export function evaluateScenario(base: BaseScenarioInput, adjustments: ScenarioA
 
   return {
     label: adjustments.label,
+    saleDate: adjustedSaleDate,
     capitalGains,
     totalTax: capitalGains.totalTax
   };

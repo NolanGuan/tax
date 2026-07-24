@@ -43,18 +43,20 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   name: 'Gain Tax Calculator',
-  tagline: 'Plan U.S. capital gains tax moves with accurate calculators and expert guides.',
+  tagline: 'Estimate 2026 U.S. capital gains taxes with transparent calculators and source-linked guides.',
   nav: [
     { label: 'Home', href: '/' },
     { label: 'Calculator', href: '/calculator' },
     { label: 'Guide', href: '/guide' },
     { label: 'Tax Rate', href: '/tax-rate' },
-    { label: 'About', href: '/about' }
+    { label: 'Blog', href: '/blog' },
+    { label: 'About', href: '/about' },
+    { label: 'Contact', href: '/contact' }
   ],
   footer: {
     about:
-      'Gain Tax Calculator delivers trusted calculators and strategies for investors, homeowners, and crypto traders seeking clarity on U.S. capital gains tax rules.',
-    copyright: '© 2025 Gain Tax Calculator. All rights reserved.',
+      'Gain Tax Calculator provides educational 2026 estimates for investors, homeowners, and crypto traders. Results are not tax, legal, or investment advice.',
+    copyright: '© 2026 Gain Tax Calculator. All rights reserved.',
     links: [
       { label: 'Capital gains tax calculator', href: '/calculator/capital-gains' },
       { label: 'Real estate capital gains calculator', href: '/calculator/real-estate-capital-gains' },
@@ -63,13 +65,17 @@ export const siteConfig: SiteConfig = {
     resources: [
       { label: 'Capital gains tax guide', href: '/guide/capital-gains-tax-basics' },
       { label: 'Scenario planning playbook', href: '/guide/tax-planning-scenarios' },
+      { label: 'Blog', href: '/blog' },
+      { label: 'Contact', href: '/contact' },
+      { label: 'Privacy policy', href: '/privacy' },
+      { label: 'Terms of service', href: '/terms' },
       { label: 'RSS feed', href: '/feed.xml' }
     ]
   },
   contactEmail: 'support@gaintaxcalculator.com',
   social: {
-    github: 'https://github.com/gaintaxcalculator',
-    twitter: 'https://twitter.com/GainTaxCalc'
+    github: '',
+    twitter: ''
   },
   domain: 'gaintaxcalculator.com',
   defaultOgImage: '/images/og-default.jpg',

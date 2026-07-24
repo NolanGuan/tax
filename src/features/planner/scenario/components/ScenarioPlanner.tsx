@@ -1,7 +1,7 @@
 'use client';
 
 import { useMemo, useState } from 'react';
-import type { FilingStatus } from '@/features/calculators/core';
+import { CURRENT_TAX_YEAR, type FilingStatus } from '@/features/calculators/core';
 import { evaluateScenario } from '@/features/planner/scenario/logic';
 import type { BaseScenarioInput, ScenarioAdjustments, ScenarioResult } from '@/features/planner/scenario/types';
 
@@ -18,7 +18,7 @@ const DEFAULT_BASE: BaseScenarioInput = {
   purchasePrice: 250000,
   purchaseDate: '2020-01-15',
   salePrice: 420000,
-  saleDate: '2025-11-01',
+  saleDate: '2026-11-01',
   taxableIncome: 110000,
   state: 'CA',
   filingStatus: 'married_joint'
@@ -119,6 +119,8 @@ export function ScenarioPlanner() {
             <input
               type="date"
               value={base.saleDate}
+              min={`${CURRENT_TAX_YEAR}-01-01`}
+              max={`${CURRENT_TAX_YEAR}-12-31`}
               onChange={(event) => setBase((previous) => ({ ...previous, saleDate: event.target.value }))}
               lang="en"
               placeholder="YYYY-MM-DD"
@@ -168,6 +170,12 @@ export function ScenarioPlanner() {
           </label>
         </div>
       </section>
+
+      <p className="rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+        This planner uses {CURRENT_TAX_YEAR} federal tables and simplified selected state rates. Keep every adjusted
+        sale date inside {CURRENT_TAX_YEAR}; adjustments outside that range are capped to the first or last day of
+        the year. NIIT and many state-specific rules are not included.
+      </p>
 
       <section className="grid gap-6 md:grid-cols-2">
         {scenarios.map((scenario, index) => {
@@ -254,7 +262,8 @@ export function ScenarioPlanner() {
 
             <div className="mt-6 rounded-xl border border-gray-100 bg-gray-50 p-4 text-sm text-gray-700">
               <p className="font-semibold text-gray-900">Estimated results</p>
-              <p className="mt-2">Total tax: {formatCurrency(results[index].totalTax)}</p>
+              <p className="mt-2">Adjusted sale date: {results[index].saleDate}</p>
+              <p className="mt-1">Total tax: {formatCurrency(results[index].totalTax)}</p>
               <p className="mt-1">Net gain: {formatCurrency(results[index].capitalGains.netCapitalGain)}</p>
               <p className="mt-1">Long-term gain: {formatCurrency(results[index].capitalGains.longTermGain)}</p>
               <p className="mt-1">Short-term gain: {formatCurrency(results[index].capitalGains.shortTermGain)}</p>

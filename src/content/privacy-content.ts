@@ -1,11 +1,11 @@
 export const privacyContent = {
   title: 'Privacy policy',
-  lastUpdated: 'Last updated: February 10, 2025',
+  lastUpdated: 'Last updated: July 24, 2026',
   intro: {
     heading: 'We only track what keeps calculators accurate',
     paragraphs: [
-      'Capital Gains Navigator does not sell user data or embed ad-tech trackers. We run the minimum logging necessary to monitor uptime and resolve bugs.',
-      'Calculator inputs are processed in-memory and never stored on our servers once you leave the page.'
+      'Gain Tax Calculator does not sell personal information. Optional analytics remain off until you grant consent through the privacy choices control.',
+      'Calculator inputs are processed in your browser. They are not included in analytics events or stored by our application servers.'
     ]
   },
   dataWeDoNotCollect: {
@@ -13,7 +13,7 @@ export const privacyContent = {
     items: [
       'Personal profile or contact details',
       'Individual calculator inputs or uploaded files',
-      'Cross-site advertising identifiers',
+      'Calculator transaction details',
       'Precise geolocation data'
     ]
   },
@@ -22,16 +22,16 @@ export const privacyContent = {
     items: [
       {
         title: 'Infrastructure health metrics',
-        description: 'Aggregated performance telemetry that helps us keep response times fast on all devices.'
+        description: 'If you accept analytics, Google Analytics and Vercel Analytics may collect aggregated usage and device information to help us improve the site.'
       },
       {
         title: 'Error diagnostics',
-        description: 'Anonymous stack traces captured when a page fails, automatically purged after 30 days.'
+        description: 'Your consent selection is stored in your browser so the site can remember your choice. You can change it at any time using “Privacy choices” in the footer.'
       }
     ]
   },
   contact: {
     heading: 'Need anything removed?',
-    description: 'Email support@capitalgainsnavigator.com and our team will respond within two business days.'
+    description: 'Email support@gaintaxcalculator.com with a privacy request or question.'
   }
 };

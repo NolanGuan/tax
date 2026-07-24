@@ -120,6 +120,16 @@ function escapeHtml(value: string): string {
     .replace(/>/g, '&gt;');
 }
 
+function renderInlineMarkdown(value: string): string {
+  return escapeHtml(value)
+    .replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>')
+    .replace(
+      /\[([^\]]+)\]\((https?:\/\/[^\s)]+|\/[^\s)]*)\)/g,
+      '<a href="$2" rel="noreferrer">$1</a>'
+    );
+}
+
 function normalizeHeading(text: string): { id: string; label: string } {
   const label = text.trim();
   const id = label
@@ -135,13 +145,22 @@ function naiveMarkdownToHtml(content: string): { htmlContent: string; tableOfCon
   const lines = content.split(/\r?\n/);
   const htmlParts: string[] = [];
   const toc: TocItem[] = [];
-  let inList = false;
+  let listType: 'ul' | 'ol' | null = null;
 
   function closeList() {
-    if (inList) {
-      htmlParts.push('</ul>');
-      inList = false;
+    if (listType) {
+      htmlParts.push(`</${listType}>`);
+      listType = null;
     }
+  }
+
+  function appendListItem(type: 'ul' | 'ol', value: string) {
+    if (listType !== type) {
+      closeList();
+      listType = type;
+      htmlParts.push(`<${type}>`);
+    }
+    htmlParts.push(`<li>${renderInlineMarkdown(value)}</li>`);
   }
 
   for (const line of lines) {
@@ -153,12 +172,13 @@ function naiveMarkdownToHtml(content: string): { htmlContent: string; tableOfCon
     }
 
     if (trimmed.startsWith('- ')) {
-      const item = escapeHtml(trimmed.slice(2));
-      if (!inList) {
-        inList = true;
-        htmlParts.push('<ul>');
-      }
-      htmlParts.push(`<li>${item}</li>`);
+      appendListItem('ul', trimmed.slice(2));
+      continue;
+    }
+
+    const orderedItem = trimmed.match(/^\d+\.\s+(.+)$/);
+    if (orderedItem) {
+      appendListItem('ol', orderedItem[1]);
       continue;
     }
 
@@ -167,25 +187,25 @@ function naiveMarkdownToHtml(content: string): { htmlContent: string; tableOfCon
     if (trimmed.startsWith('### ')) {
       const { id, label } = normalizeHeading(trimmed.slice(4));
       toc.push({ id, text: label, level: 3 });
-      htmlParts.push(`<h3 id="${id}">${escapeHtml(label)}</h3>`);
+      htmlParts.push(`<h3 id="${id}">${renderInlineMarkdown(label)}</h3>`);
       continue;
     }
 
     if (trimmed.startsWith('## ')) {
       const { id, label } = normalizeHeading(trimmed.slice(3));
       toc.push({ id, text: label, level: 2 });
-      htmlParts.push(`<h2 id="${id}">${escapeHtml(label)}</h2>`);
+      htmlParts.push(`<h2 id="${id}">${renderInlineMarkdown(label)}</h2>`);
       continue;
     }
 
     if (trimmed.startsWith('# ')) {
       const { id, label } = normalizeHeading(trimmed.slice(2));
       toc.push({ id, text: label, level: 1 });
-      htmlParts.push(`<h1 id="${id}">${escapeHtml(label)}</h1>`);
+      htmlParts.push(`<h1 id="${id}">${renderInlineMarkdown(label)}</h1>`);
       continue;
     }
 
-    htmlParts.push(`<p>${escapeHtml(trimmed)}</p>`);
+    htmlParts.push(`<p>${renderInlineMarkdown(trimmed)}</p>`);
   }
 
   closeList();

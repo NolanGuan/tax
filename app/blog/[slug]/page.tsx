@@ -128,7 +128,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
           </li>
           <li>
             <Link href="/tax-rate" className="text-blue-600 hover:underline">
-              2025 federal & state capital gains rates
+              2026 federal tables & state assumptions
             </Link>
           </li>
         </ul>
@@ -166,7 +166,7 @@ function buildArticleStructuredData(
     headline: post.seo?.title ?? post.title,
     description: post.seo?.description ?? post.excerpt,
     author: {
-      '@type': 'Person',
+      '@type': authorName === 'Gain Tax Calculator Editorial Team' ? 'Organization' : 'Person',
       name: authorName
     },
     ...(reviewerName

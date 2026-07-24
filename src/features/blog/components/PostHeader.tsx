@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import type { BlogPost } from '@/lib/blog-utils';
+import { SourceList } from '@/features/sources/SourceList';
 
 interface PostMetadata {
   author?: string;
@@ -56,11 +57,7 @@ export function PostHeader({ post, metadata }: PostHeaderProps) {
       {sources.length ? (
         <div className="text-xs text-gray-500">
           <p className="font-semibold uppercase tracking-wide text-gray-400">Sources</p>
-          <ul className="mt-1 list-disc space-y-1 pl-4">
-            {sources.map((source) => (
-              <li key={source}>{source}</li>
-            ))}
-          </ul>
+          <SourceList sources={sources} className="mt-1 list-disc space-y-1 pl-4" />
         </div>
       ) : null}
       {post.coverImage && (

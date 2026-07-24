@@ -8,7 +8,7 @@ import type {
   CryptoTransaction,
   CryptoTransactionType
 } from '@/features/calculators/crypto';
-import type { FilingStatus } from '@/features/calculators/core';
+import { CURRENT_TAX_YEAR, type FilingStatus } from '@/features/calculators/core';
 
 interface FormTransaction extends CryptoTransaction {
   key: string;
@@ -43,14 +43,14 @@ const DEFAULT_TRANSACTIONS: FormTransaction[] = [
     key: 'sell-1-key',
     asset: 'BTC',
     type: 'sell',
-    date: '2025-01-20',
+    date: '2026-01-20',
     quantity: 0.3,
     proceedsUSD: 21000
   }
 ];
 
 const DEFAULT_FORM_STATE: FormState = {
-  taxYear: 2025,
+  taxYear: CURRENT_TAX_YEAR,
   filingStatus: 'single',
   taxableIncome: 90000,
   state: 'CA',
@@ -123,7 +123,7 @@ export function CryptoForm() {
           key: generated,
           asset: 'BTC',
           type: 'sell',
-          date: '2025-06-01',
+          date: '2026-06-01',
           quantity: 0.1,
           proceedsUSD: 7000
         }
@@ -151,6 +151,13 @@ export function CryptoForm() {
       }
       if (!transaction.date) {
         issues.push(`Transaction ${transaction.id} requires a date.`);
+      }
+      if (
+        requiresProceeds(transaction.type) &&
+        transaction.date &&
+        new Date(transaction.date).getUTCFullYear() !== CURRENT_TAX_YEAR
+      ) {
+        issues.push(`Disposal ${transaction.id} must occur in tax year ${CURRENT_TAX_YEAR}.`);
       }
       if (transaction.quantity <= 0) {
         issues.push(`Transaction ${transaction.id} must have a quantity greater than zero.`);
@@ -458,6 +465,11 @@ export function CryptoForm() {
                 <p className="font-semibold">Total estimated tax: ${result.totalEstimatedTax.toLocaleString('en-US')}</p>
               </div>
             </div>
+            <p className="mt-4 text-xs text-blue-800">
+              Educational {CURRENT_TAX_YEAR} estimate using FIFO lots and simplified selected state rates. Confirm
+              wallet transfers and basis before relying on a result. NIIT, fees not entered, local tax, deductions,
+              and asset-specific exceptions are not included.
+            </p>
           </section>
 
           <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm">

@@ -1,5 +1,5 @@
 import type { Metadata } from 'next';
-import { FiGithub, FiMail } from 'react-icons/fi';
+import { FiBookOpen, FiMail } from 'react-icons/fi';
 import { buildPageMetadata } from '@/config/seo';
 import { getAboutContent } from '@/content/about-content';
 import { siteConfig } from '@/config/site';
@@ -55,10 +55,8 @@ export default function AboutPage() {
           <a
             href={content.contact.github.href}
             className="flex items-center justify-center gap-3 rounded-xl border border-gray-200 bg-white p-4 text-sm font-semibold text-gray-800 transition-colors hover:border-gray-300"
-            target="_blank"
-            rel="noreferrer"
           >
-            <FiGithub className="h-5 w-5" />
+            <FiBookOpen className="h-5 w-5" />
             {content.contact.github.label}
           </a>
           <a

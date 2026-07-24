@@ -4,6 +4,7 @@ import { SEOHead, StructuredData } from '@/features/seo';
 import { Breadcrumbs } from '@/features/layout/components/Breadcrumbs';
 import { FAQSection } from '@/features/faq/FAQSection';
 import { guidesMetadata } from '@/content/metadata/guides';
+import { SourceList } from '@/features/sources/SourceList';
 
 export const metadata: Metadata = buildPageMetadata('blog', {
   title: 'Crypto tax guide',
@@ -55,7 +56,7 @@ export default function CryptoTaxGuidePage() {
       <SEOHead
         pageKey="blog"
         title="Crypto tax guide"
-        description="Learn how cryptocurrency transactions are taxed, how to track basis, and how to prepare records for 2025 reporting."
+        description="Learn how cryptocurrency transactions are taxed, how to track basis, and how to prepare records for 2026 reporting."
         canonical="/guide/crypto-tax"
       />
       <StructuredData data={faqSchema} id="crypto-guide-faq" />
@@ -87,11 +88,7 @@ export default function CryptoTaxGuidePage() {
           <div className="md:col-span-2">
             <dt className="font-semibold text-gray-900">Sources</dt>
             <dd>
-              <ul className="list-disc space-y-1 pl-5">
-                {meta.sources.map((source) => (
-                  <li key={source}>{source}</li>
-                ))}
-              </ul>
+              <SourceList sources={meta.sources} />
             </dd>
           </div>
         </dl>
@@ -125,12 +122,12 @@ export default function CryptoTaxGuidePage() {
 
         <h2 id="crypto-cost-basis" className="text-2xl font-semibold text-gray-900">Cost basis and lot selection</h2>
         <p>
-          FIFO is the default cost method, but you can use specific identification if you document wallet addresses, transaction hashes, and cost basis for the exact units sold. The crypto calculator currently uses FIFO and will expand to other methods based on demand.
+          This site calculator uses FIFO lots. Tax-return basis rules and specific-identification requirements depend on current IRS guidance and your records, so do not assume the calculator’s FIFO result is the only permitted or required result.
         </p>
 
         <h2 id="crypto-reporting" className="text-2xl font-semibold text-gray-900">Reporting</h2>
         <p>
-          Use Form 8949 and Schedule D for capital gains. Ordinary income from staking, mining, or payments belongs on Schedule 1 or Schedule C (if you operate a business). Exchanges will begin issuing Form 1099-DA for 2025 activity—reconcile their records with your own wallet logs to avoid mismatches.</p>
+          Use Form 8949 and Schedule D for capital gains. The reporting location for staking, mining, or payment income depends on the facts. Review current Form 1099-DA instructions and reconcile any broker forms with your wallet and exchange records.</p>
 
         <p className="text-sm text-gray-600">IRS references: Notice 2014-21, Revenue Ruling 2019-24, and draft Instructions for Form 1099-DA.</p>
 
@@ -143,7 +140,7 @@ export default function CryptoTaxGuidePage() {
 
         <h2 id="crypto-next-steps" className="text-2xl font-semibold text-gray-900">Use the calculator to plan ahead</h2>
         <p>
-          Log historical trades inside the crypto tax calculator to benchmark your current tax position. Then model future disposals or income events to see how timing, income levels, or loss harvesting change your liability. Export the disposal breakdown for your tax professional.
+          Enter representative records in the crypto calculator to create a preliminary 2026 estimate. Record the displayed disposal breakdown and reconcile it with complete exchange and wallet history before review by a qualified professional.
         </p>
       </section>
 
