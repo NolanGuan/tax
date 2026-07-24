@@ -12,8 +12,8 @@
 - [x] 持有期判断改用“一周年后的日期”，覆盖闰年边界。
 - [x] 新增上述规则的自动化回归测试与 preflight 门禁。
 - [x] 运行 preflight、测试、生产构建、依赖安全审计和本地生产回归。
-- [ ] 推送 `main` 触发 Vercel production 部署。
-- [ ] 线上验证重定向、21 个 sitemap URL、canonical、JSON-LD、图片 MIME、桌面/移动端和计算器。
+- [x] 推送 `main` 触发 Vercel production 部署（提交 `dab07e1`）。
+- [x] 线上验证重定向、21 个 sitemap URL、canonical、JSON-LD、图片 MIME、桌面/移动端和计算器。
 
 ## P0：上线阻断项
 
