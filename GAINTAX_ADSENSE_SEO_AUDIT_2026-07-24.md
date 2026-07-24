@@ -3,7 +3,7 @@
 Audit date: 2026-07-24 (Asia/Shanghai)
 Target: `https://gaintaxcalculator.com`
 Repository: `/Users/nolan_lopez/Desktop/2026年开发/tax`
-Stage: post-remediation, pre-application readiness; no rejection text supplied
+Stage: production live, pre-application readiness; no rejection text supplied
 Evidence mode: live + repository
 SEO modes: existing-site technical + content
 Mutation log: the original findings below describe the pre-change baseline; see the implementation update for completed repository changes
@@ -16,8 +16,11 @@ Repository remediation was completed on 2026-07-24 and is tracked in `IMPLEMENTA
 - **Privacy default: pass for the current no-ad state.** Optional analytics remain off until consent. Users can accept, reject, manage, and later change analytics/advertising storage choices. No AdSense loader or ad request is present.
 - **Calculator integrity: pass within the disclosed scope.** The engine rejects unsupported tax years, nets opposite-signed short-term and long-term results, applies the primary-residence exclusion before tax, and labels NIIT/state/property/crypto limitations.
 - **Local verification: pass.** Preflight reported no concerns; 20 automated tests passed; the Next.js production build passed; all dependency vulnerabilities were reduced to zero; 21 sitemap routes returned `200`; the invalid-route check returned `404`; desktop and 390 px mobile browser checks passed without horizontal overflow.
-- **AdSense application readiness: externally blocked.** Account uniqueness/eligibility, domain/account ownership evidence, AdSense Sites and Policy Center state, publisher-ID match, and a Google-certified CMP configuration still require the owner’s authenticated AdSense/DNS/Vercel access. Advertising must remain disabled until those gates pass.
-- **Canonical fallback: externally blocked.** `www.gaintaxcalculator.com` still requires DNS/domain configuration and a verified permanent redirect to the bare canonical domain.
+- **Production verification: pass.** Vercel deployed commit `2624e00`; all 21 sitemap URLs return direct `200`; all canonical tags match after root-slash normalization; 22 unique internal links have no broken targets; the two legacy routes return the intended `308`; `robots.txt` and `ads.txt` are valid; desktop and 390 px mobile browser checks, consent controls, and a representative calculator result passed with no production-site console errors.
+- **Canonical fallback: pass.** Cloudflare now publishes a DNS-only `CNAME` for `www` to Vercel, Vercel reports `Valid Configuration`, and HTTPS returns a single `308` to `https://gaintaxcalculator.com/`.
+- **Google discovery: pass at submission time.** Search Console accepted `https://gaintaxcalculator.com/sitemap.xml`, reported status `Success`, and discovered 21 pages on 2026-07-24.
+- **AdSense account evidence: partial pass.** The live `ads.txt` publisher ID matches the authenticated account, domain ownership is proven, and Policy Center reports no current issue. The site is not yet present in AdSense Sites, account uniqueness/applicant eligibility still need owner attestation, and the account’s existing European/US privacy messages cover other domains.
+- **AdSense application readiness: externally blocked pending authorization.** Do not add/submit the site or create/publish its Google-certified CMP message without the account owner’s explicit authorization. Advertising remains disabled until those gates pass and regional consent behavior is retested.
 
 ## 1. Original pre-change decision
 

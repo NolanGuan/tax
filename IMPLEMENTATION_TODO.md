@@ -21,7 +21,7 @@
 - [x] 为指南和文章提供可点击的官方来源，并更新编辑日期/复核日期。
 - [x] 修正所有 2025 当前态文案；保留历史文章时明确标为历史内容。
 - [x] 增加法律页和内容中心的内部链接，消除孤儿页。
-- [ ] 配置 `www` DNS 并永久跳转到裸域（外部 DNS/Vercel 项目操作）。
+- [x] 配置 `www` DNS 并永久跳转到裸域（Cloudflare DNS + Vercel 308）。
 
 ## P1：质量与安全
 
@@ -38,8 +38,16 @@
 - [x] `npm run build` 通过类型检查和生产构建。
 - [x] `npm audit --omit=dev --audit-level=high` 无未接受的 Critical/High。
 - [x] 本地生产模式完成桌面/移动端浏览器回归：导航、计算器、法律页、404、控制台和网络。
-- [ ] 推送发布分支并完成生产部署。
-- [ ] 正式域名回归：HTTPS/状态码/canonical/robots/sitemap/ads.txt/内部链接/移动端/计算器。
+- [x] 推送发布分支并完成生产部署（Vercel production，提交 `2624e00`）。
+- [x] 正式域名回归：HTTPS/状态码/canonical/robots/sitemap/ads.txt/内部链接/移动端/计算器。
+- [x] 在 Search Console 提交 `https://gaintaxcalculator.com/sitemap.xml`，状态成功并发现 21 个网页。
 - [ ] AdSense 后台人工门禁：账号唯一性、申请人资格、站点所有权、Sites 状态、Policy Center、publisher ID。
+  - [x] `ads.txt` 的 `pub-8638451866433811` 与当前 AdSense 账号一致。
+  - [x] Cloudflare、Vercel 和 Search Console 域名控制证据已验证。
+  - [x] Policy Center 显示目前不存在任何问题。
+  - [ ] 账号唯一性和申请人资格仍需账号所有者确认。
+  - [ ] `gaintaxcalculator.com` 尚未添加到 AdSense Sites；添加/送审需所有者明确授权。
 - [ ] 在 AdSense/Google Privacy & Messaging 中启用 Google 认证 CMP，并完成 EEA/UK/Swiss 同意、拒绝、管理和撤回测试。
-- [ ] 在 DNS/托管平台配置 `www.gaintaxcalculator.com`，确认单跳 308/301 到裸域。
+  - [ ] 当前账号有其他网站的欧洲/美国消息，但没有覆盖 `gaintaxcalculator.com`。
+  - [ ] 创建并发布该域的消息属于 AdSense 外部配置，需所有者明确授权后执行。
+- [x] 在 DNS/托管平台配置 `www.gaintaxcalculator.com`，确认 HTTPS 单跳 308 到裸域。
