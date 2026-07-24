@@ -1,4 +1,9 @@
-import { calculateCapitalGains, findStateRate } from '@/features/calculators/core';
+import {
+  calculateCapitalGains,
+  findStateRate,
+  getHoldingPeriodDays,
+  isLongTermHoldingPeriod
+} from '@/features/calculators/core';
 import type {
   RealEstateCalculatorInput,
   RealEstateCalculatorResult,
@@ -66,12 +71,9 @@ export function calculateRealEstateCapitalGains(
     totalExclusionApplied += exclusionUsed;
     totalDepreciationRecapture += depreciationRecapture;
 
-    const holdingPeriodDays = Math.max(
-      0,
-      Math.floor(
-        (Date.parse(transaction.saleDate) - Date.parse(transaction.purchaseDate)) /
-          (1000 * 60 * 60 * 24)
-      )
+    const holdingPeriodDays = getHoldingPeriodDays(
+      transaction.purchaseDate,
+      transaction.saleDate
     );
 
     return {
@@ -80,7 +82,10 @@ export function calculateRealEstateCapitalGains(
       purchaseDate: transaction.purchaseDate,
       saleDate: transaction.saleDate,
       holdingPeriodDays,
-      isLongTerm: holdingPeriodDays > 365,
+      isLongTerm: isLongTermHoldingPeriod(
+        transaction.purchaseDate,
+        transaction.saleDate
+      ),
       grossGain,
       adjustedBasis,
       exclusionUsed,

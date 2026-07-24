@@ -4,7 +4,7 @@ import { SEOHead, StructuredData } from '@/features/seo';
 import { Breadcrumbs } from '@/features/layout/components/Breadcrumbs';
 import { FAQSection } from '@/features/faq/FAQSection';
 import { guidesMetadata } from '@/content/metadata/guides';
-import { SourceList } from '@/features/sources/SourceList';
+import { EditorialMetadata } from '@/features/trust';
 
 export const metadata: Metadata = buildPageMetadata('blog', {
   title: 'Crypto tax guide',
@@ -75,24 +75,7 @@ export default function CryptoTaxGuidePage() {
         <p className="text-sm text-gray-500">Updated {meta.lastUpdated} • Next review {meta.nextReview}</p>
       </header>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-6 shadow-sm text-sm text-gray-600">
-        <dl className="grid gap-2 md:grid-cols-2">
-          <div>
-            <dt className="font-semibold text-gray-900">Author</dt>
-            <dd>{meta.author}</dd>
-          </div>
-          <div>
-            <dt className="font-semibold text-gray-900">Reviewer</dt>
-            <dd>{meta.reviewer}</dd>
-          </div>
-          <div className="md:col-span-2">
-            <dt className="font-semibold text-gray-900">Sources</dt>
-            <dd>
-              <SourceList sources={meta.sources} />
-            </dd>
-          </div>
-        </dl>
-      </section>
+      <EditorialMetadata author={meta.author} reviewer={meta.reviewer} sources={meta.sources} />
 
       <nav aria-label="Table of contents" className="rounded-2xl border border-blue-100 bg-blue-50 p-6 text-sm text-blue-900">
         <p className="font-semibold">In this guide</p>

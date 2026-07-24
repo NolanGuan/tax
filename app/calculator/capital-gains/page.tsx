@@ -18,7 +18,7 @@ export default function CapitalGainsCalculatorPage() {
     {
       question: 'Does this calculator include short-term and long-term tax rates?',
       answer:
-        'Yes. Holding periods of 365 days or less are taxed using ordinary income brackets while assets held longer than a year use the 0%, 15%, or 20% long-term brackets for the selected filing status.'
+        'Yes. Assets sold on or before the one-year anniversary generally use ordinary income brackets, while later sales use the 0%, 15%, or 20% long-term brackets for the selected filing status.'
     },
     {
       question: 'Are state capital gains taxes included?',

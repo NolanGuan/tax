@@ -31,7 +31,9 @@ export interface SiteConfig {
     twitter: string;
   };
   domain: string;
+  logoImage: string;
   defaultOgImage: string;
+  editorialUrl: string;
   announcement?: {
     message: string;
     href?: string;
@@ -78,7 +80,9 @@ export const siteConfig: SiteConfig = {
     twitter: ''
   },
   domain: 'gaintaxcalculator.com',
-  defaultOgImage: '/images/og-default.jpg',
+  logoImage: '/images/logo.png',
+  defaultOgImage: '/images/og-default.png',
+  editorialUrl: '/about#editorial-method',
   announcement: null,
   defaultLocale: 'en',
   supportedLocales: ['en']

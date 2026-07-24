@@ -12,6 +12,16 @@ Mutation log: the original findings below describe the pre-change baseline; see 
 
 Repository remediation was completed on 2026-07-24 and is tracked in `IMPLEMENTATION_TODO.md`.
 
+### Final SEO closeout — pre-deployment verification
+
+- Removed the `/blog?tag=*` self-redirect loop and changed legacy tag/category paths to permanent `/blog` redirects.
+- Linked the organization author to the public editorial method, suppressed empty reviewer rows, added the author URL to Article JSON-LD, and removed unsupported “Expert” wording.
+- Separated the Organization logo from the 1200×630 social-preview image and aligned each file's extension, content, and MIME type.
+- Replaced the fixed `> 365` holding-period rule with a calendar-anniversary comparison, including leap-year regression coverage.
+- Preflight passed; 24 automated tests passed; the production build passed; the production dependency audit found zero vulnerabilities.
+- The local production crawl covered all 21 sitemap URLs with no status, canonical, structured-data, orphan, or broken-link issue. Desktop and 390 px browser checks, the editorial author link, redirects, and a representative calculator result passed with zero console warnings/errors.
+- Production deployment and live verification are recorded separately in the checklist and will be marked complete only after the release is visible at the canonical host.
+
 - **Code and content readiness: pass.** The site now uses source-linked 2026 federal tables, simplified and labeled state assumptions, consistent publisher identity, updated legal/contact surfaces, stable sitemap dates, crawlable Next.js assets, expanded articles, and no unsupported professional-review claim.
 - **Privacy default: pass for the current no-ad state.** Optional analytics remain off until consent. Users can accept, reject, manage, and later change analytics/advertising storage choices. No AdSense loader or ad request is present.
 - **Calculator integrity: pass within the disclosed scope.** The engine rejects unsupported tax years, nets opposite-signed short-term and long-term results, applies the primary-residence exclusion before tax, and labels NIIT/state/property/crypto limitations.

@@ -38,9 +38,10 @@ export const aboutContent: AboutContent = {
     ]
   },
   mission: {
-    heading: 'Accurate capital gains math, explained in plain language',
+    heading: 'Editorial method and calculator governance',
     paragraphs: [
       'We review IRS guidance, revenue procedures, and selected state publications when updating calculator inputs. The current federal tables cite IRS Revenue Procedure 2025-32.',
+      'The Gain Tax Calculator Editorial Team maintains the calculator assumptions, source links, review dates, and correction workflow. Content is updated when a supported tax year or cited authority changes; material corrections can be reported through the Contact page.',
       'The calculators are educational estimates, not tax advice. State calculations use simplified selected rates and do not model every deduction, surcharge, local tax, residency rule, or special asset treatment.'
     ]
   },

@@ -54,7 +54,7 @@ export default function GuidesIndexPage() {
       <header className="space-y-3 text-center">
         <h1 className="text-4xl font-bold text-gray-900">Capital gains tax guides</h1>
         <p className="text-gray-600">
-          Expand your strategy with expert-written resources that link directly to the calculators you need for each decision.
+          Expand your strategy with source-linked resources that connect directly to the calculators you need for each decision.
         </p>
       </header>
 

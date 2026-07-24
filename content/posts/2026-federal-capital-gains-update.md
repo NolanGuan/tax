@@ -25,7 +25,7 @@ A capital asset generally needs to be held for more than one year to receive lon
 
 The date difference can matter, but tax should not be the only reason to hold an investment. Price risk, diversification, transaction costs, liquidity needs, and the possibility of a rule applying differently to a particular asset can outweigh an estimated rate change.
 
-Gain Tax Calculator classifies a sale as long-term only when the entered purchase and sale dates are more than 365 days apart. It supports sales in tax year 2026 and rejects other sale years rather than silently applying the wrong table.
+Gain Tax Calculator classifies a sale as long-term only when the sale date is later than the one-year anniversary of the purchase date. It supports sales in tax year 2026 and rejects other sale years rather than silently applying the wrong table.
 
 ## How losses change the calculation
 

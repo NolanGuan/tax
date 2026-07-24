@@ -2,10 +2,20 @@ import { describe, expect, it } from 'vitest';
 import {
   calculateCapitalGains,
   CURRENT_TAX_YEAR,
-  FEDERAL_RATES
+  FEDERAL_RATES,
+  getHoldingPeriodDays,
+  isLongTermHoldingPeriod
 } from '@/features/calculators/core';
 
 describe('calculateCapitalGains', () => {
+  it('uses a calendar-year anniversary instead of a fixed 365-day threshold', () => {
+    expect(getHoldingPeriodDays('2024-01-01', '2025-01-01')).toBe(366);
+    expect(isLongTermHoldingPeriod('2024-01-01', '2025-01-01')).toBe(false);
+    expect(isLongTermHoldingPeriod('2024-01-01', '2025-01-02')).toBe(true);
+    expect(isLongTermHoldingPeriod('2024-02-29', '2025-03-01')).toBe(false);
+    expect(isLongTermHoldingPeriod('2024-02-29', '2025-03-02')).toBe(true);
+  });
+
   it('separates short-term and long-term gains based on holding period', () => {
     const result = calculateCapitalGains({
       taxYear: CURRENT_TAX_YEAR,

@@ -101,7 +101,7 @@ const seoConfig: GlobalSeoConfig = {
     },
     blog: {
       title: 'Gain Tax Calculator Blog',
-      description: 'Expert insights on capital gains taxes, timing strategies, tax-loss harvesting, and state-level planning updates from Gain Tax Calculator.',
+      description: 'Source-linked explanations of capital gains taxes, timing strategies, tax-loss harvesting, and state-level planning updates.',
       path: '/blog',
       structuredData: [
         {

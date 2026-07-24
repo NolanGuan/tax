@@ -2,6 +2,7 @@ import { describe, expect, it } from 'vitest';
 import sitemap from '@/../app/sitemap';
 import { getPageSeo, getRobotsConfig } from '@/config/seo';
 import { siteConfig } from '@/config/site';
+import { guidesMetadata } from '@/content/metadata/guides';
 import { processMarkdownContent } from '@/lib/blog-utils';
 
 describe('site trust and crawl configuration', () => {
@@ -17,6 +18,37 @@ describe('site trust and crawl configuration', () => {
     expect(links).toEqual(expect.arrayContaining(['/blog', '/contact', '/privacy', '/terms']));
     expect(siteConfig.social.github).toBe('');
     expect(siteConfig.social.twitter).toBe('');
+  });
+
+  it('uses distinct editorial, logo, and social-preview identities', () => {
+    expect(siteConfig.editorialUrl).toBe('/about#editorial-method');
+    expect(siteConfig.logoImage).toBe('/images/logo.png');
+    expect(siteConfig.defaultOgImage).toBe('/images/og-default.png');
+    expect(siteConfig.logoImage).not.toBe(siteConfig.defaultOgImage);
+  });
+
+  it('does not expose an empty reviewer field', () => {
+    Object.values(guidesMetadata).forEach((metadata) => {
+      expect(metadata.reviewer === undefined || metadata.reviewer.trim().length > 0).toBe(true);
+    });
+  });
+
+  it('does not create a self-redirect for legacy blog tag URLs', async () => {
+    const { default: nextConfig } = await import('../../next.config.mjs');
+    const redirects = await nextConfig.redirects();
+
+    expect(
+      redirects.some(
+        (redirect) =>
+          redirect.source === '/blog' &&
+          redirect.has?.some((condition) => condition.type === 'query' && condition.key === 'tag')
+      )
+    ).toBe(false);
+    expect(redirects).toContainEqual({
+      source: '/blog/tag/:tag*',
+      destination: '/blog',
+      permanent: true
+    });
   });
 
   it('uses stable content dates and includes important routes in the sitemap', () => {

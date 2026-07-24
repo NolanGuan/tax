@@ -1,7 +1,6 @@
 {
   "capital-gains-tax-basics": {
     "author": "Gain Tax Calculator Editorial Team",
-    "reviewer": "",
     "sources": [
       "https://www.irs.gov/publications/p544",
       "https://www.irs.gov/publications/p550",
@@ -12,7 +11,6 @@
   },
   "real-estate-capital-gains": {
     "author": "Gain Tax Calculator Editorial Team",
-    "reviewer": "",
     "sources": [
       "https://www.irs.gov/publications/p523",
       "https://www.irs.gov/publications/p527"
@@ -22,7 +20,6 @@
   },
   "crypto-tax": {
     "author": "Gain Tax Calculator Editorial Team",
-    "reviewer": "",
     "sources": [
       "https://www.irs.gov/businesses/small-businesses-self-employed/digital-assets",
       "https://www.irs.gov/irb/2014-16_IRB#NOT-2014-21",
@@ -33,7 +30,6 @@
   },
   "tax-planning-scenarios": {
     "author": "Gain Tax Calculator Editorial Team",
-    "reviewer": "",
     "sources": [
       "https://www.irs.gov/publications/p505",
       "https://www.irs.gov/publications/p550"

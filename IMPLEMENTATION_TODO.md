@@ -2,6 +2,19 @@
 
 更新日期：2026-07-24
 
+## 最终 SEO 复检收尾
+
+- [x] 修复 `/blog?tag=*` 永久重定向到自身的循环。
+- [x] 将旧 `/blog/tag/*` 与 `/blog/category/*` 永久重定向到 `/blog`。
+- [x] 隐藏空 Reviewer，并将 Editorial Team 链接到公开编辑方法。
+- [x] 为 Article JSON-LD 增加组织作者 URL，移除无依据的 “Expert” 措辞。
+- [x] 分离 Organization logo 与 1200×630 社交分享图，并确保扩展名、MIME 和文件内容一致。
+- [x] 持有期判断改用“一周年后的日期”，覆盖闰年边界。
+- [x] 新增上述规则的自动化回归测试与 preflight 门禁。
+- [x] 运行 preflight、测试、生产构建、依赖安全审计和本地生产回归。
+- [ ] 推送 `main` 触发 Vercel production 部署。
+- [ ] 线上验证重定向、21 个 sitemap URL、canonical、JSON-LD、图片 MIME、桌面/移动端和计算器。
+
 ## P0：上线阻断项
 
 - [x] 将联邦税率与长期资本利得税档更新至 2026，并用 IRS Rev. Proc. 2025-32 校验。

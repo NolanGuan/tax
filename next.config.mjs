@@ -31,16 +31,10 @@ const nextConfig = {
       {
         source: '/blog/category/:category*',
         destination: '/blog',
-        permanent: false
-      },
-      {
-        source: '/blog/tag/:tag*',
-        destination: '/',
         permanent: true
       },
       {
-        source: '/blog',
-        has: [{ type: 'query', key: 'tag' }],
+        source: '/blog/tag/:tag*',
         destination: '/blog',
         permanent: true
       }

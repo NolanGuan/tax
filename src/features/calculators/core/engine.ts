@@ -1,23 +1,12 @@
 import { CURRENT_TAX_YEAR, FEDERAL_RATES, findStateRate } from './constants';
+import { isLongTermHoldingPeriod } from './dates';
 import type {
   CapitalGainsBreakdown,
   CapitalGainsInput,
-  CapitalGainsTransaction,
   FilingStatus,
   LongTermCapitalGainsBracket,
   OrdinaryIncomeBracket
 } from './types';
-
-function getHoldingPeriodDays(transaction: CapitalGainsTransaction): number {
-  const start = Date.parse(transaction.purchaseDate);
-  const end = Date.parse(transaction.saleDate);
-  if (Number.isNaN(start) || Number.isNaN(end)) {
-    return 0;
-  }
-
-  const millisecondsInDay = 1000 * 60 * 60 * 24;
-  return Math.max(0, Math.floor((end - start) / millisecondsInDay));
-}
 
 function resolveOrdinaryBrackets(status: FilingStatus): OrdinaryIncomeBracket[] {
   return FEDERAL_RATES.ordinaryIncome[status];
@@ -196,10 +185,9 @@ export function calculateCapitalGains(input: CapitalGainsInput): CapitalGainsBre
       throw new RangeError(`Transaction ${transaction.id} must use non-negative finite prices.`);
     }
 
-    const holdingDays = getHoldingPeriodDays(transaction);
     const gain = transaction.salePrice - transaction.purchasePrice;
 
-    if (holdingDays > 365) {
+    if (isLongTermHoldingPeriod(transaction.purchaseDate, transaction.saleDate)) {
       longTermGain += gain;
     } else {
       shortTermGain += gain;

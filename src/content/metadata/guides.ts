@@ -4,7 +4,7 @@ export type GuideKey = keyof typeof guidesJson;
 
 export const guidesMetadata = guidesJson as Record<GuideKey, {
   author: string;
-  reviewer: string;
+  reviewer?: string;
   sources: string[];
   lastUpdated: string;
   nextReview: string;

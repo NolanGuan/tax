@@ -159,6 +159,8 @@ function buildArticleStructuredData(
   const authorName = metadata?.author ?? post.author;
   const reviewerName = metadata?.reviewer;
   const citations = metadata?.sources ?? [];
+  const authorIsEditorialTeam = authorName === 'Gain Tax Calculator Editorial Team';
+  const editorialUrl = `https://${siteConfig.domain}${siteConfig.editorialUrl}`;
 
   return {
     '@context': 'https://schema.org',
@@ -166,8 +168,9 @@ function buildArticleStructuredData(
     headline: post.seo?.title ?? post.title,
     description: post.seo?.description ?? post.excerpt,
     author: {
-      '@type': authorName === 'Gain Tax Calculator Editorial Team' ? 'Organization' : 'Person',
-      name: authorName
+      '@type': authorIsEditorialTeam ? 'Organization' : 'Person',
+      name: authorName,
+      ...(authorIsEditorialTeam ? { url: editorialUrl } : {})
     },
     ...(reviewerName
       ? {
@@ -186,7 +189,7 @@ function buildArticleStructuredData(
       '@type': 'Organization',
       name: siteConfig.name,
       url: `https://${siteConfig.domain}`,
-      logo: ensureAbsolute(siteConfig.defaultOgImage)
+      logo: ensureAbsolute(siteConfig.logoImage)
     }
   };
 }

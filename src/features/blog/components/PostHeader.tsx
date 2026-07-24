@@ -1,6 +1,8 @@
 import Image from 'next/image';
+import Link from 'next/link';
 import type { BlogPost } from '@/lib/blog-utils';
 import { SourceList } from '@/features/sources/SourceList';
+import { siteConfig } from '@/config/site';
 
 interface PostMetadata {
   author?: string;
@@ -19,11 +21,18 @@ export function PostHeader({ post, metadata }: PostHeaderProps) {
   const lastUpdated = metadata?.lastUpdated ?? post.updatedAt;
   const reviewer = metadata?.reviewer;
   const sources = metadata?.sources ?? [];
+  const isEditorialTeam = displayAuthor === 'Gain Tax Calculator Editorial Team';
 
   return (
     <header className="space-y-6">
       <div className="space-y-3 text-sm text-gray-500">
-        <span>{displayAuthor}</span>
+        {isEditorialTeam ? (
+          <Link href={siteConfig.editorialUrl} className="hover:text-blue-700 hover:underline">
+            {displayAuthor}
+          </Link>
+        ) : (
+          <span>{displayAuthor}</span>
+        )}
         <span aria-hidden="true">•</span>
         <time dateTime={post.publishedAt}>
           {new Date(post.publishedAt).toLocaleDateString('en-US', {

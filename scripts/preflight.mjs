@@ -98,6 +98,16 @@ if (siteConfig) {
   if (!existsSync(ogImagePath)) {
     errors.push(`Default OG image is missing: ${ogImagePath}`);
   }
+  const logoImagePath = resolve(projectRoot, 'public', siteConfig.logoImage.replace(/^\//, ''));
+  if (!existsSync(logoImagePath)) {
+    errors.push(`Organization logo is missing: ${logoImagePath}`);
+  }
+  if (siteConfig.logoImage === siteConfig.defaultOgImage) {
+    errors.push('Organization logo and default social-preview image must be separate assets.');
+  }
+  if (!siteConfig.editorialUrl?.startsWith('/about')) {
+    errors.push('Editorial identity must link to the About page.');
+  }
 }
 
 if (globalSeoConfig) {
@@ -146,6 +156,15 @@ if (/lastModified:\s*(today|new Date\(\))/.test(sitemapSource)) {
   errors.push('Sitemap lastModified must use a stable content date, not deployment time.');
 }
 
+const nextConfigSource = readFileSync(resolve(projectRoot, 'next.config.mjs'), 'utf8');
+if (
+  /source:\s*['"]\/blog['"][\s\S]{0,160}type:\s*['"]query['"][\s\S]{0,80}key:\s*['"]tag['"]/.test(
+    nextConfigSource
+  )
+) {
+  errors.push('Blog tag query redirect can preserve its query string and loop; remove it.');
+}
+
 const sourceText = collectSourceText([
   resolve(projectRoot, 'app'),
   resolve(projectRoot, 'src'),
@@ -154,11 +173,22 @@ const sourceText = collectSourceText([
 for (const forbiddenClaim of [
   'capitalgainsnavigator.com',
   'CPA-reviewed formulas',
-  'Net Investment Income Tax and the additional Medicare surtax automatically apply'
+  'Net Investment Income Tax and the additional Medicare surtax automatically apply',
+  'expert commentary',
+  'expert-written resources',
+  'Expert insights on capital gains taxes'
 ]) {
   if (sourceText.includes(forbiddenClaim)) {
     errors.push(`Forbidden stale or unsupported claim remains: ${forbiddenClaim}`);
   }
+}
+
+if (/"reviewer"\s*:\s*""/.test(sourceText)) {
+  errors.push('Editorial metadata must omit empty reviewer values.');
+}
+
+if (/isLongTerm:\s*holdingPeriodDays\s*>\s*365/.test(sourceText)) {
+  errors.push('Holding-period classification must use a calendar-year anniversary, not a fixed day count.');
 }
 
 if (/pagead2\.googlesyndication\.com|adsbygoogle/.test(sourceText)) {

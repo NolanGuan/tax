@@ -1,5 +1,9 @@
 import { FEDERAL_RATES, findStateRate } from '@/features/calculators/core/constants';
-import { calculateCapitalGains } from '@/features/calculators/core';
+import {
+  calculateCapitalGains,
+  getHoldingPeriodDays,
+  isLongTermHoldingPeriod
+} from '@/features/calculators/core';
 import type {
   CryptoCalculatorInput,
   CryptoCalculatorResult,
@@ -169,10 +173,7 @@ export function calculateCryptoTaxes(input: CryptoCalculatorInput): CryptoCalcul
         const lotQuantity = Math.min(lot.quantity, remainingQuantity);
         const costBasis = lot.costPerUnit * lotQuantity;
         const saleAmount = proceedsPerUnit * lotQuantity;
-        const holdingPeriodDays = Math.max(
-          0,
-          Math.floor((Date.parse(transaction.date) - Date.parse(lot.acquiredDate)) / (1000 * 60 * 60 * 24))
-        );
+        const holdingPeriodDays = getHoldingPeriodDays(lot.acquiredDate, transaction.date);
 
         capitalTransactions.push({
           id: `${transaction.id}-lot-${++disposalCounter}`,
@@ -191,7 +192,7 @@ export function calculateCryptoTaxes(input: CryptoCalculatorInput): CryptoCalcul
           proceedsUSD: saleAmount,
           gainUSD: saleAmount - costBasis,
           holdingPeriodDays,
-          isLongTerm: holdingPeriodDays > 365,
+          isLongTerm: isLongTermHoldingPeriod(lot.acquiredDate, transaction.date),
           transactionType: transaction.type
         });
 

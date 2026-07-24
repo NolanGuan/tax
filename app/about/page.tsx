@@ -26,7 +26,7 @@ export default function AboutPage() {
         ))}
       </section>
 
-      <section className="rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
+      <section id="editorial-method" className="scroll-mt-24 rounded-2xl border border-gray-200 bg-white p-8 shadow-sm">
         <h2 className="text-2xl font-semibold text-gray-900">{content.mission.heading}</h2>
         <div className="mt-4 space-y-4 text-gray-700">
           {content.mission.paragraphs.map((paragraph) => (
