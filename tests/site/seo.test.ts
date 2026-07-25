@@ -35,7 +35,8 @@ describe('site trust and crawl configuration', () => {
 
   it('does not create a self-redirect for legacy blog tag URLs', async () => {
     const { default: nextConfig } = await import('../../next.config.mjs');
-    const redirects = await nextConfig.redirects();
+    expect(nextConfig.redirects).toBeTypeOf('function');
+    const redirects = (await nextConfig.redirects?.()) ?? [];
 
     expect(
       redirects.some(

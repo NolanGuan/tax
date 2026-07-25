@@ -8,6 +8,7 @@ import type {
   RealEstateTransaction
 } from '@/features/calculators/real-estate';
 import { CURRENT_TAX_YEAR, type FilingStatus } from '@/features/calculators/core';
+import { EnglishDateField } from '@/features/forms';
 
 interface FormState extends Omit<RealEstateCalculatorInput, 'transactions'> {
   transactions: Array<RealEstateTransaction & { key: string }>;
@@ -289,33 +290,24 @@ export function RealEstateForm() {
                   />
                 </label>
 
-                <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
-                  Purchase date
-                  <input
-                    type="date"
-                    value={transaction.purchaseDate}
-                    onChange={(event) => updateTransaction(transaction.key, {
-                      purchaseDate: event.target.value
-                    })}
-                    lang="en"
-                    placeholder="YYYY-MM-DD"
-                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                  />
-                </label>
+                <EnglishDateField
+                  id={`${transaction.key}-purchase-date`}
+                  label="Purchase date"
+                  value={transaction.purchaseDate}
+                  onChange={(purchaseDate) => updateTransaction(transaction.key, { purchaseDate })}
+                  required
+                />
 
-                <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
-                  Sale date
-                  <input
-                    type="date"
-                    value={transaction.saleDate}
-                    onChange={(event) => updateTransaction(transaction.key, {
-                      saleDate: event.target.value
-                    })}
-                    lang="en"
-                    placeholder="YYYY-MM-DD"
-                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                  />
-                </label>
+                <EnglishDateField
+                  id={`${transaction.key}-sale-date`}
+                  label="Sale date"
+                  value={transaction.saleDate}
+                  min={`${CURRENT_TAX_YEAR}-01-01`}
+                  max={`${CURRENT_TAX_YEAR}-12-31`}
+                  onChange={(saleDate) => updateTransaction(transaction.key, { saleDate })}
+                  helpText={`Use a date in tax year ${CURRENT_TAX_YEAR}.`}
+                  required
+                />
 
                 <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
                   Capital improvements

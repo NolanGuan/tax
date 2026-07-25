@@ -2,6 +2,24 @@
 
 Updated: 2026-07-25
 
+## Calculator UX and English date closeout
+
+- [x] Replace every native date input with one shared Month / Day / Year field that is independent of browser and operating-system locale.
+- [x] Support keyboard entry, full-date paste, strict calendar validation, English helper text, English inline errors, and ISO date values.
+- [x] Add a preflight gate that rejects future native date inputs.
+- [x] Make state selection explicit in the quick calculator instead of silently defaulting to California.
+- [x] Add currency formatting, optional buying and selling costs, and an immediate long-term eligibility date.
+- [x] Reorganize the quick calculator into Transaction details and Tax profile sections.
+- [x] Prioritize total tax, after-tax gain, effective rate, and holding period in the result.
+- [x] Add tax breakdown, result explanation, assumptions, sale-timing comparison, copy, focus management, and live status feedback.
+- [x] Move the first-visit privacy notice into document flow so it cannot cover calculator fields or actions.
+- [x] Add regression tests for strict English date parsing, formatting, invalid dates, and long-term eligibility.
+- [x] Pass preflight, automated tests, lint, type checking, production build, and production dependency audit.
+- [x] Pass local desktop and 390 px browser regression for all calculator routes, English-only rendering, validation, result focus, responsive overflow, and console output.
+- [x] Complete design QA with no remaining P0, P1, or P2 issue.
+- [ ] Deploy the verified commit to Vercel production.
+- [ ] Verify the canonical production calculator and all date-enabled calculator routes.
+
 ## English-only repository closeout
 
 - [x] Scan repository text and all 21 production sitemap pages for Han characters.

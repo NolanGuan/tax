@@ -9,6 +9,7 @@ import type {
   CryptoTransactionType
 } from '@/features/calculators/crypto';
 import { CURRENT_TAX_YEAR, type FilingStatus } from '@/features/calculators/core';
+import { EnglishDateField } from '@/features/forms';
 
 interface FormTransaction extends CryptoTransaction {
   key: string;
@@ -341,17 +342,13 @@ export function CryptoForm() {
                   </select>
                 </label>
 
-                <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
-                  Date
-                  <input
-                    type="date"
-                    value={transaction.date}
-                    onChange={(event) => updateTransaction(transaction.key, { date: event.target.value })}
-                    lang="en"
-                    placeholder="YYYY-MM-DD"
-                    className="rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-                  />
-                </label>
+                <EnglishDateField
+                  id={`${transaction.key}-date`}
+                  label="Date"
+                  value={transaction.date}
+                  onChange={(date) => updateTransaction(transaction.key, { date })}
+                  required
+                />
 
                 <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
                   Quantity

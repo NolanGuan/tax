@@ -149,13 +149,13 @@ export function ConsentManager() {
   ) : !hasChoice ? (
     <section
       aria-label="Privacy choices"
-      className="fixed inset-x-4 bottom-4 z-[100] mx-auto max-w-4xl rounded-2xl border border-gray-200 bg-white p-5 shadow-2xl"
+      className="relative z-[100] mx-4 my-4 max-w-5xl rounded-2xl border border-gray-200 bg-white p-5 shadow-lg lg:mx-auto"
     >
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <p className="text-sm text-gray-700">
           We use optional analytics only with your permission. Calculator inputs stay out of analytics.
         </p>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2 md:flex-nowrap">
           <button
             type="button"
             className="rounded-full border border-gray-300 px-4 py-2 text-sm font-medium text-gray-700"

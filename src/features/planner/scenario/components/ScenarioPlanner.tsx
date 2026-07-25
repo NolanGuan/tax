@@ -2,6 +2,7 @@
 
 import { useMemo, useState } from 'react';
 import { CURRENT_TAX_YEAR, type FilingStatus } from '@/features/calculators/core';
+import { EnglishDateField } from '@/features/forms';
 import { evaluateScenario } from '@/features/planner/scenario/logic';
 import type { BaseScenarioInput, ScenarioAdjustments, ScenarioResult } from '@/features/planner/scenario/types';
 
@@ -91,17 +92,13 @@ export function ScenarioPlanner() {
             />
           </label>
 
-          <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
-            Purchase date
-            <input
-              type="date"
-              value={base.purchaseDate}
-              onChange={(event) => setBase((previous) => ({ ...previous, purchaseDate: event.target.value }))}
-              lang="en"
-              placeholder="YYYY-MM-DD"
-              className="rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-            />
-          </label>
+          <EnglishDateField
+            id="scenario-purchase-date"
+            label="Purchase date"
+            value={base.purchaseDate}
+            onChange={(purchaseDate) => setBase((previous) => ({ ...previous, purchaseDate }))}
+            required
+          />
 
           <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
             Expected sale price
@@ -114,19 +111,16 @@ export function ScenarioPlanner() {
             />
           </label>
 
-          <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
-            Target sale date
-            <input
-              type="date"
-              value={base.saleDate}
-              min={`${CURRENT_TAX_YEAR}-01-01`}
-              max={`${CURRENT_TAX_YEAR}-12-31`}
-              onChange={(event) => setBase((previous) => ({ ...previous, saleDate: event.target.value }))}
-              lang="en"
-              placeholder="YYYY-MM-DD"
-              className="rounded-lg border border-gray-300 px-4 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-200"
-            />
-          </label>
+          <EnglishDateField
+            id="scenario-sale-date"
+            label="Target sale date"
+            value={base.saleDate}
+            min={`${CURRENT_TAX_YEAR}-01-01`}
+            max={`${CURRENT_TAX_YEAR}-12-31`}
+            onChange={(saleDate) => setBase((previous) => ({ ...previous, saleDate }))}
+            helpText={`Use a date in tax year ${CURRENT_TAX_YEAR}.`}
+            required
+          />
 
           <label className="flex flex-col gap-2 text-sm font-medium text-gray-700">
             Other taxable income

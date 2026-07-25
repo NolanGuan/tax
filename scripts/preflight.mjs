@@ -185,6 +185,12 @@ if (hanCharacterLocations.length) {
   );
 }
 
+if (/type\s*=\s*["']date["']/.test(sourceText)) {
+  errors.push(
+    'Native date inputs can render browser-localized text. Use the shared EnglishDateField component instead.'
+  );
+}
+
 for (const forbiddenClaim of [
   'capitalgainsnavigator.com',
   'CPA-reviewed formulas',
