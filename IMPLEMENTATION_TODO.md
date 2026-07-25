@@ -17,8 +17,8 @@ Updated: 2026-07-25
 - [x] Pass preflight, automated tests, lint, type checking, production build, and production dependency audit.
 - [x] Pass local desktop and 390 px browser regression for all calculator routes, English-only rendering, validation, result focus, responsive overflow, and console output.
 - [x] Complete design QA with no remaining P0, P1, or P2 issue.
-- [ ] Deploy the verified commit to Vercel production.
-- [ ] Verify the canonical production calculator and all date-enabled calculator routes.
+- [x] Deploy verified calculator build commit `3025bf1` to Vercel production.
+- [x] Verify the canonical production calculator and all date-enabled calculator routes at desktop and 390 px.
 
 ## English-only repository closeout
 
