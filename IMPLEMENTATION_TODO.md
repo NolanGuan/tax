@@ -8,7 +8,7 @@ Updated: 2026-07-25
 - [x] Translate the remaining non-English project documentation and remove the localized absolute repository path.
 - [x] Add a preflight gate that rejects Han characters in project text files.
 - [x] Run preflight, automated tests, the production build, the dependency audit, and local browser regression.
-- [ ] Deploy `main` and verify the English-only production site.
+- [x] Deploy `main` at commit `9f6a8ba` and verify the English-only production site.
 
 ## Final SEO post-fix closeout
 
