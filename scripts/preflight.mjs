@@ -170,6 +170,21 @@ const sourceText = collectSourceText([
   resolve(projectRoot, 'src'),
   resolve(projectRoot, 'content')
 ]);
+
+const hanCharacterLocations = collectProjectTextFiles(projectRoot).flatMap((filePath) => {
+  const content = readFileSync(filePath, 'utf8');
+  return content
+    .split('\n')
+    .map((line, index) => ({ line, lineNumber: index + 1 }))
+    .filter(({ line }) => /\p{Script=Han}/u.test(line))
+    .map(({ lineNumber }) => `${filePath.replace(projectRoot + '/', '')}:${lineNumber}`);
+});
+if (hanCharacterLocations.length) {
+  errors.push(
+    `Project text must remain English-only. Han characters found in: ${hanCharacterLocations.join(', ')}`
+  );
+}
+
 for (const forbiddenClaim of [
   'capitalgainsnavigator.com',
   'CPA-reviewed formulas',
@@ -241,6 +256,42 @@ function collectSourceText(rootDirs) {
     }
   }
   return chunks.join('\n');
+}
+
+function collectProjectTextFiles(rootDir) {
+  const files = [];
+  const stack = [rootDir];
+  const excludedDirectories = new Set([
+    '.git',
+    '.next',
+    '.playwright-cli',
+    'coverage',
+    'node_modules',
+    'output'
+  ]);
+
+  while (stack.length) {
+    const current = stack.pop();
+    if (!current || !existsSync(current)) {
+      continue;
+    }
+
+    const stats = statSync(current);
+    if (stats.isDirectory()) {
+      for (const entry of readdirSync(current)) {
+        if (!excludedDirectories.has(entry)) {
+          stack.push(resolve(current, entry));
+        }
+      }
+      continue;
+    }
+
+    if (/\.(cjs|css|html|js|json|md|mdx|mjs|ts|tsx|txt|xml|yaml|yml)$/i.test(current)) {
+      files.push(current);
+    }
+  }
+
+  return files;
 }
 
 function collectTodoMarkers(rootDir) {

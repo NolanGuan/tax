@@ -2,7 +2,7 @@
 
 Audit date: 2026-07-24 (Asia/Shanghai)
 Target: `https://gaintaxcalculator.com`
-Repository: `/Users/nolan_lopez/Desktop/2026年开发/tax`
+Repository: local Gain Tax Calculator workspace
 Stage: production live, pre-application readiness; no rejection text supplied
 Evidence mode: live + repository
 SEO modes: existing-site technical + content
